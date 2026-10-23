@@ -1,15 +1,15 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Modules\Auth\Http\Middleware\EnsureCustomerBelongsToStore;
 use Modules\Storefront\Http\Controllers\HomeController;
 use Modules\Storefront\Http\Middleware\UseArabicLocale;
 use Modules\Tenancy\Http\Middleware\IdentifyStore;
+use Modules\Tenancy\Support\StoreRoutes;
 
-$reserved = implode('|', array_map('preg_quote', config('tenancy.reserved_slugs', [])));
-
-Route::middleware(['web', UseArabicLocale::class, IdentifyStore::class])
+Route::middleware(['web', UseArabicLocale::class, IdentifyStore::class, EnsureCustomerBelongsToStore::class])
     ->prefix('{store}')
-    ->where(['store' => "^(?!(?:{$reserved})$).+"])
+    ->where(['store' => StoreRoutes::slugPattern()])
     ->group(function () {
         Route::get('/', HomeController::class)->name('storefront.home');
     });

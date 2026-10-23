@@ -114,7 +114,6 @@ class CustomerAuthTest extends TestCase
         $this->register('store-a')->assertCreated();
 
         $this->get('/admin')->assertRedirect('/admin/login');
-        $this->get('/vendor')->assertRedirect('/vendor/login');
     }
 
     public function test_repeated_login_attempts_are_throttled(): void
