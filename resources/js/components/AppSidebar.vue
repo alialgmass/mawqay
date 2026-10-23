@@ -2,16 +2,7 @@
 import {
     Link,
 } from '@inertiajs/vue3';
-import {
-    LayoutGrid,
-    ShoppingCart,
-    Package,
-    Users,
-    BarChart3,
-    Settings,
-    LifeBuoy,
-    Send
-} from 'lucide-vue-next';
+import { LayoutGrid, LifeBuoy, Send } from 'lucide-vue-next';
 import AppLogo from '@/components/AppLogo.vue';
 import NavFooter from '@/components/NavFooter.vue';
 import NavMain from '@/components/NavMain.vue';
@@ -26,17 +17,8 @@ import {
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import {
-    dashboard
+    home
 } from '@/routes';
-import {
-    index as posIndex
-} from '@/routes/pos';
-import {
-    index as productsIndex
-} from '@/routes/inventory/products';
-import {
-    index as customersIndex
-} from '@/routes/customers';
 import type {
     NavItem
 } from '@/types';
@@ -50,34 +32,9 @@ const {
 
 const mainNavItems: NavItem[] = [{
         title: 'Dashboard',
-        href: dashboard(),
+        href: home(),
         icon: LayoutGrid,
-    },
-    {
-        title: 'POS',
-        href: posIndex(),
-        icon: ShoppingCart,
-    },
-    {
-        title: 'Products',
-        href: productsIndex(),
-        icon: Package,
-    },
-    {
-        title: 'Customers',
-        href: customersIndex(),
-        icon: Users,
-    },
-    {
-        title: 'Reports',
-        href: '/reports',
-        icon: BarChart3,
-    },
-    {
-        title: 'Settings',
-        href: '/settings/profile',
-        icon: Settings,
-    },
+    }
 ];
 
 const footerNavItems: NavItem[] = [{
@@ -99,7 +56,7 @@ const footerNavItems: NavItem[] = [{
             <SidebarMenu>
                 <SidebarMenuItem>
                     <SidebarMenuButton size="lg" as-child>
-                        <Link :href="dashboard()">
+                        <Link :href="home()">
                             <AppLogo />
                         </Link>
                     </SidebarMenuButton>
