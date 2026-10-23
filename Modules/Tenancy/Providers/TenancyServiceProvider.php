@@ -11,6 +11,8 @@ class TenancyServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
+        $this->mergeConfigFrom(__DIR__.'/../config/tenancy.php', 'tenancy');
+
         $this->app->scoped(CurrentStore::class);
         $this->app->bind(StoreResolver::class, PathStoreResolver::class);
     }
