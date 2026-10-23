@@ -27,8 +27,13 @@ class DemoSeedTest extends TestCase
         $owner = User::query()->where('email', 'owner@mawqaay.test')->firstOrFail();
 
         $this->actingAs($admin)->get('/admin')->assertOk();
+
+        $this->flushSession();
         $this->actingAs($owner)->get('/vendor/demo-store')->assertOk();
+
+        $this->flushSession();
         $this->get('/demo-store')->assertOk();
+
         $this->assertSame($store->id, $owner->store_id);
     }
 
