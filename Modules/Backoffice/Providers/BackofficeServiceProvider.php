@@ -9,6 +9,7 @@ class BackofficeServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->register(AdminPanelProvider::class);
+        $this->app->register(VendorPanelProvider::class);
     }
 
     public function boot(): void
