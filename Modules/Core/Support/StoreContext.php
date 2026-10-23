@@ -49,8 +49,8 @@ class StoreContext
     }
 
     /**
-     * Whether the Store scope is currently switched off. Only the AdminScope
-     * helper may switch it off.
+     * Whether the Store scope is currently switched off. Only the sanctioned
+     * admin helper may switch it off.
      *
      * @internal
      */
