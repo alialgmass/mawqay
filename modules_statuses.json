@@ -1,1 +1,7 @@
-{}
+{
+    "Core": true,
+    "Tenancy": true,
+    "Auth": true,
+    "Storefront": true,
+    "Backoffice": true
+}
