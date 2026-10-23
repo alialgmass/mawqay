@@ -6,7 +6,8 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use Spatie\Permission\Models\Role;
+use Modules\Auth\Enums\UserRole;
+use Modules\Tenancy\Models\Store;
 
 /**
  * @extends Factory<User>
@@ -48,13 +49,25 @@ class UserFactory extends Factory
     }
 
     /**
-     * Indicate that the user is a platform administrator.
+     * Indicate that the user is a Platform Admin.
      */
     public function admin(): static
     {
-        return $this->afterCreating(function (User $user): void {
-            $user->assignRole(Role::findOrCreate('admin', 'web'));
-        });
+        return $this->state(fn (array $attributes): array => [
+            'role' => UserRole::Admin,
+            'store_id' => null,
+        ]);
+    }
+
+    /**
+     * Indicate that the user is the Vendor Owner of the given Store.
+     */
+    public function vendorOwner(Store $store): static
+    {
+        return $this->state(fn (array $attributes): array => [
+            'role' => UserRole::VendorOwner,
+            'store_id' => $store->id,
+        ]);
     }
 
     /**
