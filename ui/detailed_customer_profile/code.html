@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+
+<html dir="ltr" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;family=IBM+Plex+Sans:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "background": "#f7f9fb",
+                        "secondary-fixed-dim": "#68dba9",
+                        "primary-container": "#1e1b4b",
+                        "error-container": "#ffdad6",
+                        "on-secondary-fixed-variant": "#005137",
+                        "tertiary-container": "#381a00",
+                        "on-tertiary-container": "#cf7100",
+                        "on-secondary-fixed": "#002114",
+                        "on-error": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "on-surface-variant": "#47464f",
+                        "surface-bright": "#f7f9fb",
+                        "tertiary-fixed": "#ffdcc3",
+                        "tertiary-fixed-dim": "#ffb77d",
+                        "on-surface": "#191c1e",
+                        "on-primary-fixed-variant": "#444173",
+                        "on-tertiary": "#ffffff",
+                        "primary": "#070235",
+                        "on-secondary-container": "#00714e",
+                        "secondary": "#006c4a",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-container": "#82f5c1",
+                        "surface-tint": "#5b598c",
+                        "inverse-surface": "#2d3133",
+                        "surface-container-low": "#f2f4f6",
+                        "inverse-primary": "#c4c1fb",
+                        "surface-variant": "#e0e3e5",
+                        "on-background": "#191c1e",
+                        "error": "#ba1a1a",
+                        "outline": "#787680",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed-variant": "#6e3900",
+                        "inverse-on-surface": "#eff1f3",
+                        "primary-fixed": "#e3dfff",
+                        "surface-container-high": "#e6e8ea",
+                        "surface": "#f7f9fb",
+                        "on-primary-fixed": "#181445",
+                        "on-tertiary-fixed": "#2f1500",
+                        "primary-fixed-dim": "#c4c1fb",
+                        "on-secondary": "#ffffff",
+                        "outline-variant": "#c8c5d0",
+                        "surface-container": "#eceef0",
+                        "secondary-fixed": "#85f8c4",
+                        "surface-dim": "#d8dadc",
+                        "on-primary-container": "#8683ba",
+                        "surface-container-highest": "#e0e3e5",
+                        "tertiary": "#170700"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "xs": "4px",
+                        "container-max": "1440px",
+                        "md": "16px",
+                        "sm": "8px",
+                        "base": "4px",
+                        "xl": "32px",
+                        "lg": "24px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["IBM Plex Sans Arabic"],
+                        "body-md": ["IBM Plex Sans Arabic"],
+                        "headline-sm": ["IBM Plex Sans Arabic"],
+                        "headline-md": ["IBM Plex Sans Arabic"],
+                        "label-md": ["IBM Plex Sans Arabic"],
+                        "display-lg": ["IBM Plex Sans Arabic"],
+                        "numeric-pos": ["IBM Plex Sans"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "numeric-pos": ["22px", {"lineHeight": "24px", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #f7f9fb;
+        }
+    </style>
+</head>
+<body class="font-body-md text-on-surface">
+<!-- SideNavBar Anchor -->
+<aside class="h-screen w-64 fixed left-0 top-0 border-r border-outline-variant flex flex-col h-full py-lg px-md bg-surface dark:bg-surface-container-lowest z-50">
+<div class="mb-xl px-md">
+<h1 class="text-headline-md font-headline-md font-bold text-primary dark:text-primary-fixed-dim">Tenant Name</h1>
+<p class="text-label-md font-label-md text-on-surface-variant">Premium Subscription</p>
+</div>
+<nav class="flex flex-col gap-xs flex-1">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span>Products</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">point_of_sale</span>
+<span>POS</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm bg-primary-container text-on-primary-container rounded-lg font-bold font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">group</span>
+<span>Customers</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">restaurant</span>
+<span>Restaurant</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">assessment</span>
+<span>Reports</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors font-label-md text-label-md mt-auto" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span>Settings</span>
+</a>
+</nav>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 flex flex-col min-h-screen">
+<!-- TopAppBar Anchor -->
+<header class="flex justify-between items-center h-16 px-lg sticky top-0 z-40 bg-surface dark:bg-surface-container-low border-b border-outline-variant">
+<div class="flex items-center gap-lg">
+<span class="text-headline-sm font-headline-md font-black text-primary dark:text-primary-fixed">SmartPOS Egypt</span>
+<div class="relative w-96">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full bg-surface-container border-none rounded-full pl-10 py-2 text-label-md focus:ring-2 focus:ring-primary" placeholder="Search orders, customers..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="text-label-md font-label-md text-primary px-md py-sm hover:bg-surface-container-highest transition-colors rounded-full">Change Branch</button>
+<button class="hover:bg-surface-container-highest dark:hover:bg-surface-variant rounded-full p-2 transition-opacity active:opacity-80">
+<span class="material-symbols-outlined text-on-surface-variant">location_on</span>
+</button>
+<button class="hover:bg-surface-container-highest dark:hover:bg-surface-variant rounded-full p-2 transition-opacity active:opacity-80">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+</button>
+<div class="w-10 h-10 rounded-full overflow-hidden border border-outline-variant">
+<img alt="User Profile" data-alt="A professional headshot of a Middle Eastern business administrator in a modern office environment. The person is wearing a crisp white shirt and a navy blazer, projecting authority and dependability. The lighting is soft and corporate, with a shallow depth of field highlighting the subject against a blurred tech-office background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAH8eCzDMMEXAUtG0k79GLxVo7Xt0V4Zimx451Hu-vE1getPBE_R_1iIQR6CpeJvPoErj5nHavNQr6LY6obTTiNNTUc_oU4T1h3P3V_Q9W_3d7q6waYoAcTEszcAMCGpenpP5BJhHnUHs4UfRnHucZ1W6mwqzIB4K317ae9dcDHMsxzPhuyuEumIqw6RDWfClBXoDtIxwBc_b6sD-CTnA-5OwkTABeRedhTEqvJA8ADAFdt94Lx4sgXGCKKCGXwwZdQzbiSRPiQvHm8"/>
+</div>
+</div>
+</header>
+<!-- Page Content -->
+<div class="p-lg flex flex-col gap-lg">
+<!-- Breadcrumbs & Actions -->
+<div class="flex justify-between items-end">
+<div class="flex flex-col">
+<div class="flex items-center gap-xs text-outline text-label-md mb-xs">
+<span>Customers</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-on-surface">Ahmed El-Sherif</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-primary">Customer Profile</h2>
+</div>
+<div class="flex gap-md">
+<button class="flex items-center gap-sm px-lg py-sm bg-secondary-container text-on-secondary-container rounded-lg font-label-md text-label-md hover:opacity-90 transition-all active:scale-95">
+<span class="material-symbols-outlined">send</span>
+                        Send WhatsApp
+                    </button>
+<button class="flex items-center gap-sm px-lg py-sm bg-primary text-on-primary rounded-lg font-label-md text-label-md hover:opacity-95 transition-all active:scale-95">
+<span class="material-symbols-outlined">payments</span>
+                        Record Payment
+                    </button>
+</div>
+</div>
+<!-- Bento Profile Header -->
+<div class="grid grid-cols-12 gap-lg">
+<!-- Main Info Card -->
+<div class="col-span-12 lg:col-span-8 bg-surface-container-lowest border border-outline-variant rounded-xl p-lg flex items-center gap-xl shadow-sm">
+<div class="w-24 h-24 rounded-full bg-primary-fixed flex items-center justify-center text-primary text-display-lg font-bold">
+                        AS
+                    </div>
+<div class="flex-1 grid grid-cols-2 gap-lg">
+<div>
+<p class="text-label-md text-outline font-label-md">Full Name</p>
+<p class="font-headline-sm text-headline-sm text-primary">Ahmed Mahmoud El-Sherif</p>
+</div>
+<div>
+<p class="text-label-md text-outline font-label-md">Phone Number</p>
+<p class="font-body-lg text-body-lg text-on-surface font-numeric-pos">+20 102 345 6789</p>
+</div>
+<div>
+<p class="text-label-md text-outline font-label-md">Customer Group</p>
+<span class="inline-flex items-center px-sm py-xs bg-secondary/10 text-secondary rounded-full font-label-md text-label-md mt-xs">
+                                VIP Retail
+                            </span>
+</div>
+<div>
+<p class="text-label-md text-outline font-label-md">Branch Location</p>
+<p class="font-body-md text-body-md text-on-surface">Cairo - Maadi Branch</p>
+</div>
+</div>
+</div>
+<!-- Loyalty Balance Card -->
+<div class="col-span-12 lg:col-span-4 bg-primary text-on-primary rounded-xl p-lg flex flex-col justify-between relative overflow-hidden shadow-md">
+<div class="absolute -right-4 -top-4 opacity-10">
+<span class="material-symbols-outlined text-[120px]" style="font-variation-settings: 'FILL' 1;">stars</span>
+</div>
+<div class="relative z-10">
+<p class="font-label-md text-label-md text-primary-fixed-dim uppercase tracking-wider">Loyalty Points Balance</p>
+<h3 class="font-display-lg text-display-lg mt-sm font-numeric-pos">12,450</h3>
+<p class="text-label-md font-label-md text-primary-fixed/80 mt-xs">Equivalent to 622.50 EGP</p>
+</div>
+<div class="relative z-10 mt-lg">
+<button class="w-full py-sm bg-white/10 hover:bg-white/20 border border-white/20 rounded-lg text-label-md font-label-md transition-colors">
+                            Redeem Points
+                        </button>
+</div>
+</div>
+</div>
+<!-- Tabs Section -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl flex flex-col overflow-hidden">
+<div class="flex border-b border-outline-variant bg-surface-container-low px-lg">
+<button class="px-lg py-md border-b-2 border-primary text-primary font-bold text-label-md flex items-center gap-sm">
+<span class="material-symbols-outlined">receipt_long</span>
+                        Transaction History
+                    </button>
+<button class="px-lg py-md text-on-surface-variant hover:text-primary transition-colors text-label-md flex items-center gap-sm">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+                        Debt History
+                    </button>
+</div>
+<!-- Transaction History Content -->
+<div class="p-lg">
+<div class="flex justify-between items-center mb-lg">
+<h4 class="font-headline-sm text-headline-sm text-on-surface">Past Sales &amp; Receipts</h4>
+<div class="flex gap-md">
+<button class="flex items-center gap-xs px-md py-sm border border-outline-variant rounded-lg text-label-md font-label-md hover:bg-surface-container">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+                                Filter
+                            </button>
+<button class="flex items-center gap-xs px-md py-sm border border-outline-variant rounded-lg text-label-md font-label-md hover:bg-surface-container">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                                Export CSV
+                            </button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-surface-container-low text-on-surface-variant font-label-md text-label-md">
+<tr>
+<th class="px-md py-sm">Receipt ID</th>
+<th class="px-md py-sm">Date &amp; Time</th>
+<th class="px-md py-sm">Items</th>
+<th class="px-md py-sm text-right">Total Amount</th>
+<th class="px-md py-sm">Status</th>
+<th class="px-md py-sm text-center">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant font-body-md text-body-md">
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-md py-md font-numeric-pos text-primary font-bold">#POS-49210</td>
+<td class="px-md py-md text-on-surface-variant">Oct 24, 2023 • 02:15 PM</td>
+<td class="px-md py-md">Cappuccino (2x), Croissant (1x)</td>
+<td class="px-md py-md text-right font-numeric-pos font-bold">245.00 EGP</td>
+<td class="px-md py-md">
+<span class="px-sm py-xs bg-secondary-container/30 text-secondary font-label-md text-label-md rounded-full">Completed</span>
+</td>
+<td class="px-md py-md">
+<div class="flex justify-center gap-sm">
+<button class="p-2 text-primary hover:bg-primary/5 rounded-full"><span class="material-symbols-outlined">visibility</span></button>
+<button class="p-2 text-primary hover:bg-primary/5 rounded-full"><span class="material-symbols-outlined">print</span></button>
+</div>
+</td>
+</tr>
+<tr class="bg-slate-50/50 hover:bg-surface-container-low transition-colors">
+<td class="px-md py-md font-numeric-pos text-primary font-bold">#POS-48902</td>
+<td class="px-md py-md text-on-surface-variant">Oct 22, 2023 • 11:30 AM</td>
+<td class="px-md py-md">Whole Bean Coffee (1kg)</td>
+<td class="px-md py-md text-right font-numeric-pos font-bold">850.00 EGP</td>
+<td class="px-md py-md">
+<span class="px-sm py-xs bg-secondary-container/30 text-secondary font-label-md text-label-md rounded-full">Completed</span>
+</td>
+<td class="px-md py-md">
+<div class="flex justify-center gap-sm">
+<button class="p-2 text-primary hover:bg-primary/5 rounded-full"><span class="material-symbols-outlined">visibility</span></button>
+<button class="p-2 text-primary hover:bg-primary/5 rounded-full"><span class="material-symbols-outlined">print</span></button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-md py-md font-numeric-pos text-primary font-bold">#POS-48566</td>
+<td class="px-md py-md text-on-surface-variant">Oct 19, 2023 • 09:45 AM</td>
+<td class="px-md py-md">Double Espresso, Cheesecake</td>
+<td class="px-md py-md text-right font-numeric-pos font-bold">180.00 EGP</td>
+<td class="px-md py-md">
+<span class="px-sm py-xs bg-error-container text-error font-label-md text-label-md rounded-full">Refunded</span>
+</td>
+<td class="px-md py-md">
+<div class="flex justify-center gap-sm">
+<button class="p-2 text-primary hover:bg-primary/5 rounded-full"><span class="material-symbols-outlined">visibility</span></button>
+<button class="p-2 text-primary hover:bg-primary/5 rounded-full"><span class="material-symbols-outlined">print</span></button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Summary Cards Row (Bottom of Canvas) -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-md p-lg border-t border-outline-variant bg-surface-container-lowest">
+<div class="p-md rounded-xl bg-surface-container-low border border-outline-variant">
+<p class="text-label-md font-label-md text-outline">Total Lifetime Value</p>
+<p class="text-headline-sm font-numeric-pos text-primary">12,540.00 EGP</p>
+</div>
+<div class="p-md rounded-xl bg-surface-container-low border border-outline-variant">
+<p class="text-label-md font-label-md text-outline">Outstanding Debt</p>
+<p class="text-headline-sm font-numeric-pos text-error">450.00 EGP</p>
+</div>
+<div class="p-md rounded-xl bg-surface-container-low border border-outline-variant">
+<p class="text-label-md font-label-md text-outline">Last Visit</p>
+<p class="text-headline-sm font-body-md text-on-surface">3 Days Ago</p>
+</div>
+</div>
+</div>
+<!-- Ad-hoc Bento Element: Customer Notes -->
+<div class="grid grid-cols-12 gap-lg mb-lg">
+<div class="col-span-12 lg:col-span-6 bg-surface-container-lowest border border-outline-variant rounded-xl p-lg flex flex-col gap-md">
+<div class="flex justify-between items-center">
+<h4 class="font-headline-sm text-headline-sm text-on-surface">Internal Notes</h4>
+<button class="text-primary hover:underline text-label-md font-label-md">Edit Notes</button>
+</div>
+<div class="p-md bg-surface-container-low rounded-lg text-on-surface-variant font-body-md italic border-l-4 border-primary">
+                        "Prefers lighter roast for whole bean purchases. Usually visits on weekday mornings for business meetings. Check for gold card availability next month."
+                    </div>
+</div>
+<div class="col-span-12 lg:col-span-6 bg-surface-container-lowest border border-outline-variant rounded-xl p-lg flex flex-col gap-md">
+<h4 class="font-headline-sm text-headline-sm text-on-surface">Quick Analytics</h4>
+<div class="flex gap-lg h-24 items-end">
+<div class="flex-1 flex flex-col gap-xs">
+<div class="h-16 w-full bg-primary/20 rounded-t-lg relative">
+<div class="absolute bottom-0 left-0 w-full h-[60%] bg-primary rounded-t-lg"></div>
+</div>
+<p class="text-center text-[10px] text-outline uppercase font-bold">Sales</p>
+</div>
+<div class="flex-1 flex flex-col gap-xs">
+<div class="h-16 w-full bg-primary/20 rounded-t-lg relative">
+<div class="absolute bottom-0 left-0 w-full h-[85%] bg-primary rounded-t-lg"></div>
+</div>
+<p class="text-center text-[10px] text-outline uppercase font-bold">Visit</p>
+</div>
+<div class="flex-1 flex flex-col gap-xs">
+<div class="h-16 w-full bg-primary/20 rounded-t-lg relative">
+<div class="absolute bottom-0 left-0 w-full h-[40%] bg-primary rounded-t-lg"></div>
+</div>
+<p class="text-center text-[10px] text-outline uppercase font-bold">Avg Order</p>
+</div>
+<div class="flex-1 flex flex-col gap-xs">
+<div class="h-16 w-full bg-primary/20 rounded-t-lg relative">
+<div class="absolute bottom-0 left-0 w-full h-[70%] bg-primary rounded-t-lg"></div>
+</div>
+<p class="text-center text-[10px] text-outline uppercase font-bold">Loyalty</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

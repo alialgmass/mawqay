@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Profit Report | SmartPOS Egypt</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;family=IBM+Plex+Sans:wght@400;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "background": "#f7f9fb",
+                      "secondary-fixed-dim": "#68dba9",
+                      "primary-container": "#1e1b4b",
+                      "error-container": "#ffdad6",
+                      "on-secondary-fixed-variant": "#005137",
+                      "tertiary-container": "#381a00",
+                      "on-tertiary-container": "#cf7100",
+                      "on-secondary-fixed": "#002114",
+                      "on-error": "#ffffff",
+                      "on-primary": "#ffffff",
+                      "on-surface-variant": "#47464f",
+                      "surface-bright": "#f7f9fb",
+                      "tertiary-fixed": "#ffdcc3",
+                      "tertiary-fixed-dim": "#ffb77d",
+                      "on-surface": "#191c1e",
+                      "on-primary-fixed-variant": "#444173",
+                      "on-tertiary": "#ffffff",
+                      "primary": "#070235",
+                      "on-secondary-container": "#00714e",
+                      "secondary": "#006c4a",
+                      "surface-container-lowest": "#ffffff",
+                      "secondary-container": "#82f5c1",
+                      "surface-tint": "#5b598c",
+                      "inverse-surface": "#2d3133",
+                      "surface-container-low": "#f2f4f6",
+                      "inverse-primary": "#c4c1fb",
+                      "surface-variant": "#e0e3e5",
+                      "on-background": "#191c1e",
+                      "error": "#ba1a1a",
+                      "outline": "#787680",
+                      "on-error-container": "#93000a",
+                      "on-tertiary-fixed-variant": "#6e3900",
+                      "inverse-on-surface": "#eff1f3",
+                      "primary-fixed": "#e3dfff",
+                      "surface-container-high": "#e6e8ea",
+                      "surface": "#f7f9fb",
+                      "on-primary-fixed": "#181445",
+                      "on-tertiary-fixed": "#2f1500",
+                      "primary-fixed-dim": "#c4c1fb",
+                      "on-secondary": "#ffffff",
+                      "outline-variant": "#c8c5d0",
+                      "surface-container": "#eceef0",
+                      "secondary-fixed": "#85f8c4",
+                      "surface-dim": "#d8dadc",
+                      "on-primary-container": "#8683ba",
+                      "surface-container-highest": "#e0e3e5",
+                      "tertiary": "#170700"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "gutter": "16px",
+                      "xs": "4px",
+                      "container-max": "1440px",
+                      "md": "16px",
+                      "sm": "8px",
+                      "base": "4px",
+                      "xl": "32px",
+                      "lg": "24px"
+              },
+              "fontFamily": {
+                      "body-lg": ["IBM Plex Sans Arabic"],
+                      "body-md": ["IBM Plex Sans Arabic"],
+                      "headline-sm": ["IBM Plex Sans Arabic"],
+                      "headline-md": ["IBM Plex Sans Arabic"],
+                      "label-md": ["IBM Plex Sans Arabic"],
+                      "display-lg": ["IBM Plex Sans Arabic"],
+                      "numeric-pos": ["IBM Plex Sans"]
+              },
+              "fontSize": {
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                      "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "numeric-pos": ["22px", {"lineHeight": "24px", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .profit-gradient {
+            background: linear-gradient(135deg, #006c4a 0%, #005137 100%);
+        }
+        body {
+            font-family: 'IBM Plex Sans Arabic', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #c8c5d0;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface">
+<!-- Sidebar Navigation -->
+<aside class="h-screen w-64 fixed left-0 top-0 border-r border-outline-variant bg-surface dark:bg-surface-container-lowest flex flex-col h-full py-lg px-md">
+<div class="mb-xl px-md">
+<h1 class="text-headline-md font-headline-md font-bold text-primary dark:text-primary-fixed-dim">Tenant Name</h1>
+<p class="text-label-md font-label-md text-on-surface-variant">Premium Subscription</p>
+</div>
+<nav class="flex-1 flex flex-col gap-xs">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-md text-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-body-md text-body-md">Products</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">point_of_sale</span>
+<span class="font-body-md text-body-md">POS</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-body-md text-body-md">Customers</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">restaurant</span>
+<span class="font-body-md text-body-md">Restaurant</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm bg-primary-container text-on-primary-container rounded-lg font-bold" href="#">
+<span class="material-symbols-outlined">assessment</span>
+<span class="font-body-md text-body-md">Reports</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body-md text-body-md">Settings</span>
+</a>
+</nav>
+<div class="mt-auto border-t border-outline-variant pt-lg flex items-center gap-md px-md">
+<div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center overflow-hidden">
+<img alt="Tenant Logo" data-alt="A professional headshot of a Middle Eastern male business executive in a sharp navy blue suit, set against a blurred corporate office background with warm golden hour lighting reflecting through glass panels. The mood is authoritative and successful, with a clean and professional color palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_3Wre4i04kZsgXiIm82iP1-U6chhsTs1xaHHVgV97q-UsjKoPSfqZny7G4a8ReLmyM1jTGlMQXMliHa3lBV27Pm7DqrrIh4eoVddR2VfBjnxNh7x09ObBp100DOznid8HHXlgXHgFwr0qGycQYWBWs-J-FgolkyOTA1o2eA9fqIm-Gie3KmKHDbW4f6W6eUp9dR63wEeHAP33LqZncKO5b6ZdqheaSrL-qAKpzXATBgKq0O-dGURvRwHOwZ942Jz48TfJbSygojYW"/>
+</div>
+<div>
+<p class="font-label-md text-label-md font-bold">Admin User</p>
+<p class="text-xs text-on-surface-variant">Main Office</p>
+</div>
+</div>
+</aside>
+<!-- Top App Bar -->
+<header class="flex justify-between items-center h-16 px-lg ml-64 sticky top-0 z-40 bg-surface dark:bg-surface-container-low border-b border-outline-variant">
+<div class="flex items-center gap-lg">
+<span class="text-headline-sm font-headline-md font-black text-primary dark:text-primary-fixed">SmartPOS Egypt</span>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="pl-10 pr-4 py-1.5 bg-surface-container border border-outline-variant rounded-xl text-label-md focus:outline-none focus:ring-1 focus:ring-primary w-64" placeholder="Search reports..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="flex items-center gap-sm px-md py-1.5 border border-outline-variant rounded-lg hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined text-sm">location_on</span>
+<span class="font-label-md text-label-md">Change Branch</span>
+</button>
+<div class="flex gap-sm">
+<button class="hover:bg-surface-container-highest dark:hover:bg-surface-variant rounded-full p-2 active:opacity-80 transition-opacity">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="hover:bg-surface-container-highest dark:hover:bg-surface-variant rounded-full p-2 active:opacity-80 transition-opacity">
+<span class="material-symbols-outlined">help</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="ml-64 p-lg">
+<!-- Header & Date Filter -->
+<div class="flex justify-between items-end mb-lg">
+<div>
+<h2 class="text-headline-md font-headline-md text-primary mb-xs">Profit Report</h2>
+<p class="text-on-surface-variant font-label-md">Detailed financial overview of your business operations.</p>
+</div>
+<div class="flex items-center gap-sm bg-white border border-outline-variant p-sm rounded-xl">
+<span class="material-symbols-outlined text-outline">calendar_today</span>
+<span class="font-label-md text-label-md font-bold px-sm">Oct 26, 2023 - Nov 24, 2023</span>
+<button class="material-symbols-outlined text-primary hover:bg-surface-container rounded-full p-1">expand_more</button>
+</div>
+</div>
+<!-- Profit Summary Bar (Bento Style) -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-md mb-xl">
+<div class="bg-white border border-outline-variant p-lg rounded-xl shadow-sm">
+<div class="flex justify-between items-start mb-sm">
+<span class="text-on-surface-variant font-label-md">Total Revenue</span>
+<span class="material-symbols-outlined text-primary">payments</span>
+</div>
+<div class="text-headline-md font-numeric-pos text-primary">EGP 142,500.00</div>
+<div class="mt-sm flex items-center gap-xs text-secondary font-label-md">
+<span class="material-symbols-outlined text-xs">trending_up</span>
+<span>+12.5% vs last month</span>
+</div>
+</div>
+<div class="bg-white border border-outline-variant p-lg rounded-xl shadow-sm">
+<div class="flex justify-between items-start mb-sm">
+<span class="text-on-surface-variant font-label-md">Total Cost (COGS)</span>
+<span class="material-symbols-outlined text-on-surface-variant">inventory</span>
+</div>
+<div class="text-headline-md font-numeric-pos">EGP 86,240.00</div>
+<div class="mt-sm flex items-center gap-xs text-on-surface-variant font-label-md">
+<span class="material-symbols-outlined text-xs">trending_flat</span>
+<span>Stable overheads</span>
+</div>
+</div>
+<div class="bg-secondary-container p-lg rounded-xl shadow-sm relative overflow-hidden">
+<div class="relative z-10">
+<div class="flex justify-between items-start mb-sm">
+<span class="text-on-secondary-container font-label-md font-bold">Net Profit</span>
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+</div>
+<div class="text-headline-md font-numeric-pos text-secondary">EGP 56,260.00</div>
+<div class="mt-sm flex items-center gap-xs text-secondary font-label-md font-bold">
+<span class="material-symbols-outlined text-xs">arrow_upward</span>
+<span>High performing</span>
+</div>
+</div>
+<div class="absolute -right-4 -bottom-4 opacity-10">
+<span class="material-symbols-outlined text-8xl text-secondary">verified</span>
+</div>
+</div>
+<div class="bg-primary-container p-lg rounded-xl shadow-sm">
+<div class="flex justify-between items-start mb-sm">
+<span class="text-on-primary-container font-label-md">Profit Margin %</span>
+<span class="material-symbols-outlined text-on-primary-container">percent</span>
+</div>
+<div class="text-headline-md font-numeric-pos text-white">39.48%</div>
+<div class="mt-sm w-full bg-primary rounded-full h-1.5">
+<div class="bg-secondary-fixed-dim h-1.5 rounded-full" style="width: 39.48%"></div>
+</div>
+</div>
+</div>
+<!-- Profit Trends Chart & Top Categories -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-lg mb-xl">
+<!-- Chart Container -->
+<div class="lg:col-span-2 bg-white border border-outline-variant rounded-xl p-lg flex flex-col">
+<div class="flex justify-between items-center mb-lg">
+<h3 class="font-headline-sm text-headline-sm">Daily Profit Trend</h3>
+<div class="flex gap-xs">
+<span class="flex items-center gap-xs text-xs font-label-md text-on-surface-variant">
+<span class="w-3 h-3 bg-secondary rounded-full"></span> Profit
+                        </span>
+<span class="flex items-center gap-xs text-xs font-label-md text-on-surface-variant">
+<span class="w-3 h-3 bg-primary rounded-full"></span> Revenue
+                        </span>
+</div>
+</div>
+<!-- Visual Mock of a Bar Chart -->
+<div class="flex-1 flex items-end justify-between gap-2 h-48 pt-4">
+<div class="w-full flex flex-col gap-1 items-center">
+<div class="w-full bg-primary-container/20 rounded-t h-[60%] relative group">
+<div class="absolute bottom-0 w-full bg-secondary rounded-t h-[40%]"></div>
+</div>
+<span class="text-[10px] text-on-surface-variant">Nov 1</span>
+</div>
+<div class="w-full flex flex-col gap-1 items-center">
+<div class="w-full bg-primary-container/20 rounded-t h-[75%] relative">
+<div class="absolute bottom-0 w-full bg-secondary rounded-t h-[50%]"></div>
+</div>
+<span class="text-[10px] text-on-surface-variant">Nov 5</span>
+</div>
+<div class="w-full flex flex-col gap-1 items-center">
+<div class="w-full bg-primary-container/20 rounded-t h-[90%] relative">
+<div class="absolute bottom-0 w-full bg-secondary rounded-t h-[65%]"></div>
+</div>
+<span class="text-[10px] text-on-surface-variant">Nov 10</span>
+</div>
+<div class="w-full flex flex-col gap-1 items-center">
+<div class="w-full bg-primary-container/20 rounded-t h-[45%] relative">
+<div class="absolute bottom-0 w-full bg-secondary rounded-t h-[25%]"></div>
+</div>
+<span class="text-[10px] text-on-surface-variant">Nov 15</span>
+</div>
+<div class="w-full flex flex-col gap-1 items-center">
+<div class="w-full bg-primary-container/20 rounded-t h-[80%] relative">
+<div class="absolute bottom-0 w-full bg-secondary rounded-t h-[55%]"></div>
+</div>
+<span class="text-[10px] text-on-surface-variant">Nov 20</span>
+</div>
+<div class="w-full flex flex-col gap-1 items-center">
+<div class="w-full bg-primary-container/20 rounded-t h-[100%] relative">
+<div class="absolute bottom-0 w-full bg-secondary rounded-t h-[70%]"></div>
+</div>
+<span class="text-[10px] text-on-surface-variant">Today</span>
+</div>
+</div>
+</div>
+<!-- Top Performing Products -->
+<div class="bg-white border border-outline-variant rounded-xl p-lg overflow-hidden">
+<h3 class="font-headline-sm text-headline-sm mb-lg">Highest Gross Profit</h3>
+<div class="flex flex-col gap-md">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 bg-surface-container rounded-lg flex-shrink-0">
+<img class="w-full h-full object-cover rounded-lg" data-alt="Close up of a vibrant Mediterranean salad with grilled salmon, avocado, and pomegranate seeds on a dark ceramic plate. Professional studio food photography with dramatic side lighting emphasizing textures and fresh colors in a high-end restaurant style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZ0Vhj6yeR5J0gSFXxXrkUqfXy-Ql4ECwNmFUNNNBCBGBOFyXdV1fjedYqxaDhFxvj8Ow_pts3sqF78Cw1eC6LxOAokTcox29IZoqNUeCRyfHA5GXfGw0QM44QSyxf5jT23cVq3UxqyrGi0qXSAF8jkQho8WU2hB-8VrhuAilZ8osFra_HpwS1qqSVAgjIjNfz0eos3soE336Hadw3K3mIjFB_9JDum6dxQbzDKm59P1MpZU1-6kTfqnwStibhUOUN3KjBgKBXvACL"/>
+</div>
+<div class="flex-1">
+<p class="font-label-md text-label-md font-bold">Grilled Salmon Salad</p>
+<p class="text-xs text-on-surface-variant">Main Course • 240 Units</p>
+</div>
+<div class="text-right">
+<p class="font-numeric-pos text-secondary text-sm">EGP 14,400</p>
+<p class="text-[10px] text-on-surface-variant">62% Margin</p>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 bg-surface-container rounded-lg flex-shrink-0">
+<img class="w-full h-full object-cover rounded-lg" data-alt="A juicy gourmet beef burger with melting cheddar cheese, caramelized onions, and crisp lettuce on a toasted brioche bun. The lighting is warm and cinematic, highlighting the moisture and texture of the ingredients, set against a dark rustic wooden background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBITSkVFavgfN7IBgoLSu9Z6fcZi-AQghb4M9fDyG1pyGgXrbb1WpILT1FPI0iThV1gtErpYMagm5_-lGaPbqcoa4SJM5EGOS6bmmMvaYecrz8S5eqlKSDVKksKLF4UTh86HCbgIKPRSprxa75k89manQype3EaerBBIQ9iWS1x98iS5TEaUEV3q6AGdyH-gg7hfKzAmrYL7owfWDp9Y9Cib6IOlb4G_o3fjAQOrnNUFCapP-lye6UwHBeD70f_FoMBChtYGBiHcagw"/>
+</div>
+<div class="flex-1">
+<p class="font-label-md text-label-md font-bold">Angus Beef Burger</p>
+<p class="text-xs text-on-surface-variant">Fast Food • 410 Units</p>
+</div>
+<div class="text-right">
+<p class="font-numeric-pos text-secondary text-sm">EGP 11,890</p>
+<p class="text-[10px] text-on-surface-variant">45% Margin</p>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 bg-surface-container rounded-lg flex-shrink-0">
+<img class="w-full h-full object-cover rounded-lg" data-alt="A refreshing lime and mint mojito in a tall glass with crushed ice and condensation. Bright, natural daylight creates sparkling highlights in the liquid and glass, conveying a cool and crisp summery atmosphere for a premium beverage." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAK2iEFm5QdfxzkxOD__8GULafTaLwINGkabwOdLk4TfGbx36D9Wh_0Ju1GtCox5NqxIDaXKJOauA6bOEvqYb6Z3ct6RzB1SG51o7BgougLnvIbxqJpYnGayh5-0KO5p9syg7OVwaZ1GHg43g7YQfqXdabkmbAuTH6praZyClEwj8tkP_mleB4wGvCiyj4MJDjy0vhANSU-5LG_bYO1Lw6YGlBHcMR5mq3KiClbo3OPYfiD0yvS1Y3pP6ff1W6sj2Hym7hvy4nOmlg-"/>
+</div>
+<div class="flex-1">
+<p class="font-label-md text-label-md font-bold">Signature Mojito</p>
+<p class="text-xs text-on-surface-variant">Drinks • 890 Units</p>
+</div>
+<div class="text-right">
+<p class="font-numeric-pos text-secondary text-sm">EGP 9,790</p>
+<p class="text-[10px] text-on-surface-variant">88% Margin</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Profit Breakdown Table -->
+<div class="bg-white border border-outline-variant rounded-xl overflow-hidden shadow-sm">
+<div class="p-lg border-b border-outline-variant flex justify-between items-center">
+<h3 class="font-headline-sm text-headline-sm">Product Profitability Breakdown</h3>
+<div class="flex gap-sm">
+<button class="flex items-center gap-xs px-md py-1.5 border border-outline-variant rounded-lg font-label-md hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-sm">filter_list</span> Filter
+                    </button>
+<button class="flex items-center gap-xs px-md py-1.5 bg-primary text-white rounded-lg font-label-md hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-sm">download</span> Export CSV
+                    </button>
+</div>
+</div>
+<div class="overflow-x-auto custom-scrollbar">
+<table class="w-full border-collapse">
+<thead>
+<tr class="bg-surface-container-low text-on-surface-variant text-label-md text-left">
+<th class="px-lg py-md font-bold uppercase tracking-wider">Product / Category</th>
+<th class="px-lg py-md font-bold uppercase tracking-wider text-right">Units Sold</th>
+<th class="px-lg py-md font-bold uppercase tracking-wider text-right">Revenue (EGP)</th>
+<th class="px-lg py-md font-bold uppercase tracking-wider text-right">COGS (EGP)</th>
+<th class="px-lg py-md font-bold uppercase tracking-wider text-right">Gross Profit</th>
+<th class="px-lg py-md font-bold uppercase tracking-wider text-center">Margin %</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<!-- Category Row -->
+<tr class="bg-surface-container/30">
+<td class="px-lg py-sm font-bold text-primary font-body-md" colspan="6">Beverages &amp; Soft Drinks</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-lg py-md font-body-md">Classic Coca Cola 330ml</td>
+<td class="px-lg py-md text-right font-numeric-pos">1,240</td>
+<td class="px-lg py-md text-right font-numeric-pos">24,800.00</td>
+<td class="px-lg py-md text-right font-numeric-pos">14,880.00</td>
+<td class="px-lg py-md text-right font-numeric-pos text-secondary font-bold">9,920.00</td>
+<td class="px-lg py-md text-center">
+<span class="bg-secondary/10 text-secondary px-sm py-xs rounded-full font-bold text-xs">40%</span>
+</td>
+</tr>
+<tr class="bg-surface-container/10 hover:bg-surface-container-low transition-colors">
+<td class="px-lg py-md font-body-md">Turkish Coffee (Medium)</td>
+<td class="px-lg py-md text-right font-numeric-pos">450</td>
+<td class="px-lg py-md text-right font-numeric-pos">13,500.00</td>
+<td class="px-lg py-md text-right font-numeric-pos">2,700.00</td>
+<td class="px-lg py-md text-right font-numeric-pos text-secondary font-bold">10,800.00</td>
+<td class="px-lg py-md text-center">
+<span class="bg-secondary/10 text-secondary px-sm py-xs rounded-full font-bold text-xs">80%</span>
+</td>
+</tr>
+<!-- Category Row -->
+<tr class="bg-surface-container/30">
+<td class="px-lg py-sm font-bold text-primary font-body-md" colspan="6">Main Platters</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-lg py-md font-body-md">Chicken Mansaf Large</td>
+<td class="px-lg py-md text-right font-numeric-pos">185</td>
+<td class="px-lg py-md text-right font-numeric-pos">40,700.00</td>
+<td class="px-lg py-md text-right font-numeric-pos">28,490.00</td>
+<td class="px-lg py-md text-right font-numeric-pos text-secondary font-bold">12,210.00</td>
+<td class="px-lg py-md text-center">
+<span class="bg-secondary/10 text-secondary px-sm py-xs rounded-full font-bold text-xs">30%</span>
+</td>
+</tr>
+<tr class="bg-surface-container/10 hover:bg-surface-container-low transition-colors">
+<td class="px-lg py-md font-body-md">Fettuccine Alfredo</td>
+<td class="px-lg py-md text-right font-numeric-pos">310</td>
+<td class="px-lg py-md text-right font-numeric-pos">37,200.00</td>
+<td class="px-lg py-md text-right font-numeric-pos">18,600.00</td>
+<td class="px-lg py-md text-right font-numeric-pos text-secondary font-bold">18,600.00</td>
+<td class="px-lg py-md text-center">
+<span class="bg-secondary/10 text-secondary px-sm py-xs rounded-full font-bold text-xs">50%</span>
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr class="bg-primary text-white font-bold">
+<td class="px-lg py-md">Grand Total</td>
+<td class="px-lg py-md text-right font-numeric-pos">2,185</td>
+<td class="px-lg py-md text-right font-numeric-pos">116,200.00</td>
+<td class="px-lg py-md text-right font-numeric-pos">64,670.00</td>
+<td class="px-lg py-md text-right font-numeric-pos">51,530.00</td>
+<td class="px-lg py-md text-center">44.3%</td>
+</tr>
+</tfoot>
+</table>
+</div>
+</div>
+</main>
+<!-- Contextual FAB (Only on Dashboard/Report Main) -->
+<button class="fixed bottom-lg right-lg w-14 h-14 bg-primary text-white rounded-full shadow-lg flex items-center justify-center hover:scale-105 active:scale-95 transition-all z-50">
+<span class="material-symbols-outlined">add</span>
+</button>
+</body></html>

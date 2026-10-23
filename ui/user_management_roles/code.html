@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;family=IBM+Plex+Sans:wght@400;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "background": "#f7f9fb",
+                    "secondary-fixed-dim": "#68dba9",
+                    "primary-container": "#1e1b4b",
+                    "error-container": "#ffdad6",
+                    "on-secondary-fixed-variant": "#005137",
+                    "tertiary-container": "#381a00",
+                    "on-tertiary-container": "#cf7100",
+                    "on-secondary-fixed": "#002114",
+                    "on-error": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "on-surface-variant": "#47464f",
+                    "surface-bright": "#f7f9fb",
+                    "tertiary-fixed": "#ffdcc3",
+                    "tertiary-fixed-dim": "#ffb77d",
+                    "on-surface": "#191c1e",
+                    "on-primary-fixed-variant": "#444173",
+                    "on-tertiary": "#ffffff",
+                    "primary": "#070235",
+                    "on-secondary-container": "#00714e",
+                    "secondary": "#006c4a",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-container": "#82f5c1",
+                    "surface-tint": "#5b598c",
+                    "inverse-surface": "#2d3133",
+                    "surface-container-low": "#f2f4f6",
+                    "inverse-primary": "#c4c1fb",
+                    "surface-variant": "#e0e3e5",
+                    "on-background": "#191c1e",
+                    "error": "#ba1a1a",
+                    "outline": "#787680",
+                    "on-error-container": "#93000a",
+                    "on-tertiary-fixed-variant": "#6e3900",
+                    "inverse-on-surface": "#eff1f3",
+                    "primary-fixed": "#e3dfff",
+                    "surface-container-high": "#e6e8ea",
+                    "surface": "#f7f9fb",
+                    "on-primary-fixed": "#181445",
+                    "on-tertiary-fixed": "#2f1500",
+                    "primary-fixed-dim": "#c4c1fb",
+                    "on-secondary": "#ffffff",
+                    "outline-variant": "#c8c5d0",
+                    "surface-container": "#eceef0",
+                    "secondary-fixed": "#85f8c4",
+                    "surface-dim": "#d8dadc",
+                    "on-primary-container": "#8683ba",
+                    "surface-container-highest": "#e0e3e5",
+                    "tertiary": "#170700"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "gutter": "16px",
+                    "xs": "4px",
+                    "container-max": "1440px",
+                    "md": "16px",
+                    "sm": "8px",
+                    "base": "4px",
+                    "xl": "32px",
+                    "lg": "24px"
+            },
+            "fontFamily": {
+                    "body-lg": ["IBM Plex Sans Arabic"],
+                    "body-md": ["IBM Plex Sans Arabic"],
+                    "headline-sm": ["IBM Plex Sans Arabic"],
+                    "headline-md": ["IBM Plex Sans Arabic"],
+                    "label-md": ["IBM Plex Sans Arabic"],
+                    "display-lg": ["IBM Plex Sans Arabic"],
+                    "numeric-pos": ["IBM Plex Sans"]
+            },
+            "fontSize": {
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "numeric-pos": ["22px", {"lineHeight": "24px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body {
+            font-family: 'IBM Plex Sans Arabic', sans-serif;
+            background-color: #f7f9fb;
+        }
+    </style>
+</head>
+<body class="text-on-surface">
+<!-- SideNavBar (Shared Component) -->
+<aside class="h-screen w-64 fixed left-0 top-0 border-r border-outline-variant bg-surface dark:bg-surface-container-lowest flex flex-col py-lg px-md z-50">
+<div class="mb-xl px-md">
+<h1 class="text-headline-md font-headline-md font-bold text-primary dark:text-primary-fixed-dim">Tenant Name</h1>
+<p class="font-label-md text-label-md text-on-surface-variant opacity-70">Premium Subscription</p>
+</div>
+<nav class="flex-1 space-y-xs overflow-y-auto">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-highest transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-md text-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-highest transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-body-md text-body-md">Products</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-highest transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">point_of_sale</span>
+<span class="font-body-md text-body-md">POS</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-highest transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-body-md text-body-md">Customers</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-highest transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">restaurant</span>
+<span class="font-body-md text-body-md">Restaurant</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-highest transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">assessment</span>
+<span class="font-body-md text-body-md">Reports</span>
+</a>
+<!-- SETTINGS ACTIVE (Mapping for User Management) -->
+<a class="flex items-center gap-md px-md py-sm bg-primary-container text-on-primary-container rounded-lg font-bold active:scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body-md text-body-md">Settings</span>
+</a>
+</nav>
+<div class="mt-auto border-t border-outline-variant pt-md px-md flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-primary-fixed-dim flex items-center justify-center text-primary font-bold">JD</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md">Admin User</span>
+<span class="text-xs opacity-60">Sign Out</span>
+</div>
+</div>
+</aside>
+<!-- Main Content Shell -->
+<div class="ml-64 min-h-screen flex flex-col">
+<!-- TopAppBar (Shared Component) -->
+<header class="flex justify-between items-center h-16 px-lg bg-surface dark:bg-surface-container-low border-b border-outline-variant sticky top-0 z-40">
+<div class="flex items-center gap-xl">
+<span class="text-headline-sm font-headline-md font-black text-primary dark:text-primary-fixed">SmartPOS Egypt</span>
+<div class="relative hidden lg:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="bg-surface-container-low border-none rounded-full pl-10 pr-md py-sm w-80 text-label-md focus:ring-1 focus:ring-primary" placeholder="Search users..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="flex items-center gap-sm text-label-md font-label-md text-primary hover:bg-surface-container-highest rounded-full px-md py-xs transition-colors">
+<span class="material-symbols-outlined">location_on</span>
+                    Change Branch
+                </button>
+<button class="hover:bg-surface-container-highest dark:hover:bg-surface-variant rounded-full p-2 transition-opacity active:opacity-80">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
+<img alt="User Profile" data-alt="A professional business portrait of a modern office administrator with a clean corporate background. The lighting is soft and high-key, reflecting a minimalist and efficient light-mode interface. The individual is dressed in contemporary professional attire, projecting an air of dependability and authority consistent with a high-end corporate administrative software environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtQnGsvqXgMz-OAfdJzoUckgoy4FY0DU5HR6_t-ldrS2p1CMAtJ9XiabxMdbu1RuNuE2wgrsO69wD6eEIBnUf8Hsp7SklOot5K9vB7x9HYlIAR-VvdCX6XVZdJfUGhc9GalojjHroRbvw8du7ozDx9KHfreleCpw3l4Pzt6dRYiw9l4nN48yGXhZKy89nHi0jodGO8vRC7b9qPWL_AemzXIDEE8VDsuwDkkOP0iMYq-HwMZSUiGDZeT64F1CIdY67Op7ISx8FthuXs"/>
+</div>
+</div>
+</header>
+<!-- Page Content -->
+<main class="p-lg flex-1">
+<!-- Breadcrumbs & Header -->
+<div class="flex flex-col md:flex-row md:items-center justify-between mb-lg gap-md">
+<div>
+<nav class="flex gap-sm items-center text-on-surface-variant mb-xs">
+<span class="font-label-md text-label-md">Settings</span>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<span class="font-label-md text-label-md text-primary font-bold">User Management</span>
+</nav>
+<h2 class="text-headline-md font-headline-md text-primary">Manage Employees</h2>
+<p class="text-on-surface-variant font-body-md text-body-md">Configure access roles and account status for your system users.</p>
+</div>
+<button class="bg-primary text-on-primary px-lg py-sm rounded-xl font-label-md text-label-md flex items-center gap-sm hover:opacity-90 active:scale-95 transition-all shadow-sm">
+<span class="material-symbols-outlined">person_add</span>
+                    Add New User
+                </button>
+</div>
+<!-- Dashboard Bento Grid Layout -->
+<div class="grid grid-cols-12 gap-lg">
+<!-- Summary Stats (Top Bar of the Grid) -->
+<div class="col-span-12 lg:col-span-4 bg-white border border-outline-variant rounded-xl p-lg flex flex-col justify-between">
+<div class="flex justify-between items-start">
+<div class="p-sm bg-primary-fixed rounded-lg">
+<span class="material-symbols-outlined text-primary">groups</span>
+</div>
+<span class="text-secondary font-bold text-label-md">+2 this month</span>
+</div>
+<div class="mt-lg">
+<p class="text-on-surface-variant font-label-md text-label-md">Total Employees</p>
+<h3 class="text-display-lg font-display-lg text-primary">42</h3>
+</div>
+</div>
+<div class="col-span-12 lg:col-span-4 bg-white border border-outline-variant rounded-xl p-lg flex flex-col justify-between">
+<div class="flex justify-between items-start">
+<div class="p-sm bg-secondary-container rounded-lg">
+<span class="material-symbols-outlined text-secondary">verified_user</span>
+</div>
+<span class="text-on-surface-variant font-label-md text-label-md">98% Verified</span>
+</div>
+<div class="mt-lg">
+<p class="text-on-surface-variant font-label-md text-label-md">Active Roles</p>
+<div class="flex gap-sm mt-sm">
+<span class="px-sm py-xs bg-surface-container text-on-surface rounded-full text-xs font-bold">3 Admin</span>
+<span class="px-sm py-xs bg-surface-container text-on-surface rounded-full text-xs font-bold">12 Manager</span>
+<span class="px-sm py-xs bg-surface-container text-on-surface rounded-full text-xs font-bold">27 Cashier</span>
+</div>
+</div>
+</div>
+<div class="col-span-12 lg:col-span-4 bg-white border border-outline-variant rounded-xl p-lg flex flex-col justify-between">
+<div class="flex justify-between items-start">
+<div class="p-sm bg-tertiary-fixed rounded-lg">
+<span class="material-symbols-outlined text-on-tertiary-fixed-variant">sync</span>
+</div>
+<button class="text-primary font-bold text-label-md underline">Sync All</button>
+</div>
+<div class="mt-lg">
+<p class="text-on-surface-variant font-label-md text-label-md">Last Sync Status</p>
+<h3 class="text-headline-md font-headline-md text-primary">Synced 2m ago</h3>
+<p class="text-xs text-secondary">All roles matched with Azure AD</p>
+</div>
+</div>
+<!-- User Table Section -->
+<div class="col-span-12 bg-white border border-outline-variant rounded-xl overflow-hidden">
+<div class="p-lg border-b border-outline-variant flex flex-col md:flex-row md:items-center justify-between gap-md bg-surface-container-lowest">
+<h4 class="font-headline-sm text-headline-sm text-primary">Employee List</h4>
+<div class="flex items-center gap-md">
+<div class="flex items-center gap-sm border border-outline-variant rounded-lg px-sm py-xs">
+<span class="material-symbols-outlined text-on-surface-variant text-sm">filter_alt</span>
+<select class="bg-transparent border-none text-label-md font-label-md focus:ring-0 cursor-pointer">
+<option>All Roles</option>
+<option>Admin</option>
+<option>Manager</option>
+<option>Cashier</option>
+</select>
+</div>
+<button class="material-symbols-outlined text-on-surface-variant p-sm hover:bg-surface-container rounded-lg transition-colors">refresh</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full border-collapse">
+<thead>
+<tr class="text-left bg-surface-container-low border-b border-outline-variant">
+<th class="px-lg py-md font-label-md text-label-md text-on-surface-variant">EMPLOYEE</th>
+<th class="px-lg py-md font-label-md text-label-md text-on-surface-variant">ASSIGNED ROLE</th>
+<th class="px-lg py-md font-label-md text-label-md text-on-surface-variant">STATUS</th>
+<th class="px-lg py-md font-label-md text-label-md text-on-surface-variant text-right">ACTIONS</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-lg py-md">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-lg bg-primary-fixed-dim text-primary flex items-center justify-center font-bold">AH</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-primary font-bold">Ahmed Hassan</span>
+<span class="text-xs text-on-surface-variant">ahassan@smartpos-egypt.com</span>
+</div>
+</div>
+</td>
+<td class="px-lg py-md">
+<span class="px-sm py-1 rounded-full bg-primary-container text-on-primary-container text-xs font-bold uppercase tracking-wider">Admin</span>
+</td>
+<td class="px-lg py-md">
+<div class="flex items-center gap-sm">
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-secondary"></div>
+</label>
+<span class="text-xs font-bold text-secondary">ENABLED</span>
+</div>
+</td>
+<td class="px-lg py-md text-right">
+<div class="flex justify-end gap-sm opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="flex items-center gap-xs px-sm py-xs text-primary font-bold text-xs border border-primary rounded-lg hover:bg-primary-fixed transition-colors">
+<span class="material-symbols-outlined text-sm">sync</span> Sync Role
+                                            </button>
+<button class="p-xs text-on-surface-variant hover:text-error hover:bg-error-container rounded transition-colors">
+<span class="material-symbols-outlined text-sm">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-lg py-md">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-lg bg-secondary-container text-secondary flex items-center justify-center font-bold">LS</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-primary font-bold">Laila Selim</span>
+<span class="text-xs text-on-surface-variant">laila.s@smartpos-egypt.com</span>
+</div>
+</div>
+</td>
+<td class="px-lg py-md">
+<span class="px-sm py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed-variant text-xs font-bold uppercase tracking-wider">Manager</span>
+</td>
+<td class="px-lg py-md">
+<div class="flex items-center gap-sm">
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-secondary"></div>
+</label>
+<span class="text-xs font-bold text-secondary">ENABLED</span>
+</div>
+</td>
+<td class="px-lg py-md text-right">
+<div class="flex justify-end gap-sm opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="flex items-center gap-xs px-sm py-xs text-primary font-bold text-xs border border-primary rounded-lg hover:bg-primary-fixed transition-colors">
+<span class="material-symbols-outlined text-sm">sync</span> Sync Role
+                                            </button>
+<button class="p-xs text-on-surface-variant hover:text-error hover:bg-error-container rounded transition-colors">
+<span class="material-symbols-outlined text-sm">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-lg py-md">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-lg bg-surface-variant text-on-surface-variant flex items-center justify-center font-bold">OM</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-primary font-bold">Omar Mansour</span>
+<span class="text-xs text-on-surface-variant">omar.m@smartpos-egypt.com</span>
+</div>
+</div>
+</td>
+<td class="px-lg py-md">
+<span class="px-sm py-1 rounded-full bg-surface-container-highest text-on-surface-variant text-xs font-bold uppercase tracking-wider">Cashier</span>
+</td>
+<td class="px-lg py-md">
+<div class="flex items-center gap-sm">
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-secondary"></div>
+</label>
+<span class="text-xs font-bold text-on-surface-variant opacity-60">DISABLED</span>
+</div>
+</td>
+<td class="px-lg py-md text-right">
+<div class="flex justify-end gap-sm opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="flex items-center gap-xs px-sm py-xs text-primary font-bold text-xs border border-primary rounded-lg hover:bg-primary-fixed transition-colors">
+<span class="material-symbols-outlined text-sm">sync</span> Sync Role
+                                            </button>
+<button class="p-xs text-on-surface-variant hover:text-error hover:bg-error-container rounded transition-colors">
+<span class="material-symbols-outlined text-sm">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-lg py-md">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-lg bg-tertiary-fixed text-on-tertiary-fixed-variant flex items-center justify-center font-bold">NA</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-primary font-bold">Nour Ali</span>
+<span class="text-xs text-on-surface-variant">nali@smartpos-egypt.com</span>
+</div>
+</div>
+</td>
+<td class="px-lg py-md">
+<span class="px-sm py-1 rounded-full bg-surface-container-highest text-on-surface-variant text-xs font-bold uppercase tracking-wider">Cashier</span>
+</td>
+<td class="px-lg py-md">
+<div class="flex items-center gap-sm">
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-secondary"></div>
+</label>
+<span class="text-xs font-bold text-secondary">ENABLED</span>
+</div>
+</td>
+<td class="px-lg py-md text-right">
+<div class="flex justify-end gap-sm opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="flex items-center gap-xs px-sm py-xs text-primary font-bold text-xs border border-primary rounded-lg hover:bg-primary-fixed transition-colors">
+<span class="material-symbols-outlined text-sm">sync</span> Sync Role
+                                            </button>
+<button class="p-xs text-on-surface-variant hover:text-error hover:bg-error-container rounded transition-colors">
+<span class="material-symbols-outlined text-sm">delete</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="p-md flex items-center justify-between border-t border-outline-variant bg-surface-container-low">
+<span class="text-xs text-on-surface-variant">Showing 1 to 4 of 42 employees</span>
+<div class="flex gap-xs">
+<button class="px-sm py-1 border border-outline-variant rounded bg-white text-xs disabled:opacity-50" disabled="">Previous</button>
+<button class="px-sm py-1 border border-primary bg-primary text-on-primary rounded text-xs">1</button>
+<button class="px-sm py-1 border border-outline-variant bg-white text-xs hover:bg-surface-container">2</button>
+<button class="px-sm py-1 border border-outline-variant bg-white text-xs hover:bg-surface-container">3</button>
+<button class="px-sm py-1 border border-outline-variant rounded bg-white text-xs">Next</button>
+</div>
+</div>
+</div>
+<!-- Activity Log / Sidebar Content for Bento -->
+<div class="col-span-12 lg:col-span-4 bg-white border border-outline-variant rounded-xl p-lg">
+<h4 class="font-headline-sm text-headline-sm text-primary mb-lg">Security Logs</h4>
+<ul class="space-y-lg">
+<li class="flex gap-md">
+<div class="mt-1 w-2 h-2 rounded-full bg-secondary"></div>
+<div>
+<p class="text-label-md font-label-md text-primary">Role Updated: Laila Selim</p>
+<p class="text-xs text-on-surface-variant">Elevated to Manager by Admin. Today 10:24 AM</p>
+</div>
+</li>
+<li class="flex gap-md">
+<div class="mt-1 w-2 h-2 rounded-full bg-error"></div>
+<div>
+<p class="text-label-md font-label-md text-primary">Account Disabled: Omar Mansour</p>
+<p class="text-xs text-on-surface-variant">System auto-disable (Inactivity). Yesterday</p>
+</div>
+</li>
+<li class="flex gap-md">
+<div class="mt-1 w-2 h-2 rounded-full bg-primary"></div>
+<div>
+<p class="text-label-md font-label-md text-primary">Sync Triggered</p>
+<p class="text-xs text-on-surface-variant">Full role synchronization completed successfully.</p>
+</div>
+</li>
+</ul>
+<button class="w-full mt-xl py-sm border border-outline text-label-md font-label-md text-on-surface-variant rounded-lg hover:bg-surface-container transition-colors">
+                        View Audit History
+                    </button>
+</div>
+<!-- Promotional / Training Banner -->
+<div class="col-span-12 lg:col-span-8 relative rounded-xl overflow-hidden min-h-[200px] bg-primary-container text-on-primary">
+<div class="absolute inset-0 bg-gradient-to-r from-primary-container to-transparent z-10 p-xl flex flex-col justify-center">
+<h4 class="text-headline-md font-headline-md text-primary-fixed mb-sm">Role-Based Access Guide</h4>
+<p class="max-w-md text-on-primary-container opacity-80 mb-lg font-body-md text-body-md">Learn how to configure custom permissions for your Egypt branch operations to ensure secure transactions.</p>
+<div class="flex gap-md">
+<button class="bg-secondary-fixed text-on-secondary-fixed px-lg py-sm rounded-lg font-label-md text-label-md flex items-center gap-sm">
+<span class="material-symbols-outlined">menu_book</span>
+                                Read Guide
+                            </button>
+</div>
+</div>
+<img alt="Security Visualization" class="absolute right-0 top-0 h-full w-1/2 object-cover" data-alt="A sophisticated digital visualization of data encryption and security permissions, featuring abstract glowing connections and shields. The style is Corporate Modern with a Deep Indigo and Emerald Green palette, conveying a sense of high-level administrative security and technological trust. The atmosphere is professional, sleek, and optimized for an Egyptian retail enterprise environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQdk1JCWmFhNczNzHu_qpDfxodln9wApYaOLm3b8fyN84w3H8Gip2H8XAisHc-V7isBL1XfMjZwV0shoG3mZte3Enxq74L5r8ijqF7_zGb3UyCSgxYtzlQActGfcvj1Mxy-GevLwI1FUt3oxuTlzNvEFGpss-nMf7yQNtWjTbR_5narfxTemW2_ovMAJ9eaaH16E5-vq4B-JKbB6EXSnZE1jwsyy1BZv-ULhWuEorGrd9BpMtzpt5CcN6aaCBDfHr3CCY8QEvDdeIj"/>
+</div>
+</div>
+</main>
+</div>
+</body></html>

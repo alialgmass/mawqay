@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+
+<html dir="ltr" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Invoice &amp; Tax Settings | SmartPOS Egypt</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;family=IBM+Plex+Sans:wght@400;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        body {
+            font-family: 'IBM Plex Sans Arabic', sans-serif;
+            background-color: #f7f9fb;
+        }
+        .receipt-container {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            background-image: repeating-linear-gradient(#ffffff, #ffffff 30px, #fbfbfb 30px, #fbfbfb 31px);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "background": "#f7f9fb",
+                      "secondary-fixed-dim": "#68dba9",
+                      "primary-container": "#1e1b4b",
+                      "error-container": "#ffdad6",
+                      "on-secondary-fixed-variant": "#005137",
+                      "tertiary-container": "#381a00",
+                      "on-tertiary-container": "#cf7100",
+                      "on-secondary-fixed": "#002114",
+                      "on-error": "#ffffff",
+                      "on-primary": "#ffffff",
+                      "on-surface-variant": "#47464f",
+                      "surface-bright": "#f7f9fb",
+                      "tertiary-fixed": "#ffdcc3",
+                      "tertiary-fixed-dim": "#ffb77d",
+                      "on-surface": "#191c1e",
+                      "on-primary-fixed-variant": "#444173",
+                      "on-tertiary": "#ffffff",
+                      "primary": "#070235",
+                      "on-secondary-container": "#00714e",
+                      "secondary": "#006c4a",
+                      "surface-container-lowest": "#ffffff",
+                      "secondary-container": "#82f5c1",
+                      "surface-tint": "#5b598c",
+                      "inverse-surface": "#2d3133",
+                      "surface-container-low": "#f2f4f6",
+                      "inverse-primary": "#c4c1fb",
+                      "surface-variant": "#e0e3e5",
+                      "on-background": "#191c1e",
+                      "error": "#ba1a1a",
+                      "outline": "#787680",
+                      "on-error-container": "#93000a",
+                      "on-tertiary-fixed-variant": "#6e3900",
+                      "inverse-on-surface": "#eff1f3",
+                      "primary-fixed": "#e3dfff",
+                      "surface-container-high": "#e6e8ea",
+                      "surface": "#f7f9fb",
+                      "on-primary-fixed": "#181445",
+                      "on-tertiary-fixed": "#2f1500",
+                      "primary-fixed-dim": "#c4c1fb",
+                      "on-secondary": "#ffffff",
+                      "outline-variant": "#c8c5d0",
+                      "surface-container": "#eceef0",
+                      "secondary-fixed": "#85f8c4",
+                      "surface-dim": "#d8dadc",
+                      "on-primary-container": "#8683ba",
+                      "surface-container-highest": "#e0e3e5",
+                      "tertiary": "#170700"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "gutter": "16px",
+                      "xs": "4px",
+                      "container-max": "1440px",
+                      "md": "16px",
+                      "sm": "8px",
+                      "base": "4px",
+                      "xl": "32px",
+                      "lg": "24px"
+              },
+              "fontFamily": {
+                      "body-lg": ["IBM Plex Sans Arabic"],
+                      "body-md": ["IBM Plex Sans Arabic"],
+                      "headline-sm": ["IBM Plex Sans Arabic"],
+                      "headline-md": ["IBM Plex Sans Arabic"],
+                      "label-md": ["IBM Plex Sans Arabic"],
+                      "display-lg": ["IBM Plex Sans Arabic"],
+                      "numeric-pos": ["IBM Plex Sans"]
+              },
+              "fontSize": {
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                      "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "numeric-pos": ["22px", {"lineHeight": "24px", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+      </script>
+</head>
+<body class="bg-background text-on-surface">
+<!-- SideNavBar Shell -->
+<aside class="h-screen w-64 fixed left-0 top-0 border-r border-outline-variant bg-surface dark:bg-surface-container-lowest flex flex-col py-lg px-md z-50">
+<div class="mb-xl px-md">
+<h1 class="text-headline-md font-headline-md font-bold text-primary dark:text-primary-fixed-dim">Tenant Name</h1>
+<p class="font-label-md text-label-md text-on-surface-variant">Premium Subscription</p>
+</div>
+<nav class="flex-1 space-y-xs">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">dashboard</span> Dashboard
+            </a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">inventory_2</span> Products
+            </a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">point_of_sale</span> POS
+            </a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">group</span> Customers
+            </a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">restaurant</span> Restaurant
+            </a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">assessment</span> Reports
+            </a>
+<a class="flex items-center gap-md px-md py-sm bg-primary-container text-on-primary-container rounded-lg font-bold font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">settings</span> Settings
+            </a>
+</nav>
+<div class="mt-auto border-t border-outline-variant pt-md px-md flex items-center gap-sm">
+<div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary-fixed">person</span>
+</div>
+<div class="overflow-hidden">
+<p class="font-label-md text-label-md font-bold truncate">Ahmed Mansour</p>
+<p class="text-xs text-on-surface-variant">Store Manager</p>
+</div>
+</div>
+</aside>
+<!-- TopAppBar Shell -->
+<header class="flex justify-between items-center h-16 px-lg ml-64 bg-surface dark:bg-surface-container-low border-b border-outline-variant sticky top-0 z-40">
+<div class="flex items-center gap-lg">
+<span class="text-headline-sm font-headline-md font-black text-primary dark:text-primary-fixed">SmartPOS Egypt</span>
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline">search</span>
+<input class="pl-10 pr-4 py-1.5 bg-surface-container rounded-full border-none text-label-md focus:ring-2 focus:ring-primary-fixed w-64" placeholder="Search settings..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="flex items-center gap-xs px-md py-1.5 rounded-full border border-outline-variant hover:bg-surface-container font-label-md text-label-md text-on-surface">
+<span class="material-symbols-outlined text-lg">location_on</span>
+                Change Branch
+            </button>
+<div class="flex items-center gap-sm">
+<button class="hover:bg-surface-container-highest dark:hover:bg-surface-variant rounded-full p-2 transition-opacity">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+</button>
+<img alt="User Profile" class="w-8 h-8 rounded-full border border-outline-variant object-cover" data-alt="A professional headshot of a middle-aged Egyptian businessman wearing a sharp navy blue suit and a white shirt. The background is a blurred office environment with soft natural lighting, maintaining the clean, authoritative corporate aesthetic of the brand. He has a calm, dependable expression that aligns with the system's focus on stability and institutional trust." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDPpIlmjhb5g_0R69WFOKHvkzIv0NISOsHEDZWDrHCOhb0YmpOIcdeDCdpU0ldD9YcXgnMSJ5tQeC9vBnJX1YPBXsvcWpE7fGg_lxGz5fctpcYBWB2DYmGpiHgArVahlJ3sC04WWm4qzBOjl3agrhSLZzMdaNbowObAtlY7c4KJkaDGP5O50RAq-k8SVWOJuQt6C95Z8UzLgKqWV-8g_9EzMoBnK474zglOjbTUPgwgrxSKY2T39emk3MagFIKgkZR-Cg6MU6Po4Lg_"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-64 p-lg min-h-screen">
+<div class="max-w-[1200px] mx-auto">
+<!-- Breadcrumbs -->
+<nav class="flex items-center gap-xs mb-lg text-label-md font-label-md text-on-surface-variant">
+<a class="hover:text-primary" href="#">Settings</a>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<span class="text-on-surface font-bold">Invoice &amp; Tax</span>
+</nav>
+<div class="grid grid-cols-12 gap-lg items-start">
+<!-- Configuration Section (Left) -->
+<div class="col-span-12 lg:col-span-7 space-y-lg">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg">
+<h2 class="font-headline-sm text-headline-sm text-primary mb-md">Store Identity</h2>
+<div class="space-y-lg">
+<!-- Logo Upload -->
+<div class="flex items-start gap-lg">
+<div class="w-32 h-32 rounded-lg border-2 border-dashed border-outline-variant flex flex-col items-center justify-center bg-background group hover:border-primary transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-outline group-hover:text-primary mb-xs">add_photo_alternate</span>
+<span class="text-xs text-outline group-hover:text-primary font-label-md">Upload Logo</span>
+</div>
+<div class="flex-1 space-y-xs">
+<p class="font-label-md text-label-md font-bold">Store Logo</p>
+<p class="text-xs text-on-surface-variant">Recommended size: 512x512px. PNG or JPG format. This will appear on your digital and printed receipts.</p>
+<button class="mt-md px-md py-1.5 text-primary border border-primary rounded-lg font-label-md text-label-md hover:bg-primary-fixed transition-colors">Choose File</button>
+</div>
+</div>
+<!-- Store Info Inputs -->
+<div class="grid grid-cols-2 gap-md">
+<div class="col-span-2 flex flex-col gap-xs">
+<label class="font-label-md text-label-md text-on-surface">Store Name (As shown on invoice)</label>
+<input class="w-full px-md py-2.5 bg-background border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary-fixed outline-none text-body-md" type="text" value="Al-Bustany Gourmet Kitchen"/>
+</div>
+<div class="col-span-2 flex flex-col gap-xs">
+<label class="font-label-md text-label-md text-on-surface">Store Address</label>
+<textarea class="w-full px-md py-2.5 bg-background border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary-fixed outline-none text-body-md" rows="3">15 El-Gomhouria St, Downtown, Cairo, Egypt</textarea>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg">
+<div class="flex justify-between items-center mb-md">
+<h2 class="font-headline-sm text-headline-sm text-primary">Taxation &amp; VAT</h2>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-outline-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-secondary"></div>
+<span class="ml-3 text-label-md font-label-md text-on-surface">Enable VAT</span>
+</label>
+</div>
+<div class="grid grid-cols-2 gap-md">
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-label-md text-on-surface">Tax Registration Number</label>
+<input class="w-full px-md py-2.5 bg-background border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary-fixed outline-none text-body-md font-numeric-pos" type="text" value="482-105-392"/>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-label-md text-on-surface">VAT Percentage (%)</label>
+<div class="relative">
+<input class="w-full px-md py-2.5 bg-background border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary-fixed outline-none text-body-md font-numeric-pos" type="number" value="14"/>
+<span class="absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-variant font-bold">%</span>
+</div>
+</div>
+</div>
+<div class="mt-lg p-md bg-surface-container-low rounded-lg flex gap-md">
+<span class="material-symbols-outlined text-primary">info</span>
+<p class="text-xs text-on-surface-variant leading-relaxed">
+                                Ensure your tax registration number matches the one provided by the <span class="font-bold">Egyptian Tax Authority</span>. The 14% VAT is the standard rate for most retail goods and services in Egypt.
+                            </p>
+</div>
+</div>
+<div class="flex justify-end gap-md">
+<button class="px-xl py-lg text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-high rounded-lg transition-colors">Discard Changes</button>
+<button class="px-xl py-lg bg-primary text-white font-label-md text-label-md rounded-lg shadow-sm active:scale-95 transition-all">Save Configuration</button>
+</div>
+</div>
+<!-- Live Preview (Right) -->
+<div class="col-span-12 lg:col-span-5 sticky top-24">
+<div class="flex flex-col items-center">
+<p class="font-label-md text-label-md text-on-surface-variant mb-md self-start flex items-center gap-xs">
+<span class="material-symbols-outlined text-sm">visibility</span>
+                            Live Receipt Preview
+                        </p>
+<!-- Receipt Paper Component -->
+<div class="receipt-container w-full max-w-[360px] p-lg border border-outline-variant rounded-sm flex flex-col items-center">
+<div class="mb-lg flex flex-col items-center text-center">
+<div class="w-16 h-16 bg-surface-container-high rounded-full mb-md flex items-center justify-center">
+<span class="material-symbols-outlined text-outline text-3xl">restaurant</span>
+</div>
+<h3 class="font-bold text-headline-sm uppercase tracking-tight">Al-Bustany Gourmet</h3>
+<p class="text-xs text-on-surface-variant">15 El-Gomhouria St, Downtown, Cairo</p>
+<p class="text-xs text-on-surface-variant">Tax ID: 482-105-392</p>
+</div>
+<div class="w-full border-t border-dashed border-outline-variant my-md"></div>
+<div class="w-full space-y-sm text-xs font-numeric-pos">
+<div class="flex justify-between">
+<span>2x Grilled Chicken Platter</span>
+<span>450.00 EGP</span>
+</div>
+<div class="flex justify-between">
+<span>1x Fresh Mango Juice</span>
+<span>65.00 EGP</span>
+</div>
+<div class="flex justify-between">
+<span>1x Chocolate Fondant</span>
+<span>95.00 EGP</span>
+</div>
+</div>
+<div class="w-full border-t border-dashed border-outline-variant my-md"></div>
+<div class="w-full space-y-xs">
+<div class="flex justify-between text-xs">
+<span>Subtotal</span>
+<span class="font-numeric-pos">610.00 EGP</span>
+</div>
+<div class="flex justify-between text-xs font-bold text-secondary">
+<span>VAT (14%)</span>
+<span class="font-numeric-pos">85.40 EGP</span>
+</div>
+<div class="flex justify-between text-headline-sm font-black pt-sm border-t border-outline-variant mt-sm">
+<span>TOTAL</span>
+<span class="font-numeric-pos">695.40 EGP</span>
+</div>
+</div>
+<div class="mt-xl flex flex-col items-center gap-md">
+<div class="w-32 h-32 bg-white p-2 border border-outline-variant">
+<div class="w-full h-full bg-slate-100 flex items-center justify-center overflow-hidden">
+<img alt="QR Code" class="w-full h-full object-contain opacity-60 mix-blend-multiply" data-alt="A high-contrast black and white digital QR code displayed on a clean white background. The QR code is sharp and minimalist, representing the modern Egyptian e-invoicing standard. The surrounding environment is a clean, well-lit professional retail counter, conveying a sense of technological advancement and compliance with national digital standards." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMBYCUH_vjwhXU3qVdNfjQKurQrixw_LfpWlIU_DSudWPzyaCTZS_9f-EaPmmlz0QWAjJddkcZo-zsmxlh_RVCKcFgkEo5R01VX4h9wKAq-21-_oCHShGTSRw6IJn6Xefp0fnGRdTM_v2q6RBWPTsU229KJ1l2RVuEK7swn5_5l_LNQmmW5m939LLijqWqFJosHqcpcFFC0lIDlkbq9jKjbPiqpytCmJ_aQE6YaVQiyVxHS_lvT4dHowcz_G77iRN4TQzswnMzqh0G"/>
+</div>
+</div>
+<div class="text-center">
+<p class="text-[10px] text-on-surface-variant font-bold">INV #82910-394</p>
+<p class="text-[10px] text-on-surface-variant">24/05/2024 14:22:15</p>
+<p class="mt-md text-[10px] font-bold text-primary">Thank you for your visit!</p>
+</div>
+</div>
+<!-- Decorative Jagged Edge -->
+<div class="absolute bottom-0 left-0 right-0 h-2 flex">
+<div class="w-full h-full flex" style="background-image: radial-gradient(circle at 4px -4px, transparent 8px, white 8px); background-size: 8px 8px; transform: rotate(180deg);"></div>
+</div>
+</div>
+<!-- Tip Box -->
+<div class="w-full max-w-[360px] mt-lg p-md bg-tertiary-fixed rounded-lg flex items-start gap-md">
+<span class="material-symbols-outlined text-on-tertiary-fixed-variant">lightbulb</span>
+<div class="text-xs text-on-tertiary-fixed">
+<p class="font-bold mb-1">Receipt Customization</p>
+<p>This preview uses standard thermal paper sizing (80mm). Layouts may vary slightly between printer models.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

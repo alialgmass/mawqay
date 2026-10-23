@@ -1,0 +1,22 @@
+POS SaaS System — Project Plan & Task Breakdown
+Stack: Laravel 11 · Vue 3 · Inertia.js · Spatie · Multi-Tenant (Single DB)
+Scope: Egyptian Market — Phase 1 | 40 User Stories · 7 Sprints · 14 Weeks · 96 Tasks
+
+### 1. Project Overview
+A multi-tenant POS SaaS tailored for the Egyptian market, featuring inventory management, restaurant-specific workflows, customer debt tracking, and offline capabilities.
+
+### 2. Core Modules
+- **Foundation & Auth**: Multi-tenant setup, Spatie RBAC.
+- **Products & Inventory**: Excel import, low-stock alerts, variants.
+- **POS Core**: Cashier interface, payment modal, thermal printing, WhatsApp receipts.
+- **Customers & Debts**: Credit sales tracking, loyalty points.
+- **Restaurant Orders**: Table map, KDS/Kitchen printing.
+- **Reports & Analytics**: Sales dashboard, profit reports, cashier performance.
+- **SaaS & Offline**: PWA, local SQLite sync, subscription billing (PayMob integration).
+
+### 3. Key Screens to Build
+1. **Public Registration/Landing**: Tenant sign-up and plan selection.
+2. **Admin Dashboard**: Analytics, low-stock warnings, and tenant overview.
+3. **POS Cashier Interface**: Product grid, cart, and payment modal.
+4. **Restaurant Table Map**: Floor plan for order management.
+5. **Customer Debt Management**: Tracking outstanding balances and recording payments.

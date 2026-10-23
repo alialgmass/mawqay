@@ -1,0 +1,74 @@
+{
+    "common": {
+        "save": "Save",
+        "saveChanges": "Save Changes",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "edit": "Edit",
+        "create": "Create",
+        "add": "Add",
+        "actions": "Actions",
+        "status": "Status",
+        "name": "Name",
+        "search": "Search...",
+        "filter": "Filter",
+        "all": "All",
+        "back": "Back",
+        "close": "Close",
+        "confirm": "Confirm",
+        "discard": "Discard",
+        "loading": "Loading...",
+        "noResults": "No results found.",
+        "unknown": "Unknown",
+        "none": "None",
+        "total": "Total",
+        "date": "Date",
+        "type": "Type",
+        "amount": "Amount",
+        "notes": "Notes",
+        "phone": "Phone",
+        "email": "Email",
+        "address": "Address",
+        "print": "Print",
+        "download": "Download",
+        "export": "Export",
+        "import": "Import",
+        "view": "View",
+        "details": "Details",
+        "quantity": "Quantity",
+        "price": "Price",
+        "cost": "Cost"
+    },
+    "status": {
+        "active": "Active",
+        "inactive": "Inactive",
+        "outOfStock": "Out of Stock",
+        "low": "Low",
+        "available": "Available",
+        "occupied": "Occupied",
+        "reserved": "Reserved",
+        "paid": "Paid",
+        "partial": "Partial",
+        "unpaid": "Unpaid"
+    },
+    "emptyState": {
+        "title": "Nothing here yet",
+        "description": "Get started by creating your first item.",
+        "noSearchResults": "No items match your search. Try adjusting the filters."
+    },
+    "confirmDelete": {
+        "title": "Are you absolutely sure?",
+        "description": "This action cannot be undone. This will permanently delete the item.",
+        "confirm": "Yes, delete it",
+        "cancel": "Cancel"
+    },
+    "pagination": {
+        "previous": "Previous",
+        "next": "Next",
+        "summary": "Showing :from–:to of :total"
+    },
+    "searchFilter": {
+        "placeholder": "Search by name or code...",
+        "reset": "Reset filters"
+    }
+}

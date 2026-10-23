@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>تسجيل مستخدم جديد وأسعار الخدمة - SmartPOS Egypt</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-container": "#381a00",
+                        "tertiary": "#170700",
+                        "on-tertiary-fixed-variant": "#6e3900",
+                        "primary-fixed": "#e3dfff",
+                        "on-primary": "#ffffff",
+                        "surface-container": "#eceef0",
+                        "surface": "#f7f9fb",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-container": "#8683ba",
+                        "background": "#f7f9fb",
+                        "error-container": "#ffdad6",
+                        "surface-container-highest": "#e0e3e5",
+                        "on-secondary-container": "#00714e",
+                        "on-tertiary-container": "#cf7100",
+                        "primary-fixed-dim": "#c4c1fb",
+                        "on-surface-variant": "#47464f",
+                        "surface-dim": "#d8dadc",
+                        "surface-variant": "#e0e3e5",
+                        "secondary-fixed-dim": "#68dba9",
+                        "primary-container": "#1e1b4b",
+                        "surface-tint": "#5b598c",
+                        "on-error": "#ffffff",
+                        "secondary-fixed": "#85f8c4",
+                        "on-primary-fixed": "#181445",
+                        "primary": "#070235",
+                        "outline": "#787680",
+                        "tertiary-fixed-dim": "#ffb77d",
+                        "on-tertiary-fixed": "#2f1500",
+                        "inverse-surface": "#2d3133",
+                        "surface-container-high": "#e6e8ea",
+                        "on-secondary-fixed-variant": "#005137",
+                        "surface-container-low": "#f2f4f6",
+                        "on-primary-fixed-variant": "#444173",
+                        "on-error-container": "#93000a",
+                        "secondary-container": "#82f5c1",
+                        "outline-variant": "#c8c5d0",
+                        "on-surface": "#191c1e",
+                        "on-secondary-fixed": "#002114",
+                        "inverse-primary": "#c4c1fb",
+                        "on-background": "#191c1e",
+                        "inverse-on-surface": "#eff1f3",
+                        "secondary": "#006c4a",
+                        "surface-bright": "#f7f9fb",
+                        "tertiary-fixed": "#ffdcc3",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "error": "#ba1a1a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "sm": "8px",
+                        "lg": "24px",
+                        "container-max": "1440px",
+                        "base": "4px",
+                        "xs": "4px",
+                        "gutter": "16px",
+                        "md": "16px",
+                        "xl": "32px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["IBM Plex Sans Arabic"],
+                        "body-md": ["IBM Plex Sans Arabic"],
+                        "label-md": ["IBM Plex Sans Arabic"],
+                        "headline-sm": ["IBM Plex Sans Arabic"],
+                        "headline-md": ["IBM Plex Sans Arabic"],
+                        "body-lg": ["IBM Plex Sans Arabic"],
+                        "numeric-pos": ["IBM Plex Sans"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "numeric-pos": ["22px", {"lineHeight": "24px", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            font-family: 'IBM Plex Sans Arabic', sans-serif;
+            background-color: #f7f9fb;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface">
+<!-- Header / Navigation Shell -->
+<header class="docked full-width top-0 sticky z-40 bg-surface border-b border-outline-variant flex justify-between items-center h-16 px-lg">
+<div class="flex items-center gap-md">
+<span class="text-headline-sm font-black text-primary">SmartPOS Egypt</span>
+</div>
+<nav class="hidden md:flex gap-lg">
+<a class="text-primary font-bold border-b-2 border-primary font-label-md text-label-md" href="#">الرئيسية</a>
+<a class="text-on-surface-variant hover:bg-surface-container-highest rounded-full px-md py-base font-label-md text-label-md transition-colors" href="#pricing">الأسعار</a>
+<a class="text-on-surface-variant hover:bg-surface-container-highest rounded-full px-md py-base font-label-md text-label-md transition-colors" href="#">المميزات</a>
+</nav>
+<div class="flex items-center gap-sm">
+<button class="bg-primary text-on-primary px-lg py-sm rounded-xl font-label-md text-label-md font-bold active:opacity-80 transition-opacity">ابدأ التجربة المجانية</button>
+</div>
+</header>
+<main>
+<!-- Hero Section -->
+<section class="relative py-xl px-lg overflow-hidden flex flex-col md:flex-row items-center gap-xl bg-surface-container-lowest">
+<div class="flex-1 space-y-md">
+<h1 class="font-display-lg text-display-lg text-primary leading-tight">نقود ثورة التجزئة في مصر</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
+                    منصة متكاملة لإدارة نقاط البيع والمخازن، مصممة خصيصاً لتلبية احتياجات السوق المصري بكفاءة واحترافية.
+                </p>
+<div class="flex gap-md pt-md">
+<button class="bg-primary text-on-primary px-xl py-md rounded-xl font-headline-sm text-headline-sm font-bold shadow-lg">ابدأ الآن مجاناً</button>
+<button class="border border-outline text-primary px-xl py-md rounded-xl font-headline-sm text-headline-sm font-semibold">عرض خطط الأسعار</button>
+</div>
+</div>
+<div class="flex-1 relative w-full aspect-video md:aspect-square bg-surface-container rounded-xl overflow-hidden shadow-2xl">
+<img class="w-full h-full object-cover" data-alt="A clean, high-resolution photograph of a modern retail checkout environment in Cairo. A sleek tablet POS terminal sits on a minimalist wooden counter, displaying a professional dashboard with Arabic text. The background is softly blurred, showing a well-lit, contemporary boutique with corporate slate gray and deep indigo accents. The atmosphere is efficient, dependable, and professional, reflecting a high-end Egyptian business aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2J9qIT0GkTkpuoO2JIiRrecPpr6b-AMRzaPLqNCDwGvH3DtVPYVYvG9xUW9w9XU7uLa1QmSDdCFQtWv8jjzi2i47tVQfp4TIxZou9TyGX6OIphUfQnBvCXtD_RuHzxcLHOV6lK9ewzrAJ3MyyO9-fGMM4HngoMWyosdQNuU8WU6v-CkrFKwWtUbpQL2S9x1wjzCve2sgpIwHK6jls8rLoCEgRfuIUoHcsTXb1Dgu1m-sNABkBsEVryi6yUlg6VXSD9UIpK4L2zpjD"/>
+</div>
+</section>
+<!-- Pricing Section -->
+<section class="py-xl px-lg max-w-container-max mx-auto" id="pricing">
+<div class="text-center mb-xl">
+<h2 class="font-display-lg text-display-lg text-primary mb-sm">أسعار بسيطة وشفافة</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">اختر الخطة المناسبة لحجم أعمالك، بدون رسوم خفية</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-lg">
+<!-- Basic Plan -->
+<div class="bg-surface-container-low border border-outline-variant p-lg rounded-xl flex flex-col hover:border-primary transition-colors">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-xs">الأساسية (Basic)</h3>
+<div class="flex items-baseline gap-xs mb-md">
+<span class="font-numeric-pos text-display-lg text-primary">٤٩٩</span>
+<span class="font-label-md text-label-md text-on-surface-variant">ج.م / شهرياً</span>
+</div>
+<ul class="space-y-sm mb-xl flex-1">
+<li class="flex items-center gap-sm font-body-md text-body-md">
+<span class="material-symbols-outlined text-secondary">check_circle</span>
+                            مستخدم واحد فقط
+                        </li>
+<li class="flex items-center gap-sm font-body-md text-body-md">
+<span class="material-symbols-outlined text-secondary">check_circle</span>
+                            حتى ٥٠٠ منتج
+                        </li>
+<li class="flex items-center gap-sm font-body-md text-body-md">
+<span class="material-symbols-outlined text-secondary">check_circle</span>
+                            تقارير مبيعات أساسية
+                        </li>
+</ul>
+<button class="w-full border border-primary text-primary py-sm rounded-lg font-bold hover:bg-primary hover:text-on-primary transition-all">اختر الخطة الأساسية</button>
+</div>
+<!-- Advanced Plan -->
+<div class="bg-primary text-on-primary p-lg rounded-xl flex flex-col shadow-xl scale-105 relative z-10">
+<div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-secondary text-on-secondary px-md py-xs rounded-full text-label-md font-bold">الأكثر طلباً</div>
+<h3 class="font-headline-md text-headline-md mb-xs">المتقدمة (Advanced)</h3>
+<div class="flex items-baseline gap-xs mb-md">
+<span class="font-numeric-pos text-display-lg text-on-primary">٩٩٩</span>
+<span class="font-label-md text-label-md opacity-80">ج.م / شهرياً</span>
+</div>
+<ul class="space-y-sm mb-xl flex-1">
+<li class="flex items-center gap-sm font-body-md text-body-md">
+<span class="material-symbols-outlined">check_circle</span>
+                            حتى ٥ مستخدمين
+                        </li>
+<li class="flex items-center gap-sm font-body-md text-body-md">
+<span class="material-symbols-outlined">check_circle</span>
+                            منتجات غير محدودة
+                        </li>
+<li class="flex items-center gap-sm font-body-md text-body-md">
+<span class="material-symbols-outlined">check_circle</span>
+                            إدارة المخازن المتقدمة
+                        </li>
+<li class="flex items-center gap-sm font-body-md text-body-md">
+<span class="material-symbols-outlined">check_circle</span>
+                            دعم فني عبر الهاتف ٢٤/٧
+                        </li>
+</ul>
+<button class="w-full bg-secondary text-on-secondary py-sm rounded-lg font-bold shadow-lg active:scale-95 transition-transform">اختر الخطة المتقدمة</button>
+</div>
+<!-- Pro Plan -->
+<div class="bg-surface-container-low border border-outline-variant p-lg rounded-xl flex flex-col hover:border-primary transition-colors">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-xs">الاحترافية (Pro)</h3>
+<div class="flex items-baseline gap-xs mb-md">
+<span class="font-numeric-pos text-display-lg text-primary">١,٩٩٩</span>
+<span class="font-label-md text-label-md text-on-surface-variant">ج.م / شهرياً</span>
+</div>
+<ul class="space-y-sm mb-xl flex-1">
+<li class="flex items-center gap-sm font-body-md text-body-md">
+<span class="material-symbols-outlined text-secondary">check_circle</span>
+                            فروع ومستخدمين غير محدودين
+                        </li>
+<li class="flex items-center gap-sm font-body-md text-body-md">
+<span class="material-symbols-outlined text-secondary">check_circle</span>
+                            تحليلات ذكاء اصطناعي
+                        </li>
+<li class="flex items-center gap-sm font-body-md text-body-md">
+<span class="material-symbols-outlined text-secondary">check_circle</span>
+                            الربط مع خدمات التوصيل
+                        </li>
+</ul>
+<button class="w-full border border-primary text-primary py-sm rounded-lg font-bold hover:bg-primary hover:text-on-primary transition-all">اختر الخطة الاحترافية</button>
+</div>
+</div>
+</section>
+<!-- Registration Form Section -->
+<section class="bg-surface-container py-xl px-lg">
+<div class="max-w-4xl mx-auto bg-surface p-xl rounded-xl shadow-sm border border-outline-variant">
+<div class="text-center mb-xl">
+<h2 class="font-headline-md text-headline-md text-primary mb-xs">أنشئ حسابك الآن</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">انضم إلى آلاف التجار في مصر وابدأ البيع بذكاء</p>
+</div>
+<form class="grid grid-cols-1 md:grid-cols-2 gap-lg">
+<div class="space-y-xs">
+<label class="block font-label-md text-label-md text-on-surface">اسم المنشأة</label>
+<input class="w-full bg-surface border border-outline-variant rounded-lg p-md focus:ring-2 focus:ring-primary focus:border-transparent outline-none" placeholder="مثال: مطعم السعادة" type="text"/>
+</div>
+<div class="space-y-xs">
+<label class="block font-label-md text-label-md text-on-surface">نوع النشاط</label>
+<select class="w-full bg-surface border border-outline-variant rounded-lg p-md focus:ring-2 focus:ring-primary focus:border-transparent outline-none">
+<option>مطاعم وكافيهات</option>
+<option>تجزئة وملابس</option>
+<option>سوبر ماركت</option>
+<option>صيدليات</option>
+<option>أخرى</option>
+</select>
+</div>
+<div class="space-y-xs">
+<label class="block font-label-md text-label-md text-on-surface">اسم المدير</label>
+<input class="w-full bg-surface border border-outline-variant rounded-lg p-md focus:ring-2 focus:ring-primary focus:border-transparent outline-none" placeholder="الاسم الكامل" type="text"/>
+</div>
+<div class="space-y-xs">
+<label class="block font-label-md text-label-md text-on-surface">رقم الموبايل</label>
+<input class="w-full bg-surface border border-outline-variant rounded-lg p-md focus:ring-2 focus:ring-primary focus:border-transparent outline-none text-left" dir="ltr" placeholder="01xxxxxxxxx" type="tel"/>
+</div>
+<div class="space-y-xs md:col-span-2">
+<label class="block font-label-md text-label-md text-on-surface">البريد الإلكتروني</label>
+<input class="w-full bg-surface border border-outline-variant rounded-lg p-md focus:ring-2 focus:ring-primary focus:border-transparent outline-none text-left" dir="ltr" placeholder="email@example.com" type="email"/>
+</div>
+<div class="space-y-xs">
+<label class="block font-label-md text-label-md text-on-surface">كلمة المرور</label>
+<input class="w-full bg-surface border border-outline-variant rounded-lg p-md focus:ring-2 focus:ring-primary focus:border-transparent outline-none text-left" dir="ltr" placeholder="••••••••" type="password"/>
+</div>
+<div class="space-y-xs">
+<label class="block font-label-md text-label-md text-on-surface">تأكيد كلمة المرور</label>
+<input class="w-full bg-surface border border-outline-variant rounded-lg p-md focus:ring-2 focus:ring-primary focus:border-transparent outline-none text-left" dir="ltr" placeholder="••••••••" type="password"/>
+</div>
+<div class="md:col-span-2 flex items-center gap-sm py-md">
+<input class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary" id="terms" type="checkbox"/>
+<label class="font-body-md text-body-md text-on-surface-variant" for="terms">أوافق على <a class="text-primary underline" href="#">الشروط والأحكام</a> وسياسة الخصوصية</label>
+</div>
+<button class="md:col-span-2 bg-primary text-on-primary py-md rounded-xl font-headline-md text-headline-md font-bold shadow-lg active:scale-[0.98] transition-all" type="submit">إنشاء الحساب</button>
+</form>
+</div>
+</section>
+</main>
+<!-- Simple Footer -->
+<footer class="bg-primary-container text-on-primary-container py-xl px-lg">
+<div class="max-w-container-max mx-auto flex flex-col md:flex-row justify-between items-center gap-lg">
+<div class="text-center md:text-right">
+<span class="text-headline-md font-black block mb-xs">SmartPOS Egypt</span>
+<p class="font-label-md text-label-md opacity-70">© ٢٠٢٤ جميع الحقوق محفوظة لشركة سمارت بوز مصر</p>
+</div>
+<div class="flex gap-lg">
+<a class="hover:underline font-label-md text-label-md" href="#">عن الشركة</a>
+<a class="hover:underline font-label-md text-label-md" href="#">سياسة الخصوصية</a>
+<a class="hover:underline font-label-md text-label-md" href="#">تواصل معنا</a>
+</div>
+</div>
+</footer>
+</body></html>

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+
+<html dir="ltr" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&amp;family=IBM+Plex+Sans:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "background": "#f7f9fb",
+                    "secondary-fixed-dim": "#68dba9",
+                    "primary-container": "#1e1b4b",
+                    "error-container": "#ffdad6",
+                    "on-secondary-fixed-variant": "#005137",
+                    "tertiary-container": "#381a00",
+                    "on-tertiary-container": "#cf7100",
+                    "on-secondary-fixed": "#002114",
+                    "on-error": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "on-surface-variant": "#47464f",
+                    "surface-bright": "#f7f9fb",
+                    "tertiary-fixed": "#ffdcc3",
+                    "tertiary-fixed-dim": "#ffb77d",
+                    "on-surface": "#191c1e",
+                    "on-primary-fixed-variant": "#444173",
+                    "on-tertiary": "#ffffff",
+                    "primary": "#070235",
+                    "on-secondary-container": "#00714e",
+                    "secondary": "#006c4a",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-container": "#82f5c1",
+                    "surface-tint": "#5b598c",
+                    "inverse-surface": "#2d3133",
+                    "surface-container-low": "#f2f4f6",
+                    "inverse-primary": "#c4c1fb",
+                    "surface-variant": "#e0e3e5",
+                    "on-background": "#191c1e",
+                    "error": "#ba1a1a",
+                    "outline": "#787680",
+                    "on-error-container": "#93000a",
+                    "on-tertiary-fixed-variant": "#6e3900",
+                    "inverse-on-surface": "#eff1f3",
+                    "primary-fixed": "#e3dfff",
+                    "surface-container-high": "#e6e8ea",
+                    "surface": "#f7f9fb",
+                    "on-primary-fixed": "#181445",
+                    "on-tertiary-fixed": "#2f1500",
+                    "primary-fixed-dim": "#c4c1fb",
+                    "on-secondary": "#ffffff",
+                    "outline-variant": "#c8c5d0",
+                    "surface-container": "#eceef0",
+                    "secondary-fixed": "#85f8c4",
+                    "surface-dim": "#d8dadc",
+                    "on-primary-container": "#8683ba",
+                    "surface-container-highest": "#e0e3e5",
+                    "tertiary": "#170700"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "gutter": "16px",
+                    "xs": "4px",
+                    "container-max": "1440px",
+                    "md": "16px",
+                    "sm": "8px",
+                    "base": "4px",
+                    "xl": "32px",
+                    "lg": "24px"
+            },
+            "fontFamily": {
+                    "body-lg": ["IBM Plex Sans Arabic"],
+                    "body-md": ["IBM Plex Sans Arabic"],
+                    "headline-sm": ["IBM Plex Sans Arabic"],
+                    "headline-md": ["IBM Plex Sans Arabic"],
+                    "label-md": ["IBM Plex Sans Arabic"],
+                    "display-lg": ["IBM Plex Sans Arabic"],
+                    "numeric-pos": ["IBM Plex Sans"]
+            },
+            "fontSize": {
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "numeric-pos": ["22px", {"lineHeight": "24px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #f7f9fb;
+            font-family: 'IBM Plex Sans Arabic', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+    </style>
+</head>
+<body class="text-on-surface">
+<!-- Top Navigation Bar -->
+<header class="docked full-width top-0 sticky z-40 bg-surface border-b border-outline-variant">
+<nav class="flex justify-between items-center h-16 px-lg container-max mx-auto">
+<div class="flex items-center gap-sm">
+<span class="text-headline-sm font-headline-md font-black text-primary">SmartPOS Egypt</span>
+</div>
+<div class="hidden md:flex items-center gap-xl">
+<a class="text-primary font-bold border-b-2 border-primary font-label-md text-label-md" href="#hero">Home</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-md text-label-md" href="#pricing">Pricing</a>
+<a class="bg-secondary text-on-secondary px-lg py-sm rounded-lg font-label-md text-label-md hover:opacity-90 transition-opacity" href="#signup">Get Started</a>
+</div>
+<div class="flex items-center gap-md md:hidden">
+<span class="material-symbols-outlined text-primary">menu</span>
+</div>
+</nav>
+</header>
+<main>
+<!-- Hero Section -->
+<section class="relative overflow-hidden bg-primary py-xl md:py-32" id="hero">
+<div class="absolute inset-0 opacity-10">
+<img alt="POS Background" class="w-full h-full object-cover" data-alt="A high-angle professional photograph of a modern retail environment in Cairo with a sleek digital POS terminal at the center. The scene is bathed in a professional deep indigo ambient light with sharp emerald green accents on digital screens. The atmosphere is clean, corporate, and highly efficient, representing the stability of a premium Egyptian SaaS brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDThfudSoBO_pHTBc28osgnE2HRCGOO_2EH7NJA29eibBaDUnOklPMaLh45Cf6WtQ2_v98nAESxXOxt5UrBAKBkq2ZTvwaJnk876Hds5DerTrk5Rz29DawukPpap41EpQdylUCRcczaN4Izh4Dlbd_8hmcum-eCheIBfAhlNzmU8N6rzOSWPxBC6eeR3F1rtSpe7xI0aFBYpNaOlGsOeE80uMdHvaGWwnZpyvZ3BB8e6TcQJmRMyriNnPs2Dl0bJSQLflUHTpamO9M6"/>
+</div>
+<div class="container-max mx-auto px-lg relative z-10 grid md:grid-cols-2 gap-xl items-center">
+<div class="text-left space-y-lg">
+<h1 class="font-display-lg text-display-lg text-white leading-tight">
+                        Powering Egypt's <span class="text-secondary-fixed">Retail Revolution</span>
+</h1>
+<p class="font-body-lg text-body-lg text-primary-fixed opacity-90 max-w-lg">
+                        A robust, bilingual POS solution designed for the speed of Egyptian commerce. Trusted by thousands of stores from Cairo to Alexandria.
+                    </p>
+<div class="flex flex-col sm:flex-row gap-md">
+<a class="bg-secondary text-on-secondary px-xl py-md rounded-xl font-headline-sm text-headline-sm text-center transition-transform active:scale-95" href="#signup">
+                            Start Free Trial
+                        </a>
+<a class="border border-outline-variant text-white px-xl py-md rounded-xl font-headline-sm text-headline-sm text-center hover:bg-white/10 transition-colors" href="#pricing">
+                            View Plans
+                        </a>
+</div>
+</div>
+<div class="hidden md:block">
+<div class="glass-card p-md rounded-xl shadow-xl">
+<img alt="Dashboard Preview" class="rounded-lg shadow-inner" data-alt="A high-resolution interface mockup of a professional POS dashboard showing sales analytics and inventory levels. The UI features a clean white background with deep indigo headers and emerald green success indicators. The design is structured with a high-density grid and professional typography, conveying a sense of calm control and institutional trust for business owners." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDq3Uc_bXq2Wnekd5PJrRlvPx16tXguX-YGuE0eM4EXv3RTeGbS5bOtaiIkdwxUeHs1usM3_sEEm-WE0ubtVFfF21cSMplJTTr9DJr3qqc9VvPnUk1FmNqQz77z5MKci7_bo7BLlaSTT2IBFrnlzweoIsvkPii8WcSaSHXcoAxOCVr-KCnW1Lz8jmdNz82pEymGfKnr4AOP-V-yKaJpOmaDwms-SwPe3BMQewenzvzQYmevyox15OIa2FVlWPE0jzO8nj24RmeLoaaU"/>
+</div>
+</div>
+</div>
+</section>
+<!-- Bento Features Grid -->
+<section class="py-xl bg-background">
+<div class="container-max mx-auto px-lg">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-md">
+<div class="md:col-span-2 bg-white p-lg rounded-xl border border-outline-variant flex flex-col justify-between h-64">
+<div>
+<span class="material-symbols-outlined text-secondary text-4xl mb-sm">language</span>
+<h3 class="font-headline-md text-headline-md text-primary">Fully Bilingual Interface</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-sm">Seamlessly switch between Arabic and English. Optimized for local RTL requirements and Egyptian tax regulations.</p>
+</div>
+</div>
+<div class="bg-primary-container p-lg rounded-xl flex flex-col justify-between text-white h-64">
+<span class="material-symbols-outlined text-secondary-fixed-dim text-4xl mb-sm">bolt</span>
+<div>
+<h3 class="font-headline-sm text-headline-sm">High-Speed Offline Mode</h3>
+<p class="font-label-md text-label-md opacity-80 mt-xs">Continue sales even when the internet goes down. Auto-syncs once back online.</p>
+</div>
+</div>
+<div class="bg-secondary-container p-lg rounded-xl flex flex-col justify-between h-64">
+<span class="material-symbols-outlined text-on-secondary-container text-4xl mb-sm">receipt_long</span>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-secondary-container">E-Invoicing Ready</h3>
+<p class="font-label-md text-label-md text-on-secondary-container opacity-80 mt-xs">Fully compliant with Egyptian Tax Authority (ETA) requirements for electronic receipts.</p>
+</div>
+</div>
+<div class="md:col-span-2 bg-white p-lg rounded-xl border border-outline-variant flex items-center gap-lg h-64">
+<div class="flex-1">
+<h3 class="font-headline-md text-headline-md text-primary">Advanced Inventory</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-sm">Track thousands of products across multiple branches with real-time stock alerts.</p>
+</div>
+<div class="hidden sm:block w-1/3 h-full rounded-lg overflow-hidden">
+<img alt="Inventory" class="w-full h-full object-cover" data-alt="A detailed close-up of organized retail inventory in a modern warehouse setting. The lighting is bright and even, highlighting the efficiency of stock management. The color palette features neutral tones with subtle primary-blue accents, emphasizing a corporate and dependable business environment suitable for a SaaS landing page." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVVLzV0v0_N2G-mR0PedSfP8Unl-Eiwc0e1ClzCptWZuofgLchn_9aIUX_7uh-fIzxNEdVTROXZh_Hc-CtLVl4Pg-QYzl1ykY-Lkx79VQ7T76fNn6JTqBraqx6MhBFU-Fs-ahmWiM6yWwJqXBV1ERGGTC8PK7CEHI7WSDwJB57-r-KRUSEt9iILwrekNu6n8RYDfudR4-Txhw7NC39_-ZyNoDppFAkWcy4IHn2W9OOCFh68vQ4bffw2EARYsC5N4kpE15Ws6vOU9Ih"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Pricing Table -->
+<section class="py-xl bg-surface-container-low" id="pricing">
+<div class="container-max mx-auto px-lg">
+<div class="text-center mb-xl">
+<h2 class="font-display-lg text-headline-md md:text-display-lg text-primary">Simple, Transparent Pricing</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-sm">Choose the plan that fits your business scale.</p>
+</div>
+<div class="grid md:grid-cols-3 gap-lg">
+<!-- Basic Plan -->
+<div class="bg-white p-lg rounded-xl border border-outline-variant flex flex-col h-full hover:shadow-lg transition-shadow">
+<div class="mb-lg">
+<h3 class="font-headline-md text-headline-md text-primary">Basic</h3>
+<p class="font-label-md text-label-md text-on-surface-variant">Ideal for small kiosks</p>
+</div>
+<div class="mb-lg">
+<span class="text-display-lg font-numeric-pos text-primary">EGP 499</span>
+<span class="text-on-surface-variant font-label-md">/month</span>
+</div>
+<ul class="space-y-sm mb-xl flex-1">
+<li class="flex items-center gap-sm text-on-surface">
+<span class="material-symbols-outlined text-secondary text-sm">check_circle</span>
+<span class="font-body-md text-body-md">1 Cashier Terminal</span>
+</li>
+<li class="flex items-center gap-sm text-on-surface">
+<span class="material-symbols-outlined text-secondary text-sm">check_circle</span>
+<span class="font-body-md text-body-md">500 Products</span>
+</li>
+<li class="flex items-center gap-sm text-on-surface">
+<span class="material-symbols-outlined text-secondary text-sm">check_circle</span>
+<span class="font-body-md text-body-md">Daily Sales Reports</span>
+</li>
+</ul>
+<button class="w-full py-sm border border-primary text-primary rounded-lg font-bold hover:bg-primary/5 transition-colors">Select Basic</button>
+</div>
+<!-- Advanced Plan -->
+<div class="bg-white p-lg rounded-xl border-2 border-secondary flex flex-col h-full relative shadow-xl transform scale-105 z-10">
+<div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-secondary text-white px-md py-xs rounded-full font-label-md text-label-md">
+                            Most Popular
+                        </div>
+<div class="mb-lg">
+<h3 class="font-headline-md text-headline-md text-primary">Advanced</h3>
+<p class="font-label-md text-label-md text-on-surface-variant">For growing retailers</p>
+</div>
+<div class="mb-lg">
+<span class="text-display-lg font-numeric-pos text-primary">EGP 999</span>
+<span class="text-on-surface-variant font-label-md">/month</span>
+</div>
+<ul class="space-y-sm mb-xl flex-1">
+<li class="flex items-center gap-sm text-on-surface">
+<span class="material-symbols-outlined text-secondary text-sm">check_circle</span>
+<span class="font-body-md text-body-md">5 Cashier Terminals</span>
+</li>
+<li class="flex items-center gap-sm text-on-surface">
+<span class="material-symbols-outlined text-secondary text-sm">check_circle</span>
+<span class="font-body-md text-body-md">Unlimited Products</span>
+</li>
+<li class="flex items-center gap-sm text-on-surface">
+<span class="material-symbols-outlined text-secondary text-sm">check_circle</span>
+<span class="font-body-md text-body-md">Inventory Management</span>
+</li>
+<li class="flex items-center gap-sm text-on-surface">
+<span class="material-symbols-outlined text-secondary text-sm">check_circle</span>
+<span class="font-body-md text-body-md">Customer Loyalty Program</span>
+</li>
+</ul>
+<button class="w-full py-sm bg-secondary text-white rounded-lg font-bold hover:opacity-90 transition-opacity">Select Advanced</button>
+</div>
+<!-- Pro Plan -->
+<div class="bg-white p-lg rounded-xl border border-outline-variant flex flex-col h-full hover:shadow-lg transition-shadow">
+<div class="mb-lg">
+<h3 class="font-headline-md text-headline-md text-primary">Pro</h3>
+<p class="font-label-md text-label-md text-on-surface-variant">For multi-branch chains</p>
+</div>
+<div class="mb-lg">
+<span class="text-display-lg font-numeric-pos text-primary">EGP 1999</span>
+<span class="text-on-surface-variant font-label-md">/month</span>
+</div>
+<ul class="space-y-sm mb-xl flex-1">
+<li class="flex items-center gap-sm text-on-surface">
+<span class="material-symbols-outlined text-secondary text-sm">check_circle</span>
+<span class="font-body-md text-body-md">Unlimited Terminals</span>
+</li>
+<li class="flex items-center gap-sm text-on-surface">
+<span class="material-symbols-outlined text-secondary text-sm">check_circle</span>
+<span class="font-body-md text-body-md">Multi-Branch Sync</span>
+</li>
+<li class="flex items-center gap-sm text-on-surface">
+<span class="material-symbols-outlined text-secondary text-sm">check_circle</span>
+<span class="font-body-md text-body-md">Custom API Integration</span>
+</li>
+<li class="flex items-center gap-sm text-on-surface">
+<span class="material-symbols-outlined text-secondary text-sm">check_circle</span>
+<span class="font-body-md text-body-md">24/7 Priority Support</span>
+</li>
+</ul>
+<button class="w-full py-sm border border-primary text-primary rounded-lg font-bold hover:bg-primary/5 transition-colors">Contact Sales</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Sign Up Form Section -->
+<section class="py-xl bg-primary relative overflow-hidden" id="signup">
+<div class="container-max mx-auto px-lg grid md:grid-cols-2 gap-xl items-center">
+<div class="text-white">
+<h2 class="font-display-lg text-display-lg">Ready to grow your business?</h2>
+<p class="font-body-lg text-body-lg mt-md text-primary-fixed opacity-80">Join over 5,000 Egyptian merchants who modernized their operations with SmartPOS. Start your 14-day free trial today.</p>
+<div class="mt-xl flex flex-col gap-md">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-secondary-container">verified_user</span>
+</div>
+<div>
+<h4 class="font-headline-sm text-headline-sm">Secure Data</h4>
+<p class="font-label-md text-label-md opacity-70">Bank-level encryption for all your records.</p>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-secondary-container">support_agent</span>
+</div>
+<div>
+<h4 class="font-headline-sm text-headline-sm">Local Support</h4>
+<p class="font-label-md text-label-md opacity-70">Dedicated team in Cairo and Alexandria.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-white p-xl rounded-xl shadow-2xl">
+<form class="space-y-md">
+<div class="grid grid-cols-1 gap-md">
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-xs">Store Name</label>
+<input class="w-full px-md py-sm border border-outline-variant rounded-lg focus:border-primary focus:ring-1 focus:ring-primary outline-none" placeholder="e.g. Al-Amal Supermarket" type="text"/>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-xs">Owner Name</label>
+<input class="w-full px-md py-sm border border-outline-variant rounded-lg focus:border-primary focus:ring-1 focus:ring-primary outline-none" placeholder="Full Name" type="text"/>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-xs">Email Address</label>
+<input class="w-full px-md py-sm border border-outline-variant rounded-lg focus:border-primary focus:ring-1 focus:ring-primary outline-none" placeholder="name@example.com" type="email"/>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-xs">Password</label>
+<input class="w-full px-md py-sm border border-outline-variant rounded-lg focus:border-primary focus:ring-1 focus:ring-primary outline-none" placeholder="Min. 8 characters" type="password"/>
+</div>
+</div>
+<button class="w-full py-md bg-secondary text-on-secondary font-headline-sm text-headline-sm rounded-xl mt-lg hover:opacity-90 transition-opacity active:scale-[0.98]" type="submit">
+                            Create Account
+                        </button>
+<p class="text-center font-label-md text-label-md text-on-surface-variant mt-md">
+                            By signing up, you agree to our <a class="text-primary underline" href="#">Terms of Service</a>.
+                        </p>
+</form>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-highest py-lg border-t border-outline-variant">
+<div class="container-max mx-auto px-lg flex flex-col md:flex-row justify-between items-center gap-md">
+<div class="flex flex-col items-center md:items-start">
+<span class="text-headline-sm font-black text-primary">SmartPOS Egypt</span>
+<p class="font-label-md text-label-md text-on-surface-variant mt-xs">© 2024 SmartPOS Tech Solutions. All rights reserved.</p>
+</div>
+<div class="flex gap-lg">
+<a class="text-on-surface-variant hover:text-primary font-label-md text-label-md" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant hover:text-primary font-label-md text-label-md" href="#">Terms</a>
+<a class="text-on-surface-variant hover:text-primary font-label-md text-label-md" href="#">Contact Us</a>
+</div>
+<div class="flex gap-md">
+<span class="material-symbols-outlined text-primary cursor-pointer">social_leaderboard</span>
+<span class="material-symbols-outlined text-primary cursor-pointer">linked_camera</span>
+</div>
+</div>
+</footer>
+</body></html>

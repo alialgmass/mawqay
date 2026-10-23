@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;family=IBM+Plex+Sans:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "background": "#f7f9fb",
+                    "secondary-fixed-dim": "#68dba9",
+                    "primary-container": "#1e1b4b",
+                    "error-container": "#ffdad6",
+                    "on-secondary-fixed-variant": "#005137",
+                    "tertiary-container": "#381a00",
+                    "on-tertiary-container": "#cf7100",
+                    "on-secondary-fixed": "#002114",
+                    "on-error": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "on-surface-variant": "#47464f",
+                    "surface-bright": "#f7f9fb",
+                    "tertiary-fixed": "#ffdcc3",
+                    "tertiary-fixed-dim": "#ffb77d",
+                    "on-surface": "#191c1e",
+                    "on-primary-fixed-variant": "#444173",
+                    "on-tertiary": "#ffffff",
+                    "primary": "#070235",
+                    "on-secondary-container": "#00714e",
+                    "secondary": "#006c4a",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-container": "#82f5c1",
+                    "surface-tint": "#5b598c",
+                    "inverse-surface": "#2d3133",
+                    "surface-container-low": "#f2f4f6",
+                    "inverse-primary": "#c4c1fb",
+                    "surface-variant": "#e0e3e5",
+                    "on-background": "#191c1e",
+                    "error": "#ba1a1a",
+                    "outline": "#787680",
+                    "on-error-container": "#93000a",
+                    "on-tertiary-fixed-variant": "#6e3900",
+                    "inverse-on-surface": "#eff1f3",
+                    "primary-fixed": "#e3dfff",
+                    "surface-container-high": "#e6e8ea",
+                    "surface": "#f7f9fb",
+                    "on-primary-fixed": "#181445",
+                    "on-tertiary-fixed": "#2f1500",
+                    "primary-fixed-dim": "#c4c1fb",
+                    "on-secondary": "#ffffff",
+                    "outline-variant": "#c8c5d0",
+                    "surface-container": "#eceef0",
+                    "secondary-fixed": "#85f8c4",
+                    "surface-dim": "#d8dadc",
+                    "on-primary-container": "#8683ba",
+                    "surface-container-highest": "#e0e3e5",
+                    "tertiary": "#170700"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "gutter": "16px",
+                    "xs": "4px",
+                    "container-max": "1440px",
+                    "md": "16px",
+                    "sm": "8px",
+                    "base": "4px",
+                    "xl": "32px",
+                    "lg": "24px"
+            },
+            "fontFamily": {
+                    "body-lg": ["IBM Plex Sans Arabic"],
+                    "body-md": ["IBM Plex Sans Arabic"],
+                    "headline-sm": ["IBM Plex Sans Arabic"],
+                    "headline-md": ["IBM Plex Sans Arabic"],
+                    "label-md": ["IBM Plex Sans Arabic"],
+                    "display-lg": ["IBM Plex Sans Arabic"],
+                    "numeric-pos": ["IBM Plex Sans"]
+            },
+            "fontSize": {
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "numeric-pos": ["22px", {"lineHeight": "24px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #070235; /* Using primary for high-contrast dark background for KDS */
+        }
+        .order-card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 16px;
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen text-on-primary">
+<!-- KDS Header - Utility focused -->
+<header class="flex items-center justify-between px-lg py-md bg-primary border-b border-on-primary-fixed-variant">
+<div class="flex items-center gap-md">
+<h1 class="font-headline-md text-headline-md text-primary-fixed uppercase tracking-widest">Kitchen Display System</h1>
+<span class="px-sm py-xs bg-secondary text-on-secondary rounded-lg font-label-md text-label-md">LIVE</span>
+</div>
+<div class="flex items-center gap-xl">
+<div class="flex flex-col items-end">
+<span class="font-label-md text-label-md text-on-primary-container">Active Orders</span>
+<span class="font-numeric-pos text-numeric-pos text-primary-fixed">12</span>
+</div>
+<div class="flex flex-col items-end border-l border-on-primary-fixed-variant pl-xl">
+<span class="font-label-md text-label-md text-on-primary-container">Current Time</span>
+<span class="font-numeric-pos text-numeric-pos text-primary-fixed">14:45:02</span>
+</div>
+<button class="material-symbols-outlined text-primary-fixed hover:bg-primary-container p-sm rounded-full transition-colors">settings</button>
+</div>
+</header>
+<!-- Main KDS Content Area -->
+<main class="p-md md:p-lg">
+<div class="order-card-grid">
+<!-- Urgent Order Card -->
+<article class="flex flex-col bg-surface-container-lowest text-on-surface rounded-xl overflow-hidden border-2 border-error shadow-xl">
+<div class="bg-error text-on-error px-md py-sm flex justify-between items-center">
+<span class="font-headline-sm text-headline-sm">TABLE 12</span>
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-[20px]">timer</span>
+<span class="font-numeric-pos text-numeric-pos">14:22</span>
+</div>
+</div>
+<div class="p-md flex-grow space-y-md">
+<div class="flex justify-between items-start border-b border-outline-variant pb-sm">
+<div class="flex items-center gap-md">
+<span class="font-numeric-pos text-numeric-pos text-primary bg-primary-fixed w-10 h-10 flex items-center justify-center rounded-lg">2</span>
+<span class="font-headline-sm text-headline-sm">Classic Burger</span>
+</div>
+<div class="bg-error-container text-on-error-container px-sm py-xs rounded font-bold text-label-md">NO ONIONS</div>
+</div>
+<div class="flex justify-between items-start border-b border-outline-variant pb-sm">
+<div class="flex items-center gap-md">
+<span class="font-numeric-pos text-numeric-pos text-primary bg-primary-fixed w-10 h-10 flex items-center justify-center rounded-lg">1</span>
+<span class="font-headline-sm text-headline-sm">Large Fries</span>
+</div>
+</div>
+<div class="flex justify-between items-start border-b border-outline-variant pb-sm">
+<div class="flex items-center gap-md">
+<span class="font-numeric-pos text-numeric-pos text-primary bg-primary-fixed w-10 h-10 flex items-center justify-center rounded-lg">1</span>
+<span class="font-headline-sm text-headline-sm">Coca Cola</span>
+</div>
+</div>
+</div>
+<div class="p-md">
+<button class="w-full bg-secondary text-on-secondary font-headline-sm text-headline-sm py-lg rounded-xl active:scale-[0.98] transition-transform">Mark Ready</button>
+</div>
+</article>
+<!-- Regular Order Card -->
+<article class="flex flex-col bg-surface-container-lowest text-on-surface rounded-xl overflow-hidden border border-outline-variant shadow-md">
+<div class="bg-primary text-on-primary px-md py-sm flex justify-between items-center">
+<span class="font-headline-sm text-headline-sm">TABLE 04</span>
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-[20px]">timer</span>
+<span class="font-numeric-pos text-numeric-pos">08:15</span>
+</div>
+</div>
+<div class="p-md flex-grow space-y-md">
+<div class="flex justify-between items-start border-b border-outline-variant pb-sm">
+<div class="flex items-center gap-md">
+<span class="font-numeric-pos text-numeric-pos text-primary bg-primary-fixed w-10 h-10 flex items-center justify-center rounded-lg">3</span>
+<span class="font-headline-sm text-headline-sm">Chicken Shawarma</span>
+</div>
+<div class="bg-tertiary-fixed text-on-tertiary-fixed-variant px-sm py-xs rounded font-bold text-label-md">EXTRA TAHINI</div>
+</div>
+<div class="flex justify-between items-start border-b border-outline-variant pb-sm">
+<div class="flex items-center gap-md">
+<span class="font-numeric-pos text-numeric-pos text-primary bg-primary-fixed w-10 h-10 flex items-center justify-center rounded-lg">1</span>
+<span class="font-headline-sm text-headline-sm">Mixed Salad</span>
+</div>
+</div>
+</div>
+<div class="p-md">
+<button class="w-full bg-secondary text-on-secondary font-headline-sm text-headline-sm py-lg rounded-xl active:scale-[0.98] transition-transform">Mark Ready</button>
+</div>
+</article>
+<!-- Delivery Order Card -->
+<article class="flex flex-col bg-surface-container-lowest text-on-surface rounded-xl overflow-hidden border border-outline-variant shadow-md">
+<div class="bg-primary-container text-on-primary-container px-md py-sm flex justify-between items-center">
+<span class="font-headline-sm text-headline-sm flex items-center gap-xs"><span class="material-symbols-outlined">delivery_dining</span> DEL-902</span>
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-[20px]">timer</span>
+<span class="font-numeric-pos text-numeric-pos">04:45</span>
+</div>
+</div>
+<div class="p-md flex-grow space-y-md">
+<div class="flex justify-between items-start border-b border-outline-variant pb-sm">
+<div class="flex items-center gap-md">
+<span class="font-numeric-pos text-numeric-pos text-primary bg-primary-fixed w-10 h-10 flex items-center justify-center rounded-lg">1</span>
+<span class="font-headline-sm text-headline-sm">Beef Kofta Platter</span>
+</div>
+</div>
+<div class="flex justify-between items-start border-b border-outline-variant pb-sm">
+<div class="flex items-center gap-md">
+<span class="font-numeric-pos text-numeric-pos text-primary bg-primary-fixed w-10 h-10 flex items-center justify-center rounded-lg">2</span>
+<span class="font-headline-sm text-headline-sm">Basmati Rice</span>
+</div>
+</div>
+</div>
+<div class="p-md">
+<button class="w-full bg-secondary text-on-secondary font-headline-sm text-headline-sm py-lg rounded-xl active:scale-[0.98] transition-transform">Mark Ready</button>
+</div>
+</article>
+<!-- Late Order Card -->
+<article class="flex flex-col bg-surface-container-lowest text-on-surface rounded-xl overflow-hidden border-2 border-error shadow-xl ring-4 ring-error/20">
+<div class="bg-error text-on-error px-md py-sm flex justify-between items-center">
+<span class="font-headline-sm text-headline-sm">TABLE 21</span>
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-[20px]">warning</span>
+<span class="font-numeric-pos text-numeric-pos">22:05</span>
+</div>
+</div>
+<div class="p-md flex-grow space-y-md">
+<div class="flex justify-between items-start border-b border-outline-variant pb-sm">
+<div class="flex items-center gap-md">
+<span class="font-numeric-pos text-numeric-pos text-primary bg-primary-fixed w-10 h-10 flex items-center justify-center rounded-lg">4</span>
+<span class="font-headline-sm text-headline-sm">Margherita Pizza</span>
+</div>
+<div class="bg-error-container text-on-error-container px-sm py-xs rounded font-bold text-label-md">WELL DONE</div>
+</div>
+</div>
+<div class="p-md">
+<button class="w-full bg-secondary text-on-secondary font-headline-sm text-headline-sm py-lg rounded-xl active:scale-[0.98] transition-transform">Mark Ready</button>
+</div>
+</article>
+<!-- Standard Card -->
+<article class="flex flex-col bg-surface-container-lowest text-on-surface rounded-xl overflow-hidden border border-outline-variant shadow-md">
+<div class="bg-primary text-on-primary px-md py-sm flex justify-between items-center">
+<span class="font-headline-sm text-headline-sm">TABLE 08</span>
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-[20px]">timer</span>
+<span class="font-numeric-pos text-numeric-pos">02:12</span>
+</div>
+</div>
+<div class="p-md flex-grow space-y-md">
+<div class="flex justify-between items-start border-b border-outline-variant pb-sm">
+<div class="flex items-center gap-md">
+<span class="font-numeric-pos text-numeric-pos text-primary bg-primary-fixed w-10 h-10 flex items-center justify-center rounded-lg">1</span>
+<span class="font-headline-sm text-headline-sm">Lentil Soup</span>
+</div>
+</div>
+<div class="flex justify-between items-start border-b border-outline-variant pb-sm">
+<div class="flex items-center gap-md">
+<span class="font-numeric-pos text-numeric-pos text-primary bg-primary-fixed w-10 h-10 flex items-center justify-center rounded-lg">2</span>
+<span class="font-headline-sm text-headline-sm">Garlic Bread</span>
+</div>
+</div>
+</div>
+<div class="p-md">
+<button class="w-full bg-secondary text-on-secondary font-headline-sm text-headline-sm py-lg rounded-xl active:scale-[0.98] transition-transform">Mark Ready</button>
+</div>
+</article>
+<!-- Standard Card -->
+<article class="flex flex-col bg-surface-container-lowest text-on-surface rounded-xl overflow-hidden border border-outline-variant shadow-md">
+<div class="bg-primary text-on-primary px-md py-sm flex justify-between items-center">
+<span class="font-headline-sm text-headline-sm">TABLE 15</span>
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-[20px]">timer</span>
+<span class="font-numeric-pos text-numeric-pos">01:45</span>
+</div>
+</div>
+<div class="p-md flex-grow space-y-md">
+<div class="flex justify-between items-start border-b border-outline-variant pb-sm">
+<div class="flex items-center gap-md">
+<span class="font-numeric-pos text-numeric-pos text-primary bg-primary-fixed w-10 h-10 flex items-center justify-center rounded-lg">2</span>
+<span class="font-headline-sm text-headline-sm">Fruit Salad Bowl</span>
+</div>
+</div>
+</div>
+<div class="p-md">
+<button class="w-full bg-secondary text-on-secondary font-headline-sm text-headline-sm py-lg rounded-xl active:scale-[0.98] transition-transform">Mark Ready</button>
+</div>
+</article>
+</div>
+</main>
+<!-- Footer Controls -->
+<footer class="fixed bottom-0 left-0 right-0 bg-primary-container px-lg py-sm flex justify-between items-center border-t border-on-primary-fixed-variant">
+<div class="flex gap-lg">
+<button class="flex items-center gap-sm text-primary-fixed font-label-md text-label-md bg-primary px-md py-sm rounded-lg border border-on-primary-fixed-variant">
+<span class="material-symbols-outlined">history</span> Order History
+            </button>
+<button class="flex items-center gap-sm text-primary-fixed font-label-md text-label-md bg-primary px-md py-sm rounded-lg border border-on-primary-fixed-variant">
+<span class="material-symbols-outlined">print</span> Reprint All
+            </button>
+</div>
+<div class="flex items-center gap-md">
+<div class="w-3 h-3 rounded-full bg-secondary shadow-[0_0_8px_rgba(104,219,169,0.8)]"></div>
+<span class="font-label-md text-label-md text-primary-fixed">Kitchen Printer Online</span>
+<div class="ml-lg flex gap-xs">
+<button class="material-symbols-outlined text-primary-fixed bg-primary p-sm rounded border border-on-primary-fixed-variant">arrow_back</button>
+<button class="material-symbols-outlined text-primary-fixed bg-primary p-sm rounded border border-on-primary-fixed-variant">arrow_forward</button>
+</div>
+</div>
+</footer>
+</body></html>

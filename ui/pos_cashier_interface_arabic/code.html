@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@100;200;300;400;500;600;700&amp;family=IBM+Plex+Sans:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-container": "#381a00",
+                    "tertiary": "#170700",
+                    "on-tertiary-fixed-variant": "#6e3900",
+                    "primary-fixed": "#e3dfff",
+                    "on-primary": "#ffffff",
+                    "surface-container": "#eceef0",
+                    "surface": "#f7f9fb",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary-container": "#8683ba",
+                    "background": "#f7f9fb",
+                    "error-container": "#ffdad6",
+                    "surface-container-highest": "#e0e3e5",
+                    "on-secondary-container": "#00714e",
+                    "on-tertiary-container": "#cf7100",
+                    "primary-fixed-dim": "#c4c1fb",
+                    "on-surface-variant": "#47464f",
+                    "surface-dim": "#d8dadc",
+                    "surface-variant": "#e0e3e5",
+                    "secondary-fixed-dim": "#68dba9",
+                    "primary-container": "#1e1b4b",
+                    "surface-tint": "#5b598c",
+                    "on-error": "#ffffff",
+                    "secondary-fixed": "#85f8c4",
+                    "on-primary-fixed": "#181445",
+                    "primary": "#070235",
+                    "outline": "#787680",
+                    "tertiary-fixed-dim": "#ffb77d",
+                    "on-tertiary-fixed": "#2f1500",
+                    "inverse-surface": "#2d3133",
+                    "surface-container-high": "#e6e8ea",
+                    "on-secondary-fixed-variant": "#005137",
+                    "surface-container-low": "#f2f4f6",
+                    "on-primary-fixed-variant": "#444173",
+                    "on-error-container": "#93000a",
+                    "secondary-container": "#82f5c1",
+                    "outline-variant": "#c8c5d0",
+                    "on-surface": "#191c1e",
+                    "on-secondary-fixed": "#002114",
+                    "inverse-primary": "#c4c1fb",
+                    "on-background": "#191c1e",
+                    "inverse-on-surface": "#eff1f3",
+                    "secondary": "#006c4a",
+                    "surface-bright": "#f7f9fb",
+                    "tertiary-fixed": "#ffdcc3",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "error": "#ba1a1a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "sm": "8px",
+                    "lg": "24px",
+                    "container-max": "1440px",
+                    "base": "4px",
+                    "xs": "4px",
+                    "gutter": "16px",
+                    "md": "16px",
+                    "xl": "32px"
+            },
+            "fontFamily": {
+                    "display-lg": ["IBM Plex Sans Arabic"],
+                    "body-md": ["IBM Plex Sans Arabic"],
+                    "label-md": ["IBM Plex Sans Arabic"],
+                    "headline-sm": ["IBM Plex Sans Arabic"],
+                    "headline-md": ["IBM Plex Sans Arabic"],
+                    "body-lg": ["IBM Plex Sans Arabic"],
+                    "numeric-pos": ["IBM Plex Sans"]
+            },
+            "fontSize": {
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "numeric-pos": ["22px", {"lineHeight": "24px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        body { font-family: 'IBM Plex Sans Arabic', sans-serif; }
+        .pos-grid { display: grid; grid-template-columns: 380px 1fr 256px; height: 100vh; }
+    </style>
+</head>
+<body class="bg-background text-on-surface">
+<div class="pos-grid">
+<!-- LEFT PANEL: CART & CHECKOUT -->
+<div class="bg-surface border-l border-outline-variant flex flex-col h-full overflow-hidden">
+<div class="p-md border-b border-outline-variant flex justify-between items-center bg-surface-container-low">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-primary">الطلبات الحالية</h2>
+<p class="font-label-md text-label-md text-on-surface-variant">عميل عابر</p>
+</div>
+<button class="p-sm hover:bg-surface-container-highest rounded-full transition-colors">
+<span class="material-symbols-outlined">person_add</span>
+</button>
+</div>
+<!-- Cart Items -->
+<div class="flex-grow overflow-y-auto p-md space-y-md">
+<!-- Item 1 -->
+<div class="flex gap-md items-start p-sm bg-surface-container-lowest border border-outline-variant rounded-lg">
+<div class="w-16 h-16 rounded-lg bg-surface-container overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="A professional culinary photograph of a gourmet cheeseburger with melting cheddar, fresh lettuce, and ripe tomatoes on a toasted brioche bun. The lighting is warm and directional, emphasizing textures and vibrant colors. The background is a clean, minimalist professional kitchen setting with soft bokeh." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_hQdjLcENgM21D_p-xwxjtsSsmSP9G70DjN16WXXrWmNNlSeuFUeeoK3K3ZINDaq50OJ0eFSz5cuf02TuQrkK9aymllsdfIleznafh8goeaPjfD1IvDf5wAV-7Z7pQGOaKevxpreRoa5LYAQDbaqsEjQZqN1wFSPyrGHIa-qVr9HvVcQCHnnK0y02qF7ohtt0ugROfRDl9z9RafdmiNjta-OxeGLds6sBe9fuXr9nNG3-n2vgtAqaH92POOgqMBm-wrO9Kn7-QDVt"/>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between">
+<h4 class="font-label-md text-label-md font-bold">برجر كلاسيك بالجبنة</h4>
+<span class="font-numeric-pos text-primary">١٨٥.٠٠ ج.م</span>
+</div>
+<p class="font-label-md text-label-md text-on-surface-variant">بدون بصل، جبنة إضافية</p>
+<div class="flex items-center gap-md mt-sm">
+<button class="w-8 h-8 rounded-full border border-outline flex items-center justify-center hover:bg-surface-container-high">-</button>
+<span class="font-numeric-pos">١</span>
+<button class="w-8 h-8 rounded-full border border-outline flex items-center justify-center hover:bg-surface-container-high">+</button>
+</div>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="flex gap-md items-start p-sm bg-surface-container-lowest border border-outline-variant rounded-lg">
+<div class="w-16 h-16 rounded-lg bg-surface-container overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="A refreshing chilled mojito cocktail in a tall glass with lime slices and fresh mint leaves. The lighting is bright and airy with a cool-toned light-mode aesthetic, highlighting the condensation on the glass and the clarity of the ice cubes against a soft-focus cafe backdrop." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTPoW97b66kw8AsdVLVx1iwT2j36nwZ7BGLGgn6RkVWIPE3dNJeCHKaFMm95vtCASrAXBdd9lJaLMgpCG8PTaVYqjZRzCp9--WkQoLrOrXCxg3EBIK7sMEWKVA9cNUD-rdOjhmWdRWkzA0B8fp3zO45wcRQyhkd_pglyeATrgVK-REAGfGdN2w4f4Z6i3cswUZ0g57JsCIxx3oHrdYXHRjxA6aINflcKAeMROHkvcMsMiyec5_Wx2pMqD8B-lGoVof_tbgxIa_xT7b"/>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between">
+<h4 class="font-label-md text-label-md font-bold">ليمون بالنعناع فريش</h4>
+<span class="font-numeric-pos text-primary">٦٥.٠٠ ج.م</span>
+</div>
+<div class="flex items-center gap-md mt-sm">
+<button class="w-8 h-8 rounded-full border border-outline flex items-center justify-center hover:bg-surface-container-high">-</button>
+<span class="font-numeric-pos">٢</span>
+<button class="w-8 h-8 rounded-full border border-outline flex items-center justify-center hover:bg-surface-container-high">+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Summary & Payment -->
+<div class="p-md bg-surface-container-low border-t border-outline-variant space-y-sm">
+<div class="flex justify-between font-label-md text-label-md">
+<span class="text-on-surface-variant">المجموع الفرعي</span>
+<span class="font-numeric-pos">٣١٥.٠٠ ج.م</span>
+</div>
+<div class="flex justify-between font-label-md text-label-md">
+<span class="text-on-surface-variant">الضريبة (١٤٪)</span>
+<span class="font-numeric-pos">٤٤.١٠ ج.م</span>
+</div>
+<div class="flex justify-between font-label-md text-label-md">
+<span class="text-on-surface-variant">الخصم</span>
+<span class="font-numeric-pos text-error">٠.٠٠ ج.م</span>
+</div>
+<div class="pt-sm border-t border-outline-variant flex justify-between items-center">
+<span class="font-headline-sm text-headline-sm">الإجمالي</span>
+<span class="font-numeric-pos text-headline-md text-primary">٣٥٩.١٠ ج.م</span>
+</div>
+<div class="grid grid-cols-2 gap-sm mt-md">
+<button class="flex flex-col items-center justify-center p-md bg-surface-container-highest rounded-xl border border-outline-variant hover:bg-secondary-container transition-colors group">
+<span class="material-symbols-outlined text-primary mb-1">payments</span>
+<span class="font-label-md">نقدي</span>
+</button>
+<button class="flex flex-col items-center justify-center p-md bg-surface-container-highest rounded-xl border border-outline-variant hover:bg-secondary-container transition-colors">
+<span class="material-symbols-outlined text-primary mb-1">credit_card</span>
+<span class="font-label-md">بطاقة بنكية</span>
+</button>
+</div>
+<button class="w-full py-lg bg-primary text-on-primary rounded-xl font-headline-sm flex items-center justify-center gap-md hover:bg-primary-container active:scale-[0.98] transition-all">
+<span>إتمام الدفع</span>
+<span class="material-symbols-outlined">check_circle</span>
+</button>
+</div>
+</div>
+<!-- CENTER PANEL: CATALOG -->
+<div class="flex flex-col h-full bg-background">
+<!-- Top Search Bar -->
+<div class="h-16 flex items-center px-lg bg-surface border-b border-outline-variant gap-lg">
+<div class="flex-grow flex items-center bg-surface-container-low rounded-full px-md gap-sm border border-outline-variant">
+<span class="material-symbols-outlined text-on-surface-variant">search</span>
+<input class="bg-transparent border-none focus:ring-0 w-full py-2 font-label-md" placeholder="ابحث عن منتج أو كود..." type="text"/>
+</div>
+<div class="flex items-center gap-sm">
+<button class="p-sm hover:bg-surface-container-highest rounded-full transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="flex items-center gap-xs px-md py-sm bg-surface-container-high rounded-full font-label-md hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined">location_on</span>
+<span>فرع القاهرة - التجمع</span>
+</button>
+</div>
+</div>
+<!-- Categories -->
+<div class="p-lg flex gap-md overflow-x-auto no-scrollbar">
+<button class="px-lg py-sm bg-primary text-on-primary rounded-full font-label-md whitespace-nowrap">كل الأصناف</button>
+<button class="px-lg py-sm bg-surface-container-high text-on-surface-variant rounded-full font-label-md whitespace-nowrap hover:bg-surface-container-highest transition-colors">الأطباق الرئيسية</button>
+<button class="px-lg py-sm bg-surface-container-high text-on-surface-variant rounded-full font-label-md whitespace-nowrap hover:bg-surface-container-highest transition-colors">المشروبات</button>
+<button class="px-lg py-sm bg-surface-container-high text-on-surface-variant rounded-full font-label-md whitespace-nowrap hover:bg-surface-container-highest transition-colors">المقبلات</button>
+<button class="px-lg py-sm bg-surface-container-high text-on-surface-variant rounded-full font-label-md whitespace-nowrap hover:bg-surface-container-highest transition-colors">الحلويات</button>
+<button class="px-lg py-sm bg-surface-container-high text-on-surface-variant rounded-full font-label-md whitespace-nowrap hover:bg-surface-container-highest transition-colors">عروض التوفير</button>
+</div>
+<!-- Product Grid -->
+<div class="p-lg grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-lg overflow-y-auto">
+<!-- Product Card 1 -->
+<button class="flex flex-col bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hover:shadow-md active:scale-95 transition-all text-right">
+<div class="h-32 w-full bg-surface-container relative">
+<img class="w-full h-full object-cover" data-alt="A detailed closeup of a premium double beef burger with melted cheese and signature sauce. Professional commercial lighting showcases the glossy bun and fresh ingredients. The image has a clean, high-contrast corporate modern look with a soft neutral background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAiB-WtFuELx3YpRSwTwidM1UfeWjBHqLqP9dKS_TRhKTIDVlg8YGV7tjVB1-JAV_SJrn6KRXmgAbhrLZCkznftT8kWxQeJ07flWz5Or1D6HyjZ50gJoBLuXuYyOMTrb6aNG5EpNdyQR31MDNjRSuwkJbaiRKQVjVZFIgFlZoN96Uel0GtlOamWaTdwEKgq3jD3IWiJGJJrdw_NwifrJbypewaFwyWeEpsGVERj8Cd2OtwYTlu73ReIoJtI4namVQRAx2DaazDcMFZ"/>
+</div>
+<div class="p-md flex flex-col gap-xs">
+<span class="font-label-md font-bold">برجر لحم مشوي</span>
+<span class="font-numeric-pos text-primary">١٤٥.٠٠ ج.م</span>
+</div>
+</button>
+<!-- Product Card 2 -->
+<button class="flex flex-col bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hover:shadow-md active:scale-95 transition-all text-right">
+<div class="h-32 w-full bg-surface-container relative">
+<img class="w-full h-full object-cover" data-alt="An artisanal wood-fired pepperoni pizza with bubbly mozzarella and fresh basil leaves on a rustic board. The photography uses high-end corporate styling with sharp focus and natural but controlled lighting. The color palette is warm and appetizing." src="https://lh3.googleusercontent.com/aida-public/AB6AXuADWllSyTjZ1oKipFGH3K7VKYF_duTrvEFDosdZQhKYwJ8pabt9Ka5pNHGmmuMCMu7eRnBelZY-ULN8CqWKi60D9ipQoPajAowwVlC4F8hsIXWcWaqVlWo-IuVcZCddKEh2UN6XqpE43R3yx41kb4yU0h_4fNctJ9qE8CpQFcU5ltqYXsFUS5fTA42JSCUUjFz_uCXV0XbZEM8jtRbnF3YoVhbQiJHpyhcMiAHxCtBxp1XACdOcGygcM6qdz90BP3pp0S0NDvmcdrhZ"/>
+</div>
+<div class="p-md flex flex-col gap-xs">
+<span class="font-label-md font-bold">بيتزا بيبيروني</span>
+<span class="font-numeric-pos text-primary">١٩٥.٠٠ ج.م</span>
+</div>
+</button>
+<!-- Product Card 3 -->
+<button class="flex flex-col bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hover:shadow-md active:scale-95 transition-all text-right">
+<div class="h-32 w-full bg-surface-container relative">
+<img class="w-full h-full object-cover" data-alt="Golden crispy chicken tenders served with a side of creamy honey mustard sauce. The shot is high-density and sharp, highlighting the crunchy texture under warm professional studio lighting. Minimalist presentation consistent with a modern retail POS aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHFMOaqTAh7Y6IkiuBQtBBpHT9vRXfccLnmrEivU7eMaQn3rvxB7PAtdm5_ioRLYT52qyfTRUVFBiNrTPKt2cT3rcuCfoAWCxz0xtuPO1pY8XDsZkyCAHV532MeMQzjT8k1qNd1-4M-qcDvSAVyVtkVOq7-IcAG7eGxuRbITAPqDnPlEah1paSR4lKYdtRWRFydzdcqI_S1Y7BOozb2ePtXh0WC_30gVx_SM0mIza2rP2yql65E1N4mxblixOzuDK-azNs3a_qCQuY"/>
+</div>
+<div class="p-md flex flex-col gap-xs">
+<span class="font-label-md font-bold">ستربس دجاج مقرمش</span>
+<span class="font-numeric-pos text-primary">١٢٠.٠٠ ج.م</span>
+</div>
+</button>
+<!-- Product Card 4 -->
+<button class="flex flex-col bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hover:shadow-md active:scale-95 transition-all text-right">
+<div class="h-32 w-full bg-surface-container relative">
+<img class="w-full h-full object-cover" data-alt="A vibrant fresh Greek salad with kalamata olives, feta cheese, and crisp cucumbers in a designer ceramic bowl. Soft, diffused daylight lighting creates a clean, healthy, and high-quality visual feel. The aesthetic is modern and fresh." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4A8kWblvWZDqr7BVBK51Hx3EDe-DrRkm1LeTst0hQPcUsuA4kbUeji2GM_0M0A_B3WOazLoYLJqJNshIxIdxQjc8MRB6g29w1EK0NsdydvANrz4I3yS2whX_G8NRFoQ13bDHNVnJrT6t-5PYuFenw1Oz0fZQ3RLyxYlAW13Yfak8Zi5lPNccjxghdFIw2X6JCy_IP0o0baJPm6mi5_UXpClOF9ct6ZVkWQsYROGw1eimpSvwCSs2jWALsXod9HKUNm-ogMMqNuuQq"/>
+</div>
+<div class="p-md flex flex-col gap-xs">
+<span class="font-label-md font-bold">سلطة يونانية</span>
+<span class="font-numeric-pos text-primary">٨٥.٠٠ ج.م</span>
+</div>
+</button>
+<!-- Product Card 5 -->
+<button class="flex flex-col bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hover:shadow-md active:scale-95 transition-all text-right">
+<div class="h-32 w-full bg-surface-container relative">
+<img class="w-full h-full object-cover" data-alt="A plate of traditional Italian pasta carbonara with creamy sauce and pancetta, garnished with freshly ground black pepper. Professional high-key lighting emphasize the rich texture. The mood is sophisticated and culinary focused." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAzJjiGVd-YxLhHkNP-Y9eqs9KnmSPhrHKXqeOcYD4SzAy6wiqzrFgAvghPvIWek4QjR7n6mHwUy9d891EcEKquwkJKyZGu7fGrEuqf4tG7sdBmyJh1eRTLS7qSb51QwPVYDEp9REo0UvPP1O3st2tZy9L3j88QHzkq0RNrM19S2CJ9BnTOVT_cca0MdKv5NLYEovX8Z13caQNo415n8Cp_UWN5xF2Kwg96qQONb2IC2RndLjgNAvau84Yvc5duZUxq4B-hjgSx6tME"/>
+</div>
+<div class="p-md flex flex-col gap-xs">
+<span class="font-label-md font-bold">باستا كاربونارا</span>
+<span class="font-numeric-pos text-primary">١٦٥.٠٠ ج.م</span>
+</div>
+</button>
+<!-- Product Card 6 -->
+<button class="flex flex-col bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hover:shadow-md active:scale-95 transition-all text-right">
+<div class="h-32 w-full bg-surface-container relative">
+<img class="w-full h-full object-cover" data-alt="A gourmet steak served with roasted potatoes and rosemary sprigs. Moody, high-end restaurant lighting with deep shadows and warm highlights on the seared meat surface. Top-down professional photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxLpgM2PAEU5QWL1zffjLCMu0BaSGDnR00DrQliNeEUVpfTBCj69z1JKiRfQ96QTInkZ4gcl1sGYY18fEbeB5jPIXGBZaoDTgwKU1d7KsrSdapZ_xF28cVritjj5ZyyazxfxZE_Nye44Xi1kd_MUpeCHpuea7N-RcUYzXEDOPXADVnMIV0swBV06_wuLcGto4XrfycC5ktk6bwsQrWdx2Jtiz_NyhUgg9DiqIzsEaubQgMQxpJd_sc31uhdrawcXAnhANUMcWh0eE8"/>
+</div>
+<div class="p-md flex flex-col gap-xs">
+<span class="font-label-md font-bold">ستيك مشوي</span>
+<span class="font-numeric-pos text-primary">٤٥٠.٠٠ ج.م</span>
+</div>
+</button>
+</div>
+</div>
+<!-- RIGHT SIDEBAR: NAVIGATION -->
+<aside class="h-screen w-64 bg-surface border-r border-outline-variant flex flex-col py-lg px-md z-50">
+<div class="mb-xl px-md">
+<h1 class="text-headline-md font-headline-md font-black text-primary">SmartPOS</h1>
+<p class="font-label-md text-label-md text-on-surface-variant">مصر</p>
+</div>
+<nav class="flex-grow space-y-sm">
+<div class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg cursor-pointer">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md">لوحة القيادة</span>
+</div>
+<div class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg cursor-pointer">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-label-md">المنتجات</span>
+</div>
+<div class="flex items-center gap-md px-md py-sm bg-primary-container text-on-primary-container rounded-lg font-bold">
+<span class="material-symbols-outlined">point_of_sale</span>
+<span class="font-label-md">نقطة البيع</span>
+</div>
+<div class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg cursor-pointer">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-md">العملاء</span>
+</div>
+<div class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg cursor-pointer">
+<span class="material-symbols-outlined">restaurant</span>
+<span class="font-label-md">المطعم</span>
+</div>
+<div class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg cursor-pointer">
+<span class="material-symbols-outlined">assessment</span>
+<span class="font-label-md">التقارير</span>
+</div>
+</nav>
+<div class="mt-auto border-t border-outline-variant pt-lg space-y-sm">
+<div class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg cursor-pointer">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md">الإعدادات</span>
+</div>
+<div class="flex items-center gap-md px-md py-sm">
+<div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center text-on-primary-fixed font-bold">
+                        أ
+                    </div>
+<div class="flex flex-col">
+<span class="font-label-md font-bold">أحمد كمال</span>
+<span class="text-[10px] text-on-surface-variant">كاشير رئيسي</span>
+</div>
+</div>
+</div>
+</aside>
+</div>
+</body></html>

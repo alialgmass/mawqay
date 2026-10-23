@@ -1,0 +1,74 @@
+{
+    "common": {
+        "save": "حفظ",
+        "saveChanges": "حفظ التغييرات",
+        "cancel": "إلغاء",
+        "delete": "حذف",
+        "edit": "تعديل",
+        "create": "إنشاء",
+        "add": "إضافة",
+        "actions": "الإجراءات",
+        "status": "الحالة",
+        "name": "الاسم",
+        "search": "بحث...",
+        "filter": "تصفية",
+        "all": "الكل",
+        "back": "رجوع",
+        "close": "إغلاق",
+        "confirm": "تأكيد",
+        "discard": "تجاهل",
+        "loading": "جارٍ التحميل...",
+        "noResults": "لا توجد نتائج.",
+        "unknown": "غير معروف",
+        "none": "بدون",
+        "total": "الإجمالي",
+        "date": "التاريخ",
+        "type": "النوع",
+        "amount": "المبلغ",
+        "notes": "ملاحظات",
+        "phone": "الهاتف",
+        "email": "البريد الإلكتروني",
+        "address": "العنوان",
+        "print": "طباعة",
+        "download": "تنزيل",
+        "export": "تصدير",
+        "import": "استيراد",
+        "view": "عرض",
+        "details": "التفاصيل",
+        "quantity": "الكمية",
+        "price": "السعر",
+        "cost": "التكلفة"
+    },
+    "status": {
+        "active": "نشط",
+        "inactive": "غير نشط",
+        "outOfStock": "نفد المخزون",
+        "low": "منخفض",
+        "available": "متاح",
+        "occupied": "مشغول",
+        "reserved": "محجوز",
+        "paid": "مدفوع",
+        "partial": "جزئي",
+        "unpaid": "غير مدفوع"
+    },
+    "emptyState": {
+        "title": "لا يوجد شيء هنا بعد",
+        "description": "ابدأ بإنشاء أول عنصر لك.",
+        "noSearchResults": "لا توجد عناصر تطابق بحثك. جرّب تعديل عوامل التصفية."
+    },
+    "confirmDelete": {
+        "title": "هل أنت متأكد تمامًا؟",
+        "description": "لا يمكن التراجع عن هذا الإجراء. سيتم حذف العنصر نهائيًا.",
+        "confirm": "نعم، احذفه",
+        "cancel": "إلغاء"
+    },
+    "pagination": {
+        "previous": "السابق",
+        "next": "التالي",
+        "summary": "عرض :from–:to من :total"
+    },
+    "searchFilter": {
+        "placeholder": "ابحث بالاسم أو الكود...",
+        "reset": "إعادة تعيين التصفية"
+    }
+}

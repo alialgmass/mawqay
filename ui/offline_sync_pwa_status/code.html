@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+
+<html dir="ltr" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;family=IBM+Plex+Sans:wght@400;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'IBM Plex Sans Arabic', sans-serif;
+            background-color: #f7f9fb;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "background": "#f7f9fb",
+                        "secondary-fixed-dim": "#68dba9",
+                        "primary-container": "#1e1b4b",
+                        "error-container": "#ffdad6",
+                        "on-secondary-fixed-variant": "#005137",
+                        "tertiary-container": "#381a00",
+                        "on-tertiary-container": "#cf7100",
+                        "on-secondary-fixed": "#002114",
+                        "on-error": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "on-surface-variant": "#47464f",
+                        "surface-bright": "#f7f9fb",
+                        "tertiary-fixed": "#ffdcc3",
+                        "tertiary-fixed-dim": "#ffb77d",
+                        "on-surface": "#191c1e",
+                        "on-primary-fixed-variant": "#444173",
+                        "on-tertiary": "#ffffff",
+                        "primary": "#070235",
+                        "on-secondary-container": "#00714e",
+                        "secondary": "#006c4a",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-container": "#82f5c1",
+                        "surface-tint": "#5b598c",
+                        "inverse-surface": "#2d3133",
+                        "surface-container-low": "#f2f4f6",
+                        "inverse-primary": "#c4c1fb",
+                        "surface-variant": "#e0e3e5",
+                        "on-background": "#191c1e",
+                        "error": "#ba1a1a",
+                        "outline": "#787680",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed-variant": "#6e3900",
+                        "inverse-on-surface": "#eff1f3",
+                        "primary-fixed": "#e3dfff",
+                        "surface-container-high": "#e6e8ea",
+                        "surface": "#f7f9fb",
+                        "on-primary-fixed": "#181445",
+                        "on-tertiary-fixed": "#2f1500",
+                        "primary-fixed-dim": "#c4c1fb",
+                        "on-secondary": "#ffffff",
+                        "outline-variant": "#c8c5d0",
+                        "surface-container": "#eceef0",
+                        "secondary-fixed": "#85f8c4",
+                        "surface-dim": "#d8dadc",
+                        "on-primary-container": "#8683ba",
+                        "surface-container-highest": "#e0e3e5",
+                        "tertiary": "#170700"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "xs": "4px",
+                        "container-max": "1440px",
+                        "md": "16px",
+                        "sm": "8px",
+                        "base": "4px",
+                        "xl": "32px",
+                        "lg": "24px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["IBM Plex Sans Arabic"],
+                        "body-md": ["IBM Plex Sans Arabic"],
+                        "headline-sm": ["IBM Plex Sans Arabic"],
+                        "headline-md": ["IBM Plex Sans Arabic"],
+                        "label-md": ["IBM Plex Sans Arabic"],
+                        "display-lg": ["IBM Plex Sans Arabic"],
+                        "numeric-pos": ["IBM Plex Sans"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "numeric-pos": ["22px", {"lineHeight": "24px", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface">
+<!-- SideNavBar -->
+<aside class="h-screen w-64 fixed left-0 top-0 border-r border-outline-variant bg-surface flex flex-col py-lg px-md z-50">
+<div class="mb-xl px-md">
+<h1 class="text-headline-md font-headline-md font-bold text-primary">Tenant Name</h1>
+<p class="text-label-md font-label-md text-on-surface-variant">Premium Subscription</p>
+</div>
+<nav class="flex-1 space-y-xs">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-md text-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-body-md text-body-md">Products</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">point_of_sale</span>
+<span class="font-body-md text-body-md">POS</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-body-md text-body-md">Customers</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">restaurant</span>
+<span class="font-body-md text-body-md">Restaurant</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">assessment</span>
+<span class="font-body-md text-body-md">Reports</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm bg-primary-container text-on-primary-container rounded-lg font-bold" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body-md text-body-md">Settings</span>
+</a>
+</nav>
+<div class="mt-auto px-md py-md border-t border-outline-variant flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest overflow-hidden">
+<img alt="Tenant Logo" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2OT2KijFwKx9ZJgLPP49PekIY4QHmDGhGpnFJnDtQ_L63Upu_pWC_QT_46cmfNzolFjXJUxXoQ2cC9fU4EDyKdhTyth94J0sfu4g0MRpOi5TcNGI6CaiwEsvQt2GiViurL5zk158e24CQ7Wcga_xcLB6hxQRy666P2xx1r5viN-qyfdzcHhrNxMdE44Nmees-yjPojuz9Ecv5IlppWZrMX-LXN4f_pE7ou5CmPh6yC0-ZG0NBLKpwkkJx7-Z4ab4dtGDOOyuNcDrw"/>
+</div>
+<div>
+<p class="text-label-md font-bold">Admin User</p>
+<p class="text-xs text-on-surface-variant">Cairo Branch</p>
+</div>
+</div>
+</aside>
+<!-- TopAppBar -->
+<header class="flex justify-between items-center h-16 px-lg ml-64 bg-surface border-b border-outline-variant sticky top-0 z-40">
+<div class="flex items-center gap-lg">
+<span class="text-headline-sm font-headline-md font-black text-primary">SmartPOS Egypt</span>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="pl-10 pr-4 py-1.5 rounded-full bg-surface-container-low border-none focus:ring-2 focus:ring-primary text-label-md w-64" placeholder="Search invoices..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="flex items-center gap-xs px-sm py-1.5 rounded-full border border-outline-variant hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-sm">location_on</span>
+<span class="text-label-md">Change Branch</span>
+</button>
+<button class="hover:bg-surface-container-highest rounded-full p-2 transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<div class="w-8 h-8 rounded-full bg-surface-variant overflow-hidden">
+<img alt="User Profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDhYt3y6bfn-dv9ebjrJy19o-WL0D16gCT62q-i_OFXFVlSWd-sH37MmhwDqOc65Z6YeCBBkwmi6CZrhewqsZISaw1IgK7qva64_Kl45xMj8roLTcaW6mDQL0KT4YeX0Nq-xNYTwQ8nqv2h0HVZGV8mleVI34aJRZqnVu0QhJ5dSdh3XaTOBKe5DnsepAHDBKVhx2OWYaElFQeDuyaj-cueJ23I_2DieYMjr3yW2Lc4bUGhjwPDV-XO3Wi59ugfUKprlKorBK5zlHLK"/>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="ml-64 p-lg">
+<div class="max-w-container-max mx-auto space-y-lg">
+<!-- Connection Status Banner -->
+<div class="bg-tertiary-container rounded-xl p-lg flex flex-col md:flex-row items-start md:items-center justify-between gap-md border border-on-tertiary-container/20">
+<div class="flex items-center gap-lg">
+<div class="bg-on-tertiary-container p-3 rounded-full">
+<span class="material-symbols-outlined text-surface">cloud_off</span>
+</div>
+<div>
+<h2 class="text-headline-sm font-headline-sm text-on-tertiary-container">Offline Mode Active - Data saving locally</h2>
+<p class="text-body-md text-on-tertiary-container/80">Your device is currently disconnected. Transactions are being stored securely on this terminal.</p>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<span class="flex items-center gap-xs text-on-tertiary-container font-bold">
+<span class="material-symbols-outlined animate-pulse">sync_problem</span>
+                        Pending: 14 Items
+                    </span>
+</div>
+</div>
+<!-- Dashboard Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-lg">
+<!-- Left Column: Sync Controls & Progress -->
+<div class="lg:col-span-1 space-y-lg">
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg shadow-sm">
+<h3 class="text-headline-sm font-headline-sm mb-md text-primary">Synchronization Control</h3>
+<div class="space-y-lg">
+<div class="space-y-sm">
+<div class="flex justify-between text-label-md">
+<span class="text-on-surface-variant">Sync Progress</span>
+<span class="font-bold text-primary">65%</span>
+</div>
+<div class="w-full bg-surface-container-high h-3 rounded-full overflow-hidden">
+<div class="bg-secondary h-full w-[65%]" style="transition: width 1s ease-in-out"></div>
+</div>
+<p class="text-xs text-on-surface-variant italic">Syncing invoice #EGY-2024-8841...</p>
+</div>
+<button class="w-full bg-primary text-on-primary py-lg rounded-xl font-bold flex items-center justify-center gap-md hover:opacity-90 active:scale-[0.98] transition-all">
+<span class="material-symbols-outlined">sync</span>
+                                Manual Sync Now
+                            </button>
+<div class="grid grid-cols-2 gap-sm">
+<div class="p-md bg-surface-container-low rounded-lg border border-outline-variant/30 text-center">
+<p class="text-xs text-on-surface-variant">Last Sync</p>
+<p class="font-numeric-pos text-label-md">14:22 Today</p>
+</div>
+<div class="p-md bg-surface-container-low rounded-lg border border-outline-variant/30 text-center">
+<p class="text-xs text-on-surface-variant">Queue Size</p>
+<p class="font-numeric-pos text-label-md">1.4 MB</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Connection Insights Card -->
+<div class="relative overflow-hidden rounded-xl h-48 group">
+<img class="w-full h-full object-cover" data-alt="A sophisticated abstract visualization of a global data network with glowing blue connection points and fiber-optic pathways against a dark digital background. The scene represents seamless data flow and modern connectivity in a high-tech corporate environment. The lighting is focused and cinematic, highlighting the intricate mesh of information routes." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfOZTkchSQ-ETDYK98Bx1ODJJEMvT3d0nkn9lVg3dQzVW84zLo2_3BktvxPO8XmD-fA3pcwUPdxcG2hJWMDg6KITKr797W1ibLlneLAjRNfrhFXkIUWex2Sllt_4Ifssta5j0ma3JAm1HwJYZ0wlvVhdjxi4VsCXXBb6EgxP_QDPqPGp7zfri8nJ5zE0x3fqMwGFs_l7ig2HUemVdnbCC456LHUD0HRKDbIU3x4StJZloSuOWu35NnyyFJsOSc2Y6Vb-5s2FL7V-jC"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/90 to-transparent flex flex-col justify-end p-lg">
+<p class="text-on-primary font-bold text-headline-sm">Reliable Infrastructure</p>
+<p class="text-primary-fixed text-label-md">Redundant local storage ensures zero data loss during Egyptian grid fluctuations.</p>
+</div>
+</div>
+</div>
+<!-- Right Column: Pending Sync Queue Table -->
+<div class="lg:col-span-2">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm h-full overflow-hidden flex flex-col">
+<div class="p-lg border-b border-outline-variant flex justify-between items-center bg-surface-container-low">
+<div>
+<h3 class="text-headline-sm font-headline-sm text-primary">Pending Sync Queue</h3>
+<p class="text-label-md text-on-surface-variant">Unsynchronized sales from the last session</p>
+</div>
+<div class="flex gap-sm">
+<button class="px-md py-sm bg-surface-container-lowest border border-outline-variant rounded-lg text-label-md font-bold flex items-center gap-xs hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-sm">filter_list</span>
+                                    Filter
+                                </button>
+<button class="px-md py-sm bg-surface-container-lowest border border-outline-variant rounded-lg text-label-md font-bold flex items-center gap-xs hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-sm">download</span>
+                                    Export CSV
+                                </button>
+</div>
+</div>
+<div class="flex-1 overflow-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container text-on-surface-variant sticky top-0 z-10">
+<tr>
+<th class="px-lg py-sm font-label-md text-label-md uppercase tracking-wider">UUID / Invoice</th>
+<th class="px-lg py-sm font-label-md text-label-md uppercase tracking-wider">Timestamp</th>
+<th class="px-lg py-sm font-label-md text-label-md uppercase tracking-wider">Customer</th>
+<th class="px-lg py-sm font-label-md text-label-md uppercase tracking-wider text-right">Total (EGP)</th>
+<th class="px-lg py-sm font-label-md text-label-md uppercase tracking-wider text-center">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/30">
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-lg py-md font-numeric-pos text-label-md font-bold">#550e8400-e29b-41d4</td>
+<td class="px-lg py-md text-label-md">14:55:02 Today</td>
+<td class="px-lg py-md text-label-md">Guest Customer</td>
+<td class="px-lg py-md font-numeric-pos text-label-md text-right">1,240.50</td>
+<td class="px-lg py-md text-center">
+<span class="inline-flex items-center gap-xs px-2 py-0.5 rounded-full bg-secondary-container/30 text-on-secondary-container text-[10px] font-bold uppercase">
+<span class="w-1.5 h-1.5 bg-secondary rounded-full"></span> Ready
+                                            </span>
+</td>
+</tr>
+<tr class="bg-surface-container-low hover:bg-surface-container-high transition-colors">
+<td class="px-lg py-md font-numeric-pos text-label-md font-bold">#a4f2c110-3321-4d11</td>
+<td class="px-lg py-md text-label-md">14:48:33 Today</td>
+<td class="px-lg py-md text-label-md">Ahmed M. (L03)</td>
+<td class="px-lg py-md font-numeric-pos text-label-md text-right">450.00</td>
+<td class="px-lg py-md text-center">
+<span class="inline-flex items-center gap-xs px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container text-[10px] font-bold uppercase">
+<span class="material-symbols-outlined text-[12px] animate-spin">sync</span> Syncing
+                                            </span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-lg py-md font-numeric-pos text-label-md font-bold">#bc09122a-0081-445a</td>
+<td class="px-lg py-md text-label-md">14:40:12 Today</td>
+<td class="px-lg py-md text-label-md">Walk-in</td>
+<td class="px-lg py-md font-numeric-pos text-label-md text-right">3,120.00</td>
+<td class="px-lg py-md text-center">
+<span class="inline-flex items-center gap-xs px-2 py-0.5 rounded-full bg-surface-container-highest text-on-surface-variant text-[10px] font-bold uppercase">
+                                                Queued
+                                            </span>
+</td>
+</tr>
+<tr class="bg-surface-container-low hover:bg-surface-container-high transition-colors">
+<td class="px-lg py-md font-numeric-pos text-label-md font-bold">#7819dd23-ff12-4c00</td>
+<td class="px-lg py-md text-label-md">14:35:55 Today</td>
+<td class="px-lg py-md text-label-md">Guest Customer</td>
+<td class="px-lg py-md font-numeric-pos text-label-md text-right">185.75</td>
+<td class="px-lg py-md text-center">
+<span class="inline-flex items-center gap-xs px-2 py-0.5 rounded-full bg-error-container text-on-error-container text-[10px] font-bold uppercase">
+<span class="material-symbols-outlined text-[12px]">priority_high</span> Retry
+                                            </span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-lg py-md font-numeric-pos text-label-md font-bold">#0091823a-e112-9981</td>
+<td class="px-lg py-md text-label-md">14:22:10 Today</td>
+<td class="px-lg py-md text-label-md">Sara K.</td>
+<td class="px-lg py-md font-numeric-pos text-label-md text-right">12,400.00</td>
+<td class="px-lg py-md text-center">
+<span class="inline-flex items-center gap-xs px-2 py-0.5 rounded-full bg-surface-container-highest text-on-surface-variant text-[10px] font-bold uppercase">
+                                                Queued
+                                            </span>
+</td>
+</tr>
+<tr class="bg-surface-container-low hover:bg-surface-container-high transition-colors">
+<td class="px-lg py-md font-numeric-pos text-label-md font-bold">#ff011223-9931-11cc</td>
+<td class="px-lg py-md text-label-md">14:15:00 Today</td>
+<td class="px-lg py-md text-label-md">Guest Customer</td>
+<td class="px-lg py-md font-numeric-pos text-label-md text-right">25.00</td>
+<td class="px-lg py-md text-center">
+<span class="inline-flex items-center gap-xs px-2 py-0.5 rounded-full bg-surface-container-highest text-on-surface-variant text-[10px] font-bold uppercase">
+                                                Queued
+                                            </span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-lg py-md font-numeric-pos text-label-md font-bold">#aa112233-bb44-cc55</td>
+<td class="px-lg py-md text-label-md">14:02:45 Today</td>
+<td class="px-lg py-md text-label-md">Nile Hotel Group</td>
+<td class="px-lg py-md font-numeric-pos text-label-md text-right">45,900.00</td>
+<td class="px-lg py-md text-center">
+<span class="inline-flex items-center gap-xs px-2 py-0.5 rounded-full bg-surface-container-highest text-on-surface-variant text-[10px] font-bold uppercase">
+                                                Queued
+                                            </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-md border-t border-outline-variant bg-surface-container-lowest text-right">
+<p class="text-label-md font-bold text-primary">Total Pending Sync Value: <span class="font-numeric-pos">63,321.25 EGP</span></p>
+</div>
+</div>
+</div>
+</div>
+<!-- Bento Status Cards -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-lg">
+<div class="bg-surface-container-lowest p-lg rounded-xl border border-outline-variant flex items-center gap-md">
+<div class="w-12 h-12 bg-primary-container rounded-lg flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined">storage</span>
+</div>
+<div>
+<p class="text-on-surface-variant text-label-md">Disk Storage</p>
+<p class="text-headline-sm font-bold font-numeric-pos text-primary">12.4 GB</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-lg rounded-xl border border-outline-variant flex items-center gap-md">
+<div class="w-12 h-12 bg-secondary-container rounded-lg flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined">wifi_off</span>
+</div>
+<div>
+<p class="text-on-surface-variant text-label-md">Disconnected For</p>
+<p class="text-headline-sm font-bold font-numeric-pos text-secondary">03:42:11</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-lg rounded-xl border border-outline-variant flex items-center gap-md">
+<div class="w-12 h-12 bg-tertiary-container/10 rounded-lg flex items-center justify-center text-on-tertiary-container">
+<span class="material-symbols-outlined">backup</span>
+</div>
+<div>
+<p class="text-on-surface-variant text-label-md">Auto-Sync</p>
+<p class="text-headline-sm font-bold text-primary">Enabled</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-lg rounded-xl border border-outline-variant flex items-center gap-md">
+<div class="w-12 h-12 bg-error-container/20 rounded-lg flex items-center justify-center text-error">
+<span class="material-symbols-outlined">report</span>
+</div>
+<div>
+<p class="text-on-surface-variant text-label-md">Sync Errors</p>
+<p class="text-headline-sm font-bold font-numeric-pos text-error">1</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

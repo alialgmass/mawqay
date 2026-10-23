@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;family=IBM+Plex+Sans:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "background": "#f7f9fb",
+                      "secondary-fixed-dim": "#68dba9",
+                      "primary-container": "#1e1b4b",
+                      "error-container": "#ffdad6",
+                      "on-secondary-fixed-variant": "#005137",
+                      "tertiary-container": "#381a00",
+                      "on-tertiary-container": "#cf7100",
+                      "on-secondary-fixed": "#002114",
+                      "on-error": "#ffffff",
+                      "on-primary": "#ffffff",
+                      "on-surface-variant": "#47464f",
+                      "surface-bright": "#f7f9fb",
+                      "tertiary-fixed": "#ffdcc3",
+                      "tertiary-fixed-dim": "#ffb77d",
+                      "on-surface": "#191c1e",
+                      "on-primary-fixed-variant": "#444173",
+                      "on-tertiary": "#ffffff",
+                      "primary": "#070235",
+                      "on-secondary-container": "#00714e",
+                      "secondary": "#006c4a",
+                      "surface-container-lowest": "#ffffff",
+                      "secondary-container": "#82f5c1",
+                      "surface-tint": "#5b598c",
+                      "inverse-surface": "#2d3133",
+                      "surface-container-low": "#f2f4f6",
+                      "inverse-primary": "#c4c1fb",
+                      "surface-variant": "#e0e3e5",
+                      "on-background": "#191c1e",
+                      "error": "#ba1a1a",
+                      "outline": "#787680",
+                      "on-error-container": "#93000a",
+                      "on-tertiary-fixed-variant": "#6e3900",
+                      "inverse-on-surface": "#eff1f3",
+                      "primary-fixed": "#e3dfff",
+                      "surface-container-high": "#e6e8ea",
+                      "surface": "#f7f9fb",
+                      "on-primary-fixed": "#181445",
+                      "on-tertiary-fixed": "#2f1500",
+                      "primary-fixed-dim": "#c4c1fb",
+                      "on-secondary": "#ffffff",
+                      "outline-variant": "#c8c5d0",
+                      "surface-container": "#eceef0",
+                      "secondary-fixed": "#85f8c4",
+                      "surface-dim": "#d8dadc",
+                      "on-primary-container": "#8683ba",
+                      "surface-container-highest": "#e0e3e5",
+                      "tertiary": "#170700"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "gutter": "16px",
+                      "xs": "4px",
+                      "container-max": "1440px",
+                      "md": "16px",
+                      "sm": "8px",
+                      "base": "4px",
+                      "xl": "32px",
+                      "lg": "24px"
+              },
+              "fontFamily": {
+                      "body-lg": ["IBM Plex Sans Arabic"],
+                      "body-md": ["IBM Plex Sans Arabic"],
+                      "headline-sm": ["IBM Plex Sans Arabic"],
+                      "headline-md": ["IBM Plex Sans Arabic"],
+                      "label-md": ["IBM Plex Sans Arabic"],
+                      "display-lg": ["IBM Plex Sans Arabic"],
+                      "numeric-pos": ["IBM Plex Sans"]
+              },
+              "fontSize": {
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                      "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "numeric-pos": ["22px", {"lineHeight": "24px", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        body {
+            background-color: #f7f9fb;
+            font-family: 'IBM Plex Sans Arabic', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c8c5d0;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #787680;
+        }
+    </style>
+</head>
+<body class="text-on-surface">
+<!-- SideNavBar Anchor -->
+<aside class="h-screen w-64 fixed left-0 top-0 border-r border-outline-variant bg-surface flex flex-col h-full py-lg px-md z-50">
+<div class="mb-xl px-sm">
+<h1 class="text-headline-md font-headline-md font-bold text-primary">Tenant Name</h1>
+<p class="text-label-md font-label-md text-on-surface-variant">Premium Subscription</p>
+</div>
+<nav class="flex-grow space-y-xs">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-md text-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-body-md text-body-md">Products</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined">point_of_sale</span>
+<span class="font-body-md text-body-md">POS</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm bg-primary-container text-on-primary-container rounded-lg font-bold active:scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-body-md text-body-md">Customers</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined">restaurant</span>
+<span class="font-body-md text-body-md">Restaurant</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined">assessment</span>
+<span class="font-body-md text-body-md">Reports</span>
+</a>
+</nav>
+<div class="mt-auto border-t border-outline-variant pt-lg">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body-md text-body-md">Settings</span>
+</a>
+</div>
+</aside>
+<!-- TopAppBar Anchor -->
+<header class="docked full-width top-0 sticky z-40 flex justify-between items-center h-16 px-lg ml-64 bg-surface border-b border-outline-variant">
+<div class="flex items-center gap-lg">
+<span class="text-headline-sm font-headline-md font-black text-primary">SmartPOS Egypt</span>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="bg-surface-container-low border border-outline-variant rounded-full pl-10 pr-lg py-sm text-label-md focus:outline-none focus:ring-2 focus:ring-primary-fixed w-64" placeholder="Search customers or debt..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="flex items-center gap-xs px-md py-sm rounded-full bg-secondary-container text-on-secondary-container text-label-md font-bold hover:opacity-90 active:opacity-80 transition-opacity">
+<span class="material-symbols-outlined text-sm">location_on</span>
+                Change Branch
+            </button>
+<div class="hover:bg-surface-container-highest rounded-full p-2 transition-opacity cursor-pointer">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+</div>
+<div class="h-10 w-10 rounded-full bg-primary-fixed flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Close-up professional portrait of a successful Middle Eastern business manager in a crisp navy blue suit, set against a blurred high-end office background with warm afternoon sunlight filtering through large windows, embodying reliability and corporate authority." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAU7Mwz2xuJwanGj9_fM537QV59MMWoZHkJjtShvWlKMweeu0FL9CyvbPiqRJo6SR3HTkg9b0gT-CC3xRXS6eD7c9s8Z3Lu7GjsplrvJ2JQL1nnMRRgaTp8u2DGBev54pBWhWpzeiW_K5h8nM0rNRsprsss8krIQWWfhM2bNJ_WlDyYAslJONCV4jFHUmX-iHymy7OBvcA4L41RiU1NM9oD51bakzrjWlDT6AkhArNLCijfLT7auY_4nIF4SuyFs0Lj6mtyfcoxMArS"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-64 p-lg">
+<div class="flex justify-between items-end mb-lg">
+<div>
+<h2 class="font-headline-md text-headline-md text-primary mb-xs">Debt Management</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Oversee outstanding customer balances and collection status.</p>
+</div>
+<div class="flex gap-md">
+<div class="bg-surface border border-outline-variant rounded-xl p-md flex items-center gap-md">
+<div class="bg-error-container text-on-error-container p-sm rounded-lg">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+</div>
+<div>
+<p class="text-label-md text-on-surface-variant">Total Outstanding</p>
+<p class="text-headline-sm font-numeric-pos text-error">EGP 142,500.50</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Bento Grid Stats -->
+<div class="grid grid-cols-12 gap-lg mb-xl">
+<div class="col-span-12 lg:col-span-4 bg-surface border border-outline-variant rounded-xl p-lg flex flex-col justify-between h-32">
+<div class="flex justify-between items-start">
+<p class="text-label-md font-bold text-on-surface-variant">Critical Overdue (&gt;30 Days)</p>
+<span class="bg-error text-on-error px-sm py-xs rounded text-[10px] font-bold">URGENT</span>
+</div>
+<div class="flex items-baseline gap-sm">
+<span class="text-display-lg font-numeric-pos text-primary">24</span>
+<span class="text-body-md text-on-surface-variant">customers</span>
+</div>
+</div>
+<div class="col-span-12 lg:col-span-4 bg-surface border border-outline-variant rounded-xl p-lg flex flex-col justify-between h-32">
+<div class="flex justify-between items-start">
+<p class="text-label-md font-bold text-on-surface-variant">Pending Reminders</p>
+<span class="bg-tertiary-fixed text-on-tertiary-fixed px-sm py-xs rounded text-[10px] font-bold">WARNING</span>
+</div>
+<div class="flex items-baseline gap-sm">
+<span class="text-display-lg font-numeric-pos text-primary">12</span>
+<span class="text-body-md text-on-surface-variant">automated alerts scheduled</span>
+</div>
+</div>
+<div class="col-span-12 lg:col-span-4 bg-secondary-container/20 border border-secondary-container rounded-xl p-lg flex flex-col justify-between h-32">
+<div class="flex justify-between items-start">
+<p class="text-label-md font-bold text-on-secondary-container">Collected This Week</p>
+<span class="material-symbols-outlined text-secondary">trending_up</span>
+</div>
+<div class="flex items-baseline gap-sm">
+<span class="text-display-lg font-numeric-pos text-secondary">EGP 42.8k</span>
+<span class="text-body-md text-on-secondary-container">+14% vs last week</span>
+</div>
+</div>
+</div>
+<!-- Data Table Section -->
+<div class="bg-surface border border-outline-variant rounded-xl overflow-hidden">
+<div class="px-lg py-md border-b border-outline-variant bg-surface-container-low flex justify-between items-center">
+<h3 class="font-headline-sm text-headline-sm text-primary">Customer Ledger</h3>
+<div class="flex gap-sm">
+<button class="flex items-center gap-xs px-md py-sm rounded-lg border border-outline text-label-md font-bold hover:bg-surface-container-high">
+<span class="material-symbols-outlined text-sm">filter_list</span>
+                        Filter
+                    </button>
+<button class="flex items-center gap-xs px-md py-sm rounded-lg border border-outline text-label-md font-bold hover:bg-surface-container-high">
+<span class="material-symbols-outlined text-sm">download</span>
+                        Export PDF
+                    </button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-lowest text-on-surface-variant uppercase text-[11px] font-bold tracking-wider">
+<th class="px-lg py-md border-b border-outline-variant">Customer</th>
+<th class="px-lg py-md border-b border-outline-variant">Total Debt</th>
+<th class="px-lg py-md border-b border-outline-variant">Days Overdue</th>
+<th class="px-lg py-md border-b border-outline-variant text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<!-- Row 1: Critical -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-lg py-md">
+<div class="flex items-center gap-md">
+<div class="h-10 w-10 rounded-full bg-surface-variant flex items-center justify-center font-bold text-primary">AM</div>
+<div>
+<p class="font-bold text-on-surface">Ahmed Mansour</p>
+<p class="text-label-md text-on-surface-variant">+20 100 234 5678</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-md font-numeric-pos font-bold text-primary">EGP 12,450.00</td>
+<td class="px-lg py-md">
+<span class="bg-error-container text-on-error-container px-md py-xs rounded-full text-label-md font-bold">42 Days Overdue</span>
+</td>
+<td class="px-lg py-md text-right">
+<div class="flex justify-end gap-sm">
+<button class="bg-primary text-on-primary px-md py-sm rounded-lg text-label-md font-bold active:scale-95 transition-transform">Record Payment</button>
+<button class="flex items-center gap-xs text-secondary hover:bg-secondary-container/30 px-md py-sm rounded-lg transition-colors">
+<span class="material-symbols-outlined text-sm">chat</span>
+<span class="text-label-md font-bold">WhatsApp</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2: Amber -->
+<tr class="bg-surface-container-low/30 hover:bg-surface-container-low transition-colors group">
+<td class="px-lg py-md">
+<div class="flex items-center gap-md">
+<div class="h-10 w-10 rounded-full bg-surface-variant flex items-center justify-center font-bold text-primary">ZK</div>
+<div>
+<p class="font-bold text-on-surface">Zainab Khaled</p>
+<p class="text-label-md text-on-surface-variant">+20 112 555 9901</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-md font-numeric-pos font-bold text-primary">EGP 3,200.00</td>
+<td class="px-lg py-md">
+<span class="bg-tertiary-fixed text-on-tertiary-fixed-variant px-md py-xs rounded-full text-label-md font-bold">18 Days Overdue</span>
+</td>
+<td class="px-lg py-md text-right">
+<div class="flex justify-end gap-sm">
+<button class="bg-primary text-on-primary px-md py-sm rounded-lg text-label-md font-bold active:scale-95 transition-transform">Record Payment</button>
+<button class="flex items-center gap-xs text-secondary hover:bg-secondary-container/30 px-md py-sm rounded-lg transition-colors">
+<span class="material-symbols-outlined text-sm">chat</span>
+<span class="text-label-md font-bold">WhatsApp</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3: Green -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-lg py-md">
+<div class="flex items-center gap-md">
+<div class="h-10 w-10 rounded-full bg-surface-variant flex items-center justify-center font-bold text-primary">OS</div>
+<div>
+<p class="font-bold text-on-surface">Omar Selim</p>
+<p class="text-label-md text-on-surface-variant">+20 155 888 2211</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-md font-numeric-pos font-bold text-primary">EGP 850.50</td>
+<td class="px-lg py-md">
+<span class="bg-secondary-container text-on-secondary-fixed-variant px-md py-xs rounded-full text-label-md font-bold">4 Days Overdue</span>
+</td>
+<td class="px-lg py-md text-right">
+<div class="flex justify-end gap-sm">
+<button class="bg-primary text-on-primary px-md py-sm rounded-lg text-label-md font-bold active:scale-95 transition-transform">Record Payment</button>
+<button class="flex items-center gap-xs text-secondary hover:bg-secondary-container/30 px-md py-sm rounded-lg transition-colors">
+<span class="material-symbols-outlined text-sm">chat</span>
+<span class="text-label-md font-bold">WhatsApp</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4: Critical -->
+<tr class="bg-surface-container-low/30 hover:bg-surface-container-low transition-colors group">
+<td class="px-lg py-md">
+<div class="flex items-center gap-md">
+<div class="h-10 w-10 rounded-full bg-surface-variant flex items-center justify-center font-bold text-primary">HR</div>
+<div>
+<p class="font-bold text-on-surface">Hoda Refaat</p>
+<p class="text-label-md text-on-surface-variant">+20 102 333 4444</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-md font-numeric-pos font-bold text-primary">EGP 25,600.00</td>
+<td class="px-lg py-md">
+<span class="bg-error-container text-on-error-container px-md py-xs rounded-full text-label-md font-bold">65 Days Overdue</span>
+</td>
+<td class="px-lg py-md text-right">
+<div class="flex justify-end gap-sm">
+<button class="bg-primary text-on-primary px-md py-sm rounded-lg text-label-md font-bold active:scale-95 transition-transform">Record Payment</button>
+<button class="flex items-center gap-xs text-secondary hover:bg-secondary-container/30 px-md py-sm rounded-lg transition-colors">
+<span class="material-symbols-outlined text-sm">chat</span>
+<span class="text-label-md font-bold">WhatsApp</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-lg py-md bg-surface border-t border-outline-variant flex justify-between items-center text-label-md text-on-surface-variant">
+<span>Showing 1-10 of 244 customers with debt</span>
+<div class="flex gap-xs">
+<button class="p-2 hover:bg-surface-container-high rounded-lg"><span class="material-symbols-outlined">chevron_left</span></button>
+<button class="px-4 py-2 bg-primary text-on-primary rounded-lg font-bold">1</button>
+<button class="px-4 py-2 hover:bg-surface-container-high rounded-lg font-bold">2</button>
+<button class="px-4 py-2 hover:bg-surface-container-high rounded-lg font-bold">3</button>
+<button class="p-2 hover:bg-surface-container-high rounded-lg"><span class="material-symbols-outlined">chevron_right</span></button>
+</div>
+</div>
+</div>
+</main>
+<!-- Record Payment Modal (Overlay) -->
+<div class="fixed inset-0 bg-primary/40 backdrop-blur-sm z-[60] flex items-center justify-center p-lg hidden">
+<div class="bg-surface w-full max-w-lg rounded-2xl overflow-hidden shadow-2xl border border-outline-variant">
+<div class="px-lg py-lg bg-surface flex justify-between items-center border-b border-outline-variant">
+<h3 class="text-headline-sm font-headline-md text-primary">Record Debt Payment</h3>
+<button class="text-on-surface-variant hover:text-on-surface"><span class="material-symbols-outlined">close</span></button>
+</div>
+<div class="p-lg space-y-lg">
+<div class="bg-surface-container-low p-md rounded-xl border border-outline-variant">
+<p class="text-label-md text-on-surface-variant mb-xs">Selected Customer</p>
+<div class="flex justify-between items-center">
+<p class="font-bold text-on-surface">Ahmed Mansour</p>
+<p class="font-numeric-pos text-error font-bold">Debt: EGP 12,450.00</p>
+</div>
+</div>
+<div class="space-y-sm">
+<label class="text-label-md font-bold text-on-surface">Amount Received (EGP)</label>
+<input class="w-full bg-surface border border-outline rounded-lg px-md py-lg text-headline-md font-numeric-pos focus:ring-2 focus:ring-primary focus:border-primary" placeholder="0.00" type="number"/>
+</div>
+<div class="space-y-sm">
+<label class="text-label-md font-bold text-on-surface">Payment Method</label>
+<div class="grid grid-cols-3 gap-sm">
+<button class="border border-primary bg-primary-container text-on-primary-container py-md rounded-lg font-bold flex flex-col items-center gap-xs">
+<span class="material-symbols-outlined">payments</span>
+                            Cash
+                        </button>
+<button class="border border-outline py-md rounded-lg font-bold text-on-surface-variant flex flex-col items-center gap-xs hover:bg-surface-container-high">
+<span class="material-symbols-outlined">credit_card</span>
+                            Card
+                        </button>
+<button class="border border-outline py-md rounded-lg font-bold text-on-surface-variant flex flex-col items-center gap-xs hover:bg-surface-container-high">
+<span class="material-symbols-outlined">smartphone</span>
+                            Wallet
+                        </button>
+</div>
+</div>
+<div class="space-y-sm">
+<label class="text-label-md font-bold text-on-surface">Notes (Optional)</label>
+<textarea class="w-full bg-surface border border-outline rounded-lg px-md py-sm text-body-md min-h-[80px] focus:ring-2 focus:ring-primary focus:border-primary" placeholder="e.g. Partial payment for June invoices"></textarea>
+</div>
+</div>
+<div class="px-lg py-lg bg-surface-container-low flex gap-md">
+<button class="flex-1 bg-primary text-on-primary py-lg rounded-xl font-bold text-headline-sm hover:opacity-90 active:scale-[0.98] transition-all">Confirm Payment</button>
+<button class="px-lg py-lg border border-outline rounded-xl font-bold text-on-surface-variant hover:bg-surface-container-high">Cancel</button>
+</div>
+</div>
+</div>
+</body></html>

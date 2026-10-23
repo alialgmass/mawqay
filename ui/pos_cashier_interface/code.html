@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SmartPOS Egypt - High Performance Checkout</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;family=IBM+Plex+Sans:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "background": "#f7f9fb",
+                        "secondary-fixed-dim": "#68dba9",
+                        "primary-container": "#1e1b4b",
+                        "error-container": "#ffdad6",
+                        "on-secondary-fixed-variant": "#005137",
+                        "tertiary-container": "#381a00",
+                        "on-tertiary-container": "#cf7100",
+                        "on-secondary-fixed": "#002114",
+                        "on-error": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "on-surface-variant": "#47464f",
+                        "surface-bright": "#f7f9fb",
+                        "tertiary-fixed": "#ffdcc3",
+                        "tertiary-fixed-dim": "#ffb77d",
+                        "on-surface": "#191c1e",
+                        "on-primary-fixed-variant": "#444173",
+                        "on-tertiary": "#ffffff",
+                        "primary": "#070235",
+                        "on-secondary-container": "#00714e",
+                        "secondary": "#006c4a",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-container": "#82f5c1",
+                        "surface-tint": "#5b598c",
+                        "inverse-surface": "#2d3133",
+                        "surface-container-low": "#f2f4f6",
+                        "inverse-primary": "#c4c1fb",
+                        "surface-variant": "#e0e3e5",
+                        "on-background": "#191c1e",
+                        "error": "#ba1a1a",
+                        "outline": "#787680",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed-variant": "#6e3900",
+                        "inverse-on-surface": "#eff1f3",
+                        "primary-fixed": "#e3dfff",
+                        "surface-container-high": "#e6e8ea",
+                        "surface": "#f7f9fb",
+                        "on-primary-fixed": "#181445",
+                        "on-tertiary-fixed": "#2f1500",
+                        "primary-fixed-dim": "#c4c1fb",
+                        "on-secondary": "#ffffff",
+                        "outline-variant": "#c8c5d0",
+                        "surface-container": "#eceef0",
+                        "secondary-fixed": "#85f8c4",
+                        "surface-dim": "#d8dadc",
+                        "on-primary-container": "#8683ba",
+                        "surface-container-highest": "#e0e3e5",
+                        "tertiary": "#170700"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "xs": "4px",
+                        "container-max": "1440px",
+                        "md": "16px",
+                        "sm": "8px",
+                        "base": "4px",
+                        "xl": "32px",
+                        "lg": "24px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["IBM Plex Sans Arabic"],
+                        "body-md": ["IBM Plex Sans Arabic"],
+                        "headline-sm": ["IBM Plex Sans Arabic"],
+                        "headline-md": ["IBM Plex Sans Arabic"],
+                        "label-md": ["IBM Plex Sans Arabic"],
+                        "display-lg": ["IBM Plex Sans Arabic"],
+                        "numeric-pos": ["IBM Plex Sans"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "numeric-pos": ["22px", {"lineHeight": "24px", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #c8c5d0; border-radius: 10px; }
+        .pos-grid { display: grid; grid-template-columns: 1fr 400px; height: calc(100vh - 64px); }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md selection:bg-secondary-container">
+<!-- SideNavBar (Mandatory Shell) -->
+<aside class="h-screen w-64 fixed left-0 top-0 border-r border-outline-variant bg-surface flex flex-col py-lg px-md z-50">
+<div class="mb-xl px-sm">
+<h1 class="text-headline-md font-headline-md font-bold text-primary">Tenant Name</h1>
+<p class="font-label-md text-label-md text-on-surface-variant">Premium Subscription</p>
+</div>
+<nav class="flex-1 space-y-xs">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-label-md text-label-md">Products</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm bg-primary-container text-on-primary-container rounded-lg font-bold" href="#">
+<span class="material-symbols-outlined">point_of_sale</span>
+<span class="font-label-md text-label-md">POS</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-md text-label-md">Customers</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">restaurant</span>
+<span class="font-label-md text-label-md">Restaurant</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">assessment</span>
+<span class="font-label-md text-label-md">Reports</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+</nav>
+<div class="mt-auto border-t border-outline-variant pt-md px-sm flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center overflow-hidden">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="A professional headshot of a Middle Eastern business executive in a sharp navy suit, smiling confidently against a soft-focus corporate office background. The lighting is bright and professional, emphasizing a modern corporate aesthetic with high-key tones and clean lines." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBN2_aMHOrl6UOWaqwjFiO0ugl3DYTaQo3YG9VB2Ncmd9zAg_DHnayRjqaXOP8yuw2sojzQfAZK3g1x60pMXUY39ar9f-mZr8vFv7POyzIDq1X9zdqUqmGjsKyPnP1OM3tNd12RPTY2EeoFbQRJX-EPDZQsV4F-2wh8g5tBRObsmBEi7Qp48imEgyWXexLkeVKpQBbebAu2qmG9xFNx1q9RTWAxrkmcwwCPPujwt8KpQXlpJcWNWEj4RGWP1cMf0IeTG9wcF3tBF6Hr"/>
+</div>
+<div>
+<p class="font-label-md text-label-md font-bold text-on-surface">Ahmed Ali</p>
+<p class="text-xs text-on-surface-variant">Store Manager</p>
+</div>
+</div>
+</aside>
+<!-- Main Workspace -->
+<main class="ml-64 min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center h-16 px-lg sticky top-0 z-40 bg-surface border-b border-outline-variant">
+<div class="flex items-center gap-lg flex-1">
+<span class="text-headline-sm font-headline-md font-black text-primary">SmartPOS Egypt</span>
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-xl focus:outline-none focus:ring-1 focus:ring-primary font-body-md" placeholder="Scan Barcode or Search Products..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="hover:bg-surface-container-highest rounded-full p-2 transition-opacity active:opacity-80">
+<span class="material-symbols-outlined text-primary">notifications</span>
+</button>
+<button class="flex items-center gap-xs px-md py-sm bg-surface-container-highest rounded-full text-on-surface font-label-md">
+<span class="material-symbols-outlined text-sm">location_on</span>
+<span>Maadi Branch</span>
+</button>
+</div>
+</header>
+<!-- POS Interface -->
+<div class="pos-grid">
+<!-- Left: Product Grid & Filters -->
+<section class="flex flex-col border-r border-outline-variant overflow-hidden bg-background">
+<!-- Multi-Invoice Tabs -->
+<div class="flex items-center gap-1 p-sm bg-surface-container-low border-b border-outline-variant">
+<button class="px-lg py-2 bg-primary text-on-primary rounded-lg font-label-md flex items-center gap-sm">
+<span>Invoice #2401</span>
+<span class="material-symbols-outlined text-sm">close</span>
+</button>
+<button class="px-lg py-2 text-on-surface-variant hover:bg-surface-container-high rounded-lg font-label-md transition-colors flex items-center gap-sm">
+<span>Invoice #2402</span>
+<span class="material-symbols-outlined text-sm">close</span>
+</button>
+<button class="p-2 text-primary hover:bg-surface-container-highest rounded-full">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+<!-- Category Bar -->
+<div class="flex items-center gap-sm p-md overflow-x-auto whitespace-nowrap scrollbar-hide">
+<button class="px-lg py-2 bg-secondary text-on-secondary rounded-full font-label-md">All Items</button>
+<button class="px-lg py-2 bg-surface-container-highest text-on-surface-variant rounded-full font-label-md hover:bg-surface-variant">Main Course</button>
+<button class="px-lg py-2 bg-surface-container-highest text-on-surface-variant rounded-full font-label-md hover:bg-surface-variant">Beverages</button>
+<button class="px-lg py-2 bg-surface-container-highest text-on-surface-variant rounded-full font-label-md hover:bg-surface-variant">Desserts</button>
+<button class="px-lg py-2 bg-surface-container-highest text-on-surface-variant rounded-full font-label-md hover:bg-surface-variant">Sides</button>
+<button class="px-lg py-2 bg-surface-container-highest text-on-surface-variant rounded-full font-label-md hover:bg-surface-variant">Appetizers</button>
+</div>
+<!-- Product Grid -->
+<div class="flex-1 overflow-y-auto p-md grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-md content-start">
+<!-- Product Card -->
+<div class="bg-surface border border-outline-variant rounded-xl overflow-hidden hover:border-primary transition-all active:scale-[0.98] cursor-pointer group">
+<div class="h-32 bg-surface-container overflow-hidden">
+<img alt="Kofta Platter" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A close-up gourmet photograph of a traditional Egyptian Kofta platter, featuring grilled skewers of seasoned meat resting on a bed of aromatic yellow rice with fresh parsley garnish. The lighting is warm and directional, creating a high-end restaurant atmosphere with rich colors and sharp textures." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDExe3b3PA2q-r_to_dSH4lvxA9GAe_PVCOYcIQUIr6oRYiyQReD4RgvJ0HImURoFiMen_VHT9pA-sWkIxJ8N4Grg6AXdWH-kmjddeaPjYoXXQBQVsNvdMUo70VF9__AUqEcG0jCVI38VbTi98UL7Y-PvB3PiKeC9sufBOw-B1MCOgOyquorYoxR3ZZMllSYUe_ym3YLJkHqmzMd8IJdpHlrIPX4R5u9hc6eTOgYc6_9tLbU5WATN4xQcmH6B-4ZVkEi8Tqerd5Jq3t"/>
+</div>
+<div class="p-sm">
+<h3 class="font-bold text-on-surface font-body-md truncate">Grilled Kofta Platter</h3>
+<div class="flex justify-between items-end mt-xs">
+<span class="text-xs text-on-surface-variant">SKU: 0012</span>
+<span class="text-primary font-numeric-pos">145.00 <span class="text-xs font-label-md">EGP</span></span>
+</div>
+</div>
+</div>
+<div class="bg-surface border border-outline-variant rounded-xl overflow-hidden hover:border-primary transition-all active:scale-[0.98] cursor-pointer group">
+<div class="h-32 bg-surface-container overflow-hidden">
+<img alt="Hummus Dip" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A professional food photography shot of a ceramic bowl filled with creamy hummus, drizzled with olive oil and topped with chickpeas and paprika. The shot is taken from a top-down angle in a bright, modern cafe setting with neutral tones and soft natural light from a window." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwJcMBnFMUzn0OODtFn3aJfXR91pgJAsuJIeLb90XbQYOzaZR80NDkCFW9V6x9_wvNitaCSuDvK_blTh2w45SiID2JUjcrKozK8N7DPsbqYiIF3GTQg-Pr6BELSC1EBLBRRhXnylZjyf5UXTPRai_5FAOGTnDXSdR01maYYyhEbZxRqzqzwiRc_Rp4Sl6TRVYK0cwWLLcKUPOUMr3vGlhQRNvMRLb-Hzp7lpZwiME2q28zlVe3CjW6M2ZRdo6yqknrIQ6S1YQdZjLy"/>
+</div>
+<div class="p-sm">
+<h3 class="font-bold text-on-surface font-body-md truncate">Creamy Hummus Dip</h3>
+<div class="flex justify-between items-end mt-xs">
+<span class="text-xs text-on-surface-variant">SKU: 0085</span>
+<span class="text-primary font-numeric-pos">65.00 <span class="text-xs font-label-md">EGP</span></span>
+</div>
+</div>
+</div>
+<div class="bg-surface border border-outline-variant rounded-xl overflow-hidden hover:border-primary transition-all active:scale-[0.98] cursor-pointer group">
+<div class="h-32 bg-surface-container overflow-hidden">
+<img alt="Egyptian Salad" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A vibrant salad bowl featuring chopped cucumbers, tomatoes, onions, and fresh herbs in a Mediterranean style. The image is bright and fresh, with crisp greens and deep reds, set against a clean white marble background for a modern, healthy aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9DZCDfnLY0HPnwTHzDFaEUodrXZ_9ATEohumVpOWeiEGxVnaD1UAEjhz-Uun4eNybDS23xac6Ymf8HZB5_gmkA52LIrAOmHRxIZgjcCnuiQKATxncZglLjolXh-2NbBBsH-AR5Z9mOMKM_A14cpu1THmqkEfzNxn5Jygp10oJkRnvUOH2laJLZWjRUGY3JbVOQ8JXqJRx2kvyXnILLpkd0NrWlu1fzzfQy-GuSq_FtmesxbbBbLfR-o6K8RrjgZM8Ekc2L_9Z2lYn"/>
+</div>
+<div class="p-sm">
+<h3 class="font-bold text-on-surface font-body-md truncate">Classic Egyptian Salad</h3>
+<div class="flex justify-between items-end mt-xs">
+<span class="text-xs text-on-surface-variant">SKU: 0044</span>
+<span class="text-primary font-numeric-pos">40.00 <span class="text-xs font-label-md">EGP</span></span>
+</div>
+</div>
+</div>
+<div class="bg-surface border border-outline-variant rounded-xl overflow-hidden hover:border-primary transition-all active:scale-[0.98] cursor-pointer group">
+<div class="h-32 bg-surface-container overflow-hidden">
+<img alt="Iced Hibiscus" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A tall glass of deep red hibiscus iced tea (Karkade) with a fresh mint sprig and condensation on the glass. The background is a sunny, minimalist outdoor terrace in Egypt, creating a refreshing and cool mood with vibrant ruby red liquid." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYEiHDyR8mPqVvs-sQGeN1lPYs-wVlHfGbbJ1gQySz_bdTJvtCxNqgto8JDlUt7l0JgZI4AMhbpXkErggBUOqxPKl8MqxIPxETk3AyJGEuYgrqC4i70pP7NOcuzgFimBM9Z3UKjxBqojesiqfOUu05L3S20pBVBywO7zbuit23Z3Gv-n088CpUtU97xiRKOs7ygJVZBfWKZGcyo5f_l7mvNOaijSdKhHxQtE_tle941lEICEbOjay0hdVzf4717QRvEHvX3Et64o87"/>
+</div>
+<div class="p-sm">
+<h3 class="font-bold text-on-surface font-body-md truncate">Iced Hibiscus Tea</h3>
+<div class="flex justify-between items-end mt-xs">
+<span class="text-xs text-on-surface-variant">SKU: 0102</span>
+<span class="text-primary font-numeric-pos">35.00 <span class="text-xs font-label-md">EGP</span></span>
+</div>
+</div>
+</div>
+<div class="bg-surface border border-outline-variant rounded-xl overflow-hidden hover:border-primary transition-all active:scale-[0.98] cursor-pointer group">
+<div class="h-32 bg-surface-container overflow-hidden">
+<img alt="Mixed Grill" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A heavy wooden platter filled with various grilled meats including lamb chops, beef kebabs, and chicken shish taouk, served with grilled onions and peppers. The styling is rustic yet corporate, emphasizing bounty and high quality with warm golden lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVfIpSRzn88z9tSCbE1OK3axJ9WMtyIsIX5FY7YIW-IFYFjoEp-t9Uf7x0usQG9WXRk8dW-MNiX49Z7tnEHK1DmuAeg5WaXNm8nhGj39vy9H3hRLykVXrBoYeb5BNZNrdxWtY1NzYlf2Dw80ZeR3nM_he796HEvg04dhFE6Q8dAV5U4lFUAm9qDPXzIidAaUyPAmU6-ECXi72BMknrwBhiq2J8kdB7oyrm9zuwWRqJrp7eQnoWYekoBUb1vshewl61PEoCVjWJcPEu"/>
+</div>
+<div class="p-sm">
+<h3 class="font-bold text-on-surface font-body-md truncate">Family Mixed Grill</h3>
+<div class="flex justify-between items-end mt-xs">
+<span class="text-xs text-on-surface-variant">SKU: 0031</span>
+<span class="text-primary font-numeric-pos">450.00 <span class="text-xs font-label-md">EGP</span></span>
+</div>
+</div>
+</div>
+<div class="bg-surface border border-outline-variant rounded-xl overflow-hidden hover:border-primary transition-all active:scale-[0.98] cursor-pointer group">
+<div class="h-32 bg-surface-container overflow-hidden">
+<img alt="Basmati Rice" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A steaming plate of long-grain basmati rice garnished with slivered almonds and golden raisins. The lighting is bright and clean, emphasizing the texture and steam rising from the plate in a minimalist kitchen setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCowzoHtGDMu3X-iswYjgq0h7nrSC0O88oAAAGpixx4MMgcm7_muPvHBHOtsseYQz6v3stjNVK9--nDCFySVx7CRgZ_EO_nG86G6cWTD6w885Pdmt9xS9vSsvluvsl_XLsfLWLteeQcqVaTCXyQYQ9E_RWs-DBTeO92RQWzReKBVSjYjzkvAu8KBWdivLVTRNw3duWaBdwBfUuRDeysGMNvWNd6nUBz_PRqGs7CuAQzxA3AZLJm6Yn9lB-KfK2j9uxairSzLxeaN-5p"/>
+</div>
+<div class="p-sm">
+<h3 class="font-bold text-on-surface font-body-md truncate">Yellow Basmati Rice</h3>
+<div class="flex justify-between items-end mt-xs">
+<span class="text-xs text-on-surface-variant">SKU: 0022</span>
+<span class="text-primary font-numeric-pos">55.00 <span class="text-xs font-label-md">EGP</span></span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Right: Persistent Cart Sidebar -->
+<aside class="flex flex-col bg-surface overflow-hidden">
+<!-- Customer Header -->
+<div class="p-md border-b border-outline-variant flex justify-between items-center bg-surface-container-low">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary">account_circle</span>
+<span class="font-bold text-on-surface">Walk-in Customer</span>
+</div>
+<button class="text-primary hover:underline font-label-md">Change</button>
+</div>
+<!-- Cart Items List -->
+<div class="flex-1 overflow-y-auto p-md space-y-md">
+<!-- Item 1 -->
+<div class="flex gap-md group">
+<div class="w-16 h-16 rounded-lg bg-surface-container overflow-hidden flex-shrink-0">
+<img alt="Kofta" class="w-full h-full object-cover" data-alt="Thumbnail of grilled kofta on a plate" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDstKKXIpq7vWyKiPAF2-GaBLzeSeoYlMTbcpf6EAM6nArSmeOo0BncraA4vJWiZG2MAJOy8VkunotZw8mAVqUHFtvhRcHjS_N-BWWbhosRlZpKSo9NyLeRHYY3htfxi8DDWSnesm2_lngQyjO7T6ldCLomPArBGWbN0l3AoZ0RMIH_m-0KUGtzYSWIuc2sfnsdjRsjQ0CRyVD8HXOtNIxpTjqQv0fG9BlkWgWGQqsgDQp57sEWF74E1D8YZc0dit3JWpL1pYgJhkKg"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between">
+<h4 class="font-bold text-on-surface truncate">Grilled Kofta Platter</h4>
+<span class="font-numeric-pos text-on-surface">145.00</span>
+</div>
+<div class="flex justify-between items-center mt-xs">
+<div class="flex items-center bg-surface-container rounded-full border border-outline-variant">
+<button class="w-8 h-8 flex items-center justify-center hover:bg-surface-variant rounded-full">-</button>
+<span class="px-3 font-bold">1</span>
+<button class="w-8 h-8 flex items-center justify-center hover:bg-surface-variant rounded-full">+</button>
+</div>
+<button class="p-2 text-error hover:bg-error-container rounded-full transition-colors opacity-0 group-hover:opacity-100">
+<span class="material-symbols-outlined text-sm">delete</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="flex gap-md group">
+<div class="w-16 h-16 rounded-lg bg-surface-container overflow-hidden flex-shrink-0">
+<img alt="Hibiscus" class="w-full h-full object-cover" data-alt="Thumbnail of red hibiscus tea glass" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDA1bSSkngzCl9adQBCkv8MFnVPoEOau2RPBY82HthqFaYFzqgecN7DMJhHW7iJfVUkhRQwJyVn82juAjKFbG4airuk5hBauzSBefIv2Xb4dYUiLGbcs-ZDrnOpFw8sE440w-8zAfpvGU7hf8zo3Bz_vOZjfNI0LXRNRFOlOOepzIS__YJo1mC38ufq0rhwX58OiGyQhxhWvfAzQIRzk5cgLfbqmjIW6i8DdtqKj6QHhKr9UFxWfzxF7PAViVa0XGj4CkxsCqxx92sa"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between">
+<h4 class="font-bold text-on-surface truncate">Iced Hibiscus Tea</h4>
+<span class="font-numeric-pos text-on-surface">70.00</span>
+</div>
+<div class="flex justify-between items-center mt-xs">
+<div class="flex items-center bg-surface-container rounded-full border border-outline-variant">
+<button class="w-8 h-8 flex items-center justify-center hover:bg-surface-variant rounded-full">-</button>
+<span class="px-3 font-bold">2</span>
+<button class="w-8 h-8 flex items-center justify-center hover:bg-surface-variant rounded-full">+</button>
+</div>
+<button class="p-2 text-error hover:bg-error-container rounded-full transition-colors opacity-0 group-hover:opacity-100">
+<span class="material-symbols-outlined text-sm">delete</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Totals & Checkout -->
+<div class="p-md bg-surface-container-low border-t border-outline-variant space-y-sm">
+<div class="flex justify-between text-on-surface-variant font-label-md">
+<span>Subtotal</span>
+<span class="font-numeric-pos">215.00 EGP</span>
+</div>
+<div class="flex justify-between text-on-surface-variant font-label-md">
+<span>Tax (14%)</span>
+<span class="font-numeric-pos">30.10 EGP</span>
+</div>
+<div class="flex justify-between text-secondary font-bold font-label-md bg-secondary-container px-sm py-1 rounded">
+<span>Discount (PROMO20)</span>
+<span class="font-numeric-pos">-20.00 EGP</span>
+</div>
+<div class="flex justify-between items-end pt-md pb-lg">
+<span class="text-headline-sm font-bold text-on-surface">Total</span>
+<div class="text-right">
+<span class="text-display-lg font-numeric-pos text-primary leading-none">225.10</span>
+<span class="text-primary font-bold ml-1">EGP</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-sm">
+<button class="py-4 border-2 border-primary text-primary font-bold rounded-xl flex flex-col items-center justify-center active:scale-95 transition-transform">
+<span class="material-symbols-outlined mb-1">payments</span>
+<span>Cash</span>
+</button>
+<button class="py-4 border-2 border-outline-variant text-on-surface font-bold rounded-xl flex flex-col items-center justify-center active:scale-95 transition-transform">
+<span class="material-symbols-outlined mb-1">credit_card</span>
+<span>Credit Card</span>
+</button>
+</div>
+<button class="w-full py-5 bg-primary text-on-primary text-headline-sm font-bold rounded-xl shadow-lg active:scale-95 transition-all mt-md flex items-center justify-center gap-md">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">shopping_cart_checkout</span>
+<span>Complete Payment</span>
+</button>
+</div>
+</aside>
+</div>
+</main>
+<!-- Contextual FAB -->
+<button class="fixed bottom-gutter right-gutter w-16 h-16 bg-secondary-fixed text-on-secondary-fixed rounded-full shadow-xl flex items-center justify-center hover:scale-110 active:scale-90 transition-all z-50">
+<span class="material-symbols-outlined text-3xl">print</span>
+</button>
+</body></html>

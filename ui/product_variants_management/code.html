@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+
+<html dir="ltr" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;family=IBM+Plex+Sans:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'IBM Plex Sans Arabic', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .numeric-font {
+            font-family: 'IBM Plex Sans', sans-serif;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "background": "#f7f9fb",
+                        "secondary-fixed-dim": "#68dba9",
+                        "primary-container": "#1e1b4b",
+                        "error-container": "#ffdad6",
+                        "on-secondary-fixed-variant": "#005137",
+                        "tertiary-container": "#381a00",
+                        "on-tertiary-container": "#cf7100",
+                        "on-secondary-fixed": "#002114",
+                        "on-error": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "on-surface-variant": "#47464f",
+                        "surface-bright": "#f7f9fb",
+                        "tertiary-fixed": "#ffdcc3",
+                        "tertiary-fixed-dim": "#ffb77d",
+                        "on-surface": "#191c1e",
+                        "on-primary-fixed-variant": "#444173",
+                        "on-tertiary": "#ffffff",
+                        "primary": "#070235",
+                        "on-secondary-container": "#00714e",
+                        "secondary": "#006c4a",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-container": "#82f5c1",
+                        "surface-tint": "#5b598c",
+                        "inverse-surface": "#2d3133",
+                        "surface-container-low": "#f2f4f6",
+                        "inverse-primary": "#c4c1fb",
+                        "surface-variant": "#e0e3e5",
+                        "on-background": "#191c1e",
+                        "error": "#ba1a1a",
+                        "outline": "#787680",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed-variant": "#6e3900",
+                        "inverse-on-surface": "#eff1f3",
+                        "primary-fixed": "#e3dfff",
+                        "surface-container-high": "#e6e8ea",
+                        "surface": "#f7f9fb",
+                        "on-primary-fixed": "#181445",
+                        "on-tertiary-fixed": "#2f1500",
+                        "primary-fixed-dim": "#c4c1fb",
+                        "on-secondary": "#ffffff",
+                        "outline-variant": "#c8c5d0",
+                        "surface-container": "#eceef0",
+                        "secondary-fixed": "#85f8c4",
+                        "surface-dim": "#d8dadc",
+                        "on-primary-container": "#8683ba",
+                        "surface-container-highest": "#e0e3e5",
+                        "tertiary": "#170700"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "xs": "4px",
+                        "container-max": "1440px",
+                        "md": "16px",
+                        "sm": "8px",
+                        "base": "4px",
+                        "xl": "32px",
+                        "lg": "24px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["IBM Plex Sans Arabic"],
+                        "body-md": ["IBM Plex Sans Arabic"],
+                        "headline-sm": ["IBM Plex Sans Arabic"],
+                        "headline-md": ["IBM Plex Sans Arabic"],
+                        "label-md": ["IBM Plex Sans Arabic"],
+                        "display-lg": ["IBM Plex Sans Arabic"],
+                        "numeric-pos": ["IBM Plex Sans"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface">
+<!-- SideNavBar -->
+<aside class="h-screen w-64 fixed left-0 top-0 border-r border-outline-variant bg-surface dark:bg-surface-container-lowest flex flex-col py-lg px-md z-50">
+<div class="mb-xl px-md">
+<h1 class="text-headline-md font-headline-md font-bold text-primary dark:text-primary-fixed-dim">Tenant Name</h1>
+<p class="font-label-md text-label-md text-on-surface-variant">Premium Subscription</p>
+</div>
+<nav class="flex-1 space-y-xs">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm bg-primary-container text-on-primary-container rounded-lg font-bold" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-label-md text-label-md">Products</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">point_of_sale</span>
+<span class="font-label-md text-label-md">POS</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-md text-label-md">Customers</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">restaurant</span>
+<span class="font-label-md text-label-md">Restaurant</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">assessment</span>
+<span class="font-label-md text-label-md">Reports</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+</nav>
+<div class="mt-auto pt-lg border-t border-outline-variant flex items-center gap-md px-md">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center overflow-hidden">
+<img alt="User Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-aaPrpShCaiJz1hzfcsEXBTx2ryBYxMJgC4vqtFVqT2o9rtVKvHkKEOkgf_06rwDJVaiciK4nyLDKbABrbRMyRayMQHnRhcx3w1dKeGpk2bl4TBCMcS14VTynHa7GNQ3vh-0xoFHc7PXdekXyyYYHe9BSRc3wdJsb3ICD4dcSwQcIwY9QYzp5_ltsjy14tYR_6nJbDoSRKefvRJV-WPT3u5OUUaJOT9DNhsgd7dkZ9Fr59eKItDPk0dff3pPRRAxzPvJMM75nNgMU"/>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-bold">Ahmed Hassan</span>
+<span class="text-[10px] uppercase text-outline">Admin</span>
+</div>
+</div>
+</aside>
+<!-- TopAppBar -->
+<header class="flex justify-between items-center h-16 px-lg ml-64 docked full-width top-0 sticky z-40 bg-surface dark:bg-surface-container-low border-b border-outline-variant">
+<div class="flex items-center gap-lg">
+<div class="text-headline-sm font-headline-md font-black text-primary dark:text-primary-fixed">SmartPOS Egypt</div>
+<div class="relative hidden lg:block w-96">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full bg-surface-container-low border-none rounded-xl pl-10 py-2 font-label-md focus:ring-2 focus:ring-primary" placeholder="Search products, orders..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="flex items-center gap-sm px-md py-sm hover:bg-surface-container-highest dark:hover:bg-surface-variant rounded-xl transition-all">
+<span class="material-symbols-outlined text-primary">location_on</span>
+<span class="font-label-md text-label-md font-bold">Maadi Branch</span>
+</button>
+<div class="flex items-center gap-xs">
+<button class="hover:bg-surface-container-highest dark:hover:bg-surface-variant rounded-full p-2 active:opacity-80 transition-opacity">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="ml-64 p-lg">
+<!-- Breadcrumb & Header -->
+<div class="mb-lg flex justify-between items-end">
+<div>
+<nav class="flex items-center gap-xs text-outline mb-xs">
+<span class="font-label-md text-label-md">Products</span>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<span class="font-label-md text-label-md text-primary font-bold">Edit Product</span>
+</nav>
+<h2 class="font-headline-md text-headline-md text-on-surface">Premium Cotton T-Shirt</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Manage product variants, inventory, and pricing details.</p>
+</div>
+<div class="flex gap-md">
+<button class="px-lg py-sm border border-outline text-outline font-label-md rounded-xl hover:bg-surface-container transition-colors">Discard</button>
+<button class="px-lg py-sm bg-primary text-on-primary font-label-md rounded-xl shadow-sm hover:opacity-90 active:scale-95 transition-all">Save Changes</button>
+</div>
+</div>
+<!-- Variant Management Section -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden">
+<div class="p-lg border-b border-outline-variant flex justify-between items-center bg-white">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-primary">Product Variants</h3>
+<p class="font-label-md text-label-md text-on-surface-variant">Add variations like size, color, or material.</p>
+</div>
+<button class="flex items-center gap-sm px-md py-sm bg-secondary-container text-on-secondary-container font-bold rounded-xl hover:opacity-90 transition-all">
+<span class="material-symbols-outlined">add</span>
+<span>Add Variant</span>
+</button>
+</div>
+<!-- Configuration Bento Grid -->
+<div class="grid grid-cols-12 gap-gutter p-lg bg-surface-container-low/30">
+<!-- Variant Table -->
+<div class="col-span-12 bg-white rounded-xl shadow-sm border border-outline-variant overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container text-on-surface-variant border-b border-outline-variant">
+<th class="px-md py-sm font-label-md text-label-md uppercase tracking-wider">Variant Name</th>
+<th class="px-md py-sm font-label-md text-label-md uppercase tracking-wider">SKU</th>
+<th class="px-md py-sm font-label-md text-label-md uppercase tracking-wider">Barcode</th>
+<th class="px-md py-sm font-label-md text-label-md uppercase tracking-wider">Price (EGP)</th>
+<th class="px-md py-sm font-label-md text-label-md uppercase tracking-wider">Stock</th>
+<th class="px-md py-sm font-label-md text-label-md uppercase tracking-wider w-16">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/50">
+<!-- Row 1 -->
+<tr class="hover:bg-background transition-colors">
+<td class="px-md py-xs">
+<input class="w-full border-none focus:ring-0 bg-transparent font-label-md p-0 h-8" type="text" value="Small / Navy Blue"/>
+</td>
+<td class="px-md py-xs">
+<input class="w-full border-none focus:ring-0 bg-transparent font-label-md p-0 h-8 uppercase numeric-font" type="text" value="TSH-NAV-S"/>
+</td>
+<td class="px-md py-xs">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-outline text-sm">barcode_scanner</span>
+<input class="w-full border-none focus:ring-0 bg-transparent font-label-md p-0 h-8 numeric-font" type="text" value="6221234567890"/>
+</div>
+</td>
+<td class="px-md py-xs">
+<input class="w-full border-none focus:ring-0 bg-transparent font-label-md p-0 h-8 font-bold numeric-font" type="text" value="450.00"/>
+</td>
+<td class="px-md py-xs">
+<div class="flex items-center gap-sm">
+<input class="w-20 border-none focus:ring-0 bg-transparent font-label-md p-0 h-8 numeric-font" type="number" value="24"/>
+<span class="px-xs py-[2px] bg-secondary-container/30 text-secondary text-[10px] font-bold rounded">In Stock</span>
+</div>
+</td>
+<td class="px-md py-xs text-center">
+<button class="text-error hover:bg-error-container p-1 rounded-lg transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-background transition-colors bg-surface-container-low/20">
+<td class="px-md py-xs">
+<input class="w-full border-none focus:ring-0 bg-transparent font-label-md p-0 h-8" type="text" value="Medium / Navy Blue"/>
+</td>
+<td class="px-md py-xs">
+<input class="w-full border-none focus:ring-0 bg-transparent font-label-md p-0 h-8 uppercase numeric-font" type="text" value="TSH-NAV-M"/>
+</td>
+<td class="px-md py-xs">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-outline text-sm">barcode_scanner</span>
+<input class="w-full border-none focus:ring-0 bg-transparent font-label-md p-0 h-8 numeric-font" type="text" value="6221234567891"/>
+</div>
+</td>
+<td class="px-md py-xs">
+<input class="w-full border-none focus:ring-0 bg-transparent font-label-md p-0 h-8 font-bold numeric-font" type="text" value="450.00"/>
+</td>
+<td class="px-md py-xs">
+<div class="flex items-center gap-sm">
+<input class="w-20 border-none focus:ring-0 bg-transparent font-label-md p-0 h-8 numeric-font" type="number" value="12"/>
+<span class="px-xs py-[2px] bg-secondary-container/30 text-secondary text-[10px] font-bold rounded">In Stock</span>
+</div>
+</td>
+<td class="px-md py-xs text-center">
+<button class="text-error hover:bg-error-container p-1 rounded-lg transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 (Low Stock Example) -->
+<tr class="hover:bg-background transition-colors">
+<td class="px-md py-xs">
+<input class="w-full border-none focus:ring-0 bg-transparent font-label-md p-0 h-8" type="text" value="Large / Navy Blue"/>
+</td>
+<td class="px-md py-xs">
+<input class="w-full border-none focus:ring-0 bg-transparent font-label-md p-0 h-8 uppercase numeric-font" type="text" value="TSH-NAV-L"/>
+</td>
+<td class="px-md py-xs">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-outline text-sm">barcode_scanner</span>
+<input class="w-full border-none focus:ring-0 bg-transparent font-label-md p-0 h-8 numeric-font" type="text" value="6221234567892"/>
+</div>
+</td>
+<td class="px-md py-xs">
+<input class="w-full border-none focus:ring-0 bg-transparent font-label-md p-0 h-8 font-bold numeric-font" type="text" value="450.00"/>
+</td>
+<td class="px-md py-xs">
+<div class="flex items-center gap-sm">
+<input class="w-20 border-none focus:ring-0 bg-transparent font-label-md p-0 h-8 numeric-font" type="number" value="3"/>
+<span class="px-xs py-[2px] bg-error-container text-error text-[10px] font-bold rounded">Low Stock</span>
+</div>
+</td>
+<td class="px-md py-xs text-center">
+<button class="text-error hover:bg-error-container p-1 rounded-lg transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-background transition-colors bg-surface-container-low/20">
+<td class="px-md py-xs">
+<input class="w-full border-none focus:ring-0 bg-transparent font-label-md p-0 h-8" type="text" value="Small / Forest Green"/>
+</td>
+<td class="px-md py-xs">
+<input class="w-full border-none focus:ring-0 bg-transparent font-label-md p-0 h-8 uppercase numeric-font" type="text" value="TSH-GRN-S"/>
+</td>
+<td class="px-md py-xs">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-outline text-sm">barcode_scanner</span>
+<input class="w-full border-none focus:ring-0 bg-transparent font-label-md p-0 h-8 numeric-font" type="text" value="6221234567893"/>
+</div>
+</td>
+<td class="px-md py-xs">
+<input class="w-full border-none focus:ring-0 bg-transparent font-label-md p-0 h-8 font-bold numeric-font" type="text" value="450.00"/>
+</td>
+<td class="px-md py-xs">
+<div class="flex items-center gap-sm">
+<input class="w-20 border-none focus:ring-0 bg-transparent font-label-md p-0 h-8 numeric-font" type="number" value="48"/>
+<span class="px-xs py-[2px] bg-secondary-container/30 text-secondary text-[10px] font-bold rounded">In Stock</span>
+</div>
+</td>
+<td class="px-md py-xs text-center">
+<button class="text-error hover:bg-error-container p-1 rounded-lg transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Bulk Actions & Summary Bento Cards -->
+<div class="col-span-12 lg:col-span-8 bg-white border border-outline-variant rounded-xl p-lg flex flex-col gap-md">
+<h4 class="font-label-md text-label-md font-bold text-primary uppercase tracking-widest">Variant Preview</h4>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-md">
+<div class="aspect-square bg-surface-container-low rounded-lg relative overflow-hidden group">
+<img alt="Variant Preview" class="w-full h-full object-cover" data-alt="A high-quality product photograph of a navy blue premium cotton t-shirt neatly folded on a minimalist white stone surface. The lighting is bright and airy, typical of a modern e-commerce aesthetic. Soft shadows emphasize the fabric texture and deep blue tones. The overall atmosphere is clean, professional, and corporate modern." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDyrEDB40thC36iwHci9zVxR8PErsDOf4cKNUkfs8xm_9rIj4qHQy-pxxF2215uldWgy0Ul_sV5EKUPi4TI3-KG96rJseVsflMaJ47Ca4vQ7nw4BdRcBZLS7JvSoYmUAIw2m6v-pq9LYyYx-hPeLxklQrgnSPBlVFHLEtE9NEz368XKBpQGA5ogORGCNXnH1kFqskM8imE-yqVZsIZrMqZ6Gn4wL2bGNHqaGpUfAQbyXWHT0z8YoOEt6s3DR7Y_4c4PbBkFXKeEb3j6"/>
+<div class="absolute bottom-0 left-0 right-0 bg-primary/80 text-white text-[10px] p-1 text-center font-bold">Navy Blue</div>
+</div>
+<div class="aspect-square bg-surface-container-low rounded-lg relative overflow-hidden group border-2 border-primary">
+<img alt="Variant Preview" class="w-full h-full object-cover" data-alt="A studio shot of a forest green premium cotton t-shirt displayed on a minimalist wooden hanger against a neutral grey background. The lighting is sharp and balanced, highlighting the rich green hue and the quality of the stitching. The scene is presented in a high-density, professional retail catalog style. The mood is dependable and authoritative." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAb3FiapcrFYOhTJ7IyNB-8FZ1Iteq8L06nVheiqbrXblYrnNgnBYB4EhVR6oSbb82eOPBCaVRXPRXs7KGamFC87IoNFpDqLwBNJZGj7MbFMhFCEZpuoBnKUaUugEaFc6JP9nLQbifrpnmspTgXrQ0xnHevxcLkW_WFtFeDje4Pu24bCn-WLeSi5G2qUSXoGOuRKn77Z7IczaJRZXBxLoJTQwKimoYFJCzpQtuqlM1lbr0w4EIuravBAJpBsNjjYX72SBgrujjLj3Kp"/>
+<div class="absolute bottom-0 left-0 right-0 bg-primary/80 text-white text-[10px] p-1 text-center font-bold">Forest Green</div>
+<div class="absolute top-2 right-2 bg-secondary text-white rounded-full p-1 shadow-sm">
+<span class="material-symbols-outlined text-[12px] block">check</span>
+</div>
+</div>
+<div class="aspect-square bg-surface-container-low rounded-lg border-2 border-dashed border-outline-variant flex flex-col items-center justify-center cursor-pointer hover:border-primary transition-colors">
+<span class="material-symbols-outlined text-outline">add_photo_alternate</span>
+<span class="text-[10px] text-outline font-bold mt-1">Add Color</span>
+</div>
+</div>
+</div>
+<div class="col-span-12 lg:col-span-4 bg-primary text-on-primary rounded-xl p-lg flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start mb-md">
+<span class="font-label-md text-label-md opacity-70">Total Variations</span>
+<span class="material-symbols-outlined">inventory</span>
+</div>
+<div class="text-[32px] font-bold leading-none mb-xs numeric-font">12</div>
+<p class="text-[12px] opacity-70">Across 3 sizes and 4 colorways</p>
+</div>
+<div class="pt-lg">
+<div class="flex justify-between items-center py-sm border-t border-white/20">
+<span class="text-[12px]">Avg. Price</span>
+<span class="numeric-font font-bold">450.00 EGP</span>
+</div>
+<div class="flex justify-between items-center py-sm border-t border-white/20">
+<span class="text-[12px]">Total Stock</span>
+<span class="numeric-font font-bold">142 Units</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Toolbar -->
+<div class="p-md bg-surface-container-highest/30 border-t border-outline-variant flex justify-between items-center px-lg">
+<div class="flex items-center gap-md">
+<button class="text-on-surface-variant flex items-center gap-xs font-label-md hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm">content_copy</span>
+<span>Duplicate All</span>
+</button>
+<button class="text-on-surface-variant flex items-center gap-xs font-label-md hover:text-error transition-colors">
+<span class="material-symbols-outlined text-sm">delete_sweep</span>
+<span>Delete All Variants</span>
+</button>
+</div>
+<div class="flex items-center gap-lg">
+<label class="flex items-center gap-sm cursor-pointer">
+<input checked="" class="w-4 h-4 rounded border-outline text-primary focus:ring-primary" type="checkbox"/>
+<span class="font-label-md text-label-md">Track inventory for all variants</span>
+</label>
+</div>
+</div>
+</div>
+<!-- Inventory Alerts Toast (Corner Placement Simulation) -->
+<div class="fixed bottom-lg right-lg w-80 bg-inverse-surface text-inverse-on-surface p-md rounded-xl shadow-lg flex items-start gap-md z-50">
+<span class="material-symbols-outlined text-secondary-fixed-dim">check_circle</span>
+<div class="flex-1">
+<h5 class="font-bold text-label-md">Variant Updated</h5>
+<p class="text-[12px] opacity-80">Stock for "Forest Green / S" updated to 48 units.</p>
+</div>
+<button class="opacity-50 hover:opacity-100">
+<span class="material-symbols-outlined text-sm">close</span>
+</button>
+</div>
+</main>
+</body></html>

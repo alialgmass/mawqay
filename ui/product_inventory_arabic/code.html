@@ -1,0 +1,439 @@
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&amp;family=IBM+Plex+Sans:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        body {
+            font-family: 'IBM Plex Sans Arabic', sans-serif;
+            background-color: #f7f9fb;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary-container": "#381a00",
+                      "tertiary": "#170700",
+                      "on-tertiary-fixed-variant": "#6e3900",
+                      "primary-fixed": "#e3dfff",
+                      "on-primary": "#ffffff",
+                      "surface-container": "#eceef0",
+                      "surface": "#f7f9fb",
+                      "surface-container-lowest": "#ffffff",
+                      "on-primary-container": "#8683ba",
+                      "background": "#f7f9fb",
+                      "error-container": "#ffdad6",
+                      "surface-container-highest": "#e0e3e5",
+                      "on-secondary-container": "#00714e",
+                      "on-tertiary-container": "#cf7100",
+                      "primary-fixed-dim": "#c4c1fb",
+                      "on-surface-variant": "#47464f",
+                      "surface-dim": "#d8dadc",
+                      "surface-variant": "#e0e3e5",
+                      "secondary-fixed-dim": "#68dba9",
+                      "primary-container": "#1e1b4b",
+                      "surface-tint": "#5b598c",
+                      "on-error": "#ffffff",
+                      "secondary-fixed": "#85f8c4",
+                      "on-primary-fixed": "#181445",
+                      "primary": "#070235",
+                      "outline": "#787680",
+                      "tertiary-fixed-dim": "#ffb77d",
+                      "on-tertiary-fixed": "#2f1500",
+                      "inverse-surface": "#2d3133",
+                      "surface-container-high": "#e6e8ea",
+                      "on-secondary-fixed-variant": "#005137",
+                      "surface-container-low": "#f2f4f6",
+                      "on-primary-fixed-variant": "#444173",
+                      "on-error-container": "#93000a",
+                      "secondary-container": "#82f5c1",
+                      "outline-variant": "#c8c5d0",
+                      "on-surface": "#191c1e",
+                      "on-secondary-fixed": "#002114",
+                      "inverse-primary": "#c4c1fb",
+                      "on-background": "#191c1e",
+                      "inverse-on-surface": "#eff1f3",
+                      "secondary": "#006c4a",
+                      "surface-bright": "#f7f9fb",
+                      "tertiary-fixed": "#ffdcc3",
+                      "on-tertiary": "#ffffff",
+                      "on-secondary": "#ffffff",
+                      "error": "#ba1a1a"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "sm": "8px",
+                      "lg": "24px",
+                      "container-max": "1440px",
+                      "base": "4px",
+                      "xs": "4px",
+                      "gutter": "16px",
+                      "md": "16px",
+                      "xl": "32px"
+              },
+              "fontFamily": {
+                      "display-lg": ["IBM Plex Sans Arabic"],
+                      "body-md": ["IBM Plex Sans Arabic"],
+                      "label-md": ["IBM Plex Sans Arabic"],
+                      "headline-sm": ["IBM Plex Sans Arabic"],
+                      "headline-md": ["IBM Plex Sans Arabic"],
+                      "body-lg": ["IBM Plex Sans Arabic"],
+                      "numeric-pos": ["IBM Plex Sans"]
+              },
+              "fontSize": {
+                      "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                      "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "numeric-pos": ["22px", {"lineHeight": "24px", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface">
+<!-- Top Navigation Shell -->
+<header class="docked full-width top-0 sticky z-40 bg-surface dark:bg-surface-container-low border-b border-outline-variant flex justify-between items-center h-16 px-lg mr-64">
+<div class="flex items-center gap-md">
+<h1 class="text-headline-sm font-black text-primary dark:text-primary-fixed">SmartPOS Egypt</h1>
+<div class="flex items-center bg-surface-container-low rounded-full px-md py-xs border border-outline-variant">
+<span class="material-symbols-outlined text-on-surface-variant">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-label-md px-sm w-64" placeholder="البحث في المخزون..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="flex items-center gap-xs px-md py-xs text-label-md font-bold text-primary hover:bg-surface-container-highest transition-colors rounded-lg">
+<span class="material-symbols-outlined" data-icon="location_on">location_on</span>
+<span>تغيير الفرع</span>
+</button>
+<div class="flex items-center gap-sm">
+<button class="hover:bg-surface-container-highest dark:hover:bg-surface-variant rounded-full p-2 active:opacity-80 transition-opacity">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="notifications">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center">
+<img alt="User Profile" class="w-full h-full rounded-full" data-alt="A professional headshot of a Middle Eastern business administrator wearing corporate attire. The background is a clean, softly lit office environment with neutral tones, conveying authority and dependability in a modern Egyptian corporate setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdCmWBUjsIU52RgvNKoIPc-IEslensCmoqBBiK7sJtzNRrKnktByiMKgCgBFs7saiurpykTEho-96u_bz_t-RBRIeN6F7rTCav8kO2TPr-OKLoJ9Emw1Ml74nR4WTanklBaAKyQGfAjMz3q36jTl-e8thpJ_phlJV_4KpQj8epZJnJWstQ_bi-GH2eGNJjzPDN9Es7eFTc6oIHUKPepJ2MWFgTUs2HbYR4uqK1tqub8dnIDff2OhbPlOsKcwNg8vwJtzxSv7vL7bJo"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Side Navigation Shell (Right Aligned for RTL) -->
+<aside class="h-screen w-64 fixed right-0 top-0 border-l border-outline-variant bg-surface dark:bg-surface-container-lowest flex flex-col py-lg px-md z-50">
+<div class="flex flex-col gap-xs mb-xl px-md">
+<span class="text-headline-md font-bold text-primary dark:text-primary-fixed-dim">الاسم التجاري</span>
+<span class="font-label-md text-label-md text-on-surface-variant">اشتراك بريميوم</span>
+</div>
+<nav class="flex flex-col gap-xs flex-1">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-md">لوحة القيادة</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm bg-primary-container text-on-primary-container rounded-lg font-bold active:scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="font-label-md">المنتجات</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="point_of_sale">point_of_sale</span>
+<span class="font-label-md">نقطة البيع (POS)</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-label-md">العملاء</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="restaurant">restaurant</span>
+<span class="font-label-md">المطعم</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="assessment">assessment</span>
+<span class="font-label-md">التقارير</span>
+</a>
+<div class="mt-auto">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-label-md">الإعدادات</span>
+</a>
+</div>
+</nav>
+</aside>
+<!-- Main Content Canvas -->
+<main class="mr-64 p-lg">
+<!-- Header Section -->
+<div class="flex justify-between items-end mb-xl">
+<div>
+<h2 class="font-headline-md text-headline-md text-primary mb-xs">إدارة مخزون المنتجات</h2>
+<p class="text-body-md text-on-surface-variant">تتبع وإدارة مستويات المخزون عبر جميع الفروع</p>
+</div>
+<div class="flex gap-md">
+<button class="bg-surface-container-high text-on-surface flex items-center gap-sm px-lg py-sm rounded-xl font-bold hover:bg-surface-container-highest transition-all border border-outline-variant">
+<span class="material-symbols-outlined">file_download</span>
+                    استيراد من إكسل
+                </button>
+<button class="bg-primary text-on-primary flex items-center gap-sm px-xl py-sm rounded-xl font-bold hover:opacity-90 active:scale-95 transition-all">
+<span class="material-symbols-outlined">add_circle</span>
+                    إضافة منتج
+                </button>
+</div>
+</div>
+<!-- Bento Grid Stats -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-md mb-xl">
+<div class="bg-surface-container-lowest p-lg rounded-xl border border-outline-variant">
+<div class="flex justify-between items-start mb-md">
+<div class="p-sm bg-primary-container/10 rounded-lg">
+<span class="material-symbols-outlined text-primary">inventory</span>
+</div>
+<span class="text-xs font-bold text-secondary">+12.5%</span>
+</div>
+<div class="text-on-surface-variant font-label-md">إجمالي المنتجات</div>
+<div class="text-headline-md font-numeric-pos font-bold">1,284</div>
+</div>
+<div class="bg-surface-container-lowest p-lg rounded-xl border border-outline-variant">
+<div class="flex justify-between items-start mb-md">
+<div class="p-sm bg-secondary-container/10 rounded-lg">
+<span class="material-symbols-outlined text-secondary">check_circle</span>
+</div>
+<span class="text-xs font-bold text-secondary">نشط</span>
+</div>
+<div class="text-on-surface-variant font-label-md">الأصناف النشطة</div>
+<div class="text-headline-md font-numeric-pos font-bold">1,150</div>
+</div>
+<div class="bg-surface-container-lowest p-lg rounded-xl border border-outline-variant border-l-4 border-l-error">
+<div class="flex justify-between items-start mb-md">
+<div class="p-sm bg-error-container/10 rounded-lg">
+<span class="material-symbols-outlined text-error">warning</span>
+</div>
+<span class="text-xs font-bold text-error">حرج</span>
+</div>
+<div class="text-on-surface-variant font-label-md">نواقص المخزون</div>
+<div class="text-headline-md font-numeric-pos font-bold">42</div>
+</div>
+<div class="bg-surface-container-lowest p-lg rounded-xl border border-outline-variant">
+<div class="flex justify-between items-start mb-md">
+<div class="p-sm bg-tertiary-container/10 rounded-lg">
+<span class="material-symbols-outlined text-on-tertiary-fixed-variant">payments</span>
+</div>
+</div>
+<div class="text-on-surface-variant font-label-md">قيمة المخزون</div>
+<div class="text-headline-md font-numeric-pos font-bold">452,000 <span class="text-sm font-normal">جم</span></div>
+</div>
+</div>
+<!-- Catalog Filter & Table -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden">
+<div class="p-lg border-b border-outline-variant flex justify-between items-center bg-surface-container-low">
+<h3 class="font-headline-sm text-headline-sm">كتالوج المنتجات</h3>
+<div class="flex gap-sm">
+<button class="p-sm border border-outline-variant rounded-lg hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined">filter_list</span>
+</button>
+<button class="p-sm border border-outline-variant rounded-lg hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined">grid_view</span>
+</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-right">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant">
+<th class="px-lg py-md font-label-md text-on-surface-variant">معلومات المنتج</th>
+<th class="px-lg py-md font-label-md text-on-surface-variant">الفئة</th>
+<th class="px-lg py-md font-label-md text-on-surface-variant">الباركود</th>
+<th class="px-lg py-md font-label-md text-on-surface-variant">مستوى المخزون</th>
+<th class="px-lg py-md font-label-md text-on-surface-variant">السعر</th>
+<th class="px-lg py-md font-label-md text-on-surface-variant">الحالة</th>
+<th class="px-lg py-md font-label-md text-on-surface-variant">إجراءات</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-lg py-md">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center overflow-hidden">
+<img alt="Product" data-alt="Close-up studio shot of a vibrant red performance running shoe. The lighting is crisp and commercial, with soft shadows against a clean, light-gray professional background. The visual style is premium corporate retail, emphasizing product detail and texture in a high-density modern UI." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAWq81doJlVQiImEUWkOjoqcXvZEsKLBAPXCSMYJuYJTKNhpczgQmJPbqdylNHggyVOf5clklw7wLAz3_lwIk6ckqyvB5Be2mhozWR4meDPgk0LT3ucpojB9341D4y5nJUTcYEE8NHmIbW4BlP4gQE8dMJZFI-6F_x84uWdQghREaVybfOK2_ISmnhJcIbgj908Y9bHe5E4QIFTmk0ERZdFBsvWWqkcTI8XFOjiUBUewnhxyXIjlnS4AzIePkCP96l9VGvD9Q1U6Wa"/>
+</div>
+<div>
+<div class="font-bold text-on-surface">نايكي إير ماكس</div>
+<div class="text-xs text-on-surface-variant">SKU: NK-2024-001</div>
+</div>
+</div>
+</td>
+<td class="px-lg py-md text-body-md">أحذية رياضية</td>
+<td class="px-lg py-md font-numeric-pos text-sm">629100012345</td>
+<td class="px-lg py-md">
+<div class="w-32">
+<div class="flex justify-between text-xs mb-1">
+<span>85 وحدة</span>
+<span class="text-on-surface-variant">85%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-secondary" style="width: 85%"></div>
+</div>
+</div>
+</td>
+<td class="px-lg py-md font-numeric-pos font-bold">4,200 جم</td>
+<td class="px-lg py-md">
+<span class="px-sm py-1 rounded-full text-xs font-bold bg-secondary/10 text-secondary border border-secondary/20">متوفر</span>
+</td>
+<td class="px-lg py-md">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 (Low Stock Example) -->
+<tr class="hover:bg-surface-container-low transition-colors bg-error-container/5">
+<td class="px-lg py-md">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center overflow-hidden">
+<img alt="Product" data-alt="A minimalist high-tech minimalist white smartwatch with a clean silicone band. Photographed in high-key lighting to match a corporate modern aesthetic. The product is centered on a soft white background, highlighting its sleek industrial design and premium build quality." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIvtYaYpOQd72ca6sas9QrbY7YXBUgnbZ3zjDHkAPdhtTZKhCMFnMGZVmNun8j2GKEWLIrwxUz9zh2SLtCA_NCNB-KCkQ7Aw5IUXojcFSHjk4yKOTgGYPQQKUQrfRe-keOwccHC6xLCuzD0W3fJGu8OVIlxfAtteI7nZ883M1uvAJOCWnGvqKiZCh3vVEaI023tuEPjjRckgTV0SHEH2wYUVTHpXVpo4EDIPBLLWeBMiQGNM_eRBD9IX9zxKHXInObKYzgAgQiHyHW"/>
+</div>
+<div>
+<div class="font-bold text-on-surface">ساعة ذكية برو</div>
+<div class="text-xs text-on-surface-variant">SKU: SW-PRO-99</div>
+</div>
+</div>
+</td>
+<td class="px-lg py-md text-body-md">إلكترونيات</td>
+<td class="px-lg py-md font-numeric-pos text-sm">745200098765</td>
+<td class="px-lg py-md">
+<div class="w-32">
+<div class="flex justify-between text-xs mb-1">
+<span class="text-error font-bold">8 وحدات</span>
+<span class="text-on-surface-variant">10%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-error" style="width: 10%"></div>
+</div>
+</div>
+</td>
+<td class="px-lg py-md font-numeric-pos font-bold">12,500 جم</td>
+<td class="px-lg py-md">
+<span class="px-sm py-1 rounded-full text-xs font-bold bg-error/10 text-error border border-error/20">مخزون منخفض</span>
+</td>
+<td class="px-lg py-md">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-lg py-md">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center overflow-hidden">
+<img alt="Product" data-alt="A pair of sleek black over-ear wireless headphones with metallic accents. Studio lighting creates deep blacks and sharp highlights, emphasizing a professional and premium feel. The composition is clean, centered, and optimized for a high-density product management dashboard." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCStfJorR-GCeiusNpsP6FxDOijpv3p-goJOeg9gEagirZXpkZoXQj0pgleeMGK5EJyqt9i8CNBV1jw4Wx1sxL1pjmcPidzxBhPnF_sSsT1S0i1LSJbSHtV5BnTVnDShHNfkyFjWpjKgQw3tY0nldD_AVwB1ePodQwXc93bG_oKi1Z_BS6fZzx2CBlSNhmH_yWJMd832V3i8WrMAHPIADJTVeXecn-4A-ugeK9jaKeC6bZhA7F4aimaVDzTXToXCxzuJgs92Q3KzxhF"/>
+</div>
+<div>
+<div class="font-bold text-on-surface">سماعات لاسلكية</div>
+<div class="text-xs text-on-surface-variant">SKU: WH-1000-XM</div>
+</div>
+</div>
+</td>
+<td class="px-lg py-md text-body-md">إكسسوارات</td>
+<td class="px-lg py-md font-numeric-pos text-sm">882300055441</td>
+<td class="px-lg py-md">
+<div class="w-32">
+<div class="flex justify-between text-xs mb-1">
+<span>45 وحدة</span>
+<span class="text-on-surface-variant">45%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-secondary" style="width: 45%"></div>
+</div>
+</div>
+</td>
+<td class="px-lg py-md font-numeric-pos font-bold">8,900 جم</td>
+<td class="px-lg py-md">
+<span class="px-sm py-1 rounded-full text-xs font-bold bg-secondary/10 text-secondary border border-secondary/20">متوفر</span>
+</td>
+<td class="px-lg py-md">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="p-lg border-t border-outline-variant flex justify-between items-center bg-surface-container-low">
+<span class="text-label-md text-on-surface-variant">عرض 1-10 من أصل 1,284 منتج</span>
+<div class="flex gap-xs">
+<button class="w-8 h-8 flex items-center justify-center rounded border border-outline-variant hover:bg-surface-container-high">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center rounded bg-primary text-on-primary font-bold">1</button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-outline-variant hover:bg-surface-container-high">2</button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-outline-variant hover:bg-surface-container-high">3</button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-outline-variant hover:bg-surface-container-high">
+<span class="material-symbols-outlined text-sm">chevron_left</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Secondary Information Section -->
+<div class="mt-xl grid grid-cols-1 md:grid-cols-2 gap-lg">
+<div class="bg-surface-container-lowest p-lg rounded-xl border border-outline-variant">
+<div class="flex items-center gap-md mb-lg">
+<div class="w-10 h-10 bg-primary-container/10 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">category</span>
+</div>
+<h4 class="font-headline-sm">الفئات الأعلى مبيعاً</h4>
+</div>
+<div class="space-y-md">
+<div class="flex justify-between items-center">
+<span class="text-body-md">أحذية رياضية</span>
+<span class="font-numeric-pos font-bold">42%</span>
+</div>
+<div class="w-full h-2 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 42%"></div>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-body-md">إلكترونيات</span>
+<span class="font-numeric-pos font-bold">28%</span>
+</div>
+<div class="w-full h-2 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 28%"></div>
+</div>
+</div>
+</div>
+<div class="bg-primary text-on-primary p-lg rounded-xl border border-primary relative overflow-hidden">
+<div class="relative z-10">
+<h4 class="font-headline-sm mb-sm">تحديثات النظام</h4>
+<p class="text-body-md opacity-80 mb-lg">تم تحديث أسعار الصرف تلقائياً لفرع القاهرة.</p>
+<button class="bg-on-primary text-primary px-lg py-sm rounded-lg font-bold hover:bg-primary-fixed transition-colors">
+                        عرض التفاصيل
+                    </button>
+</div>
+<!-- Abstract Design Element -->
+<div class="absolute -bottom-10 -left-10 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
+<div class="absolute top-0 right-0 p-lg opacity-20">
+<span class="material-symbols-outlined text-[80px]">auto_awesome</span>
+</div>
+</div>
+</div>
+</main>
+<!-- Floating Action Button (FAB) - Suppressed as per Task-Focused screen policy -->
+</body></html>
