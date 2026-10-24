@@ -16,6 +16,7 @@ use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Modules\Auth\Filament\AuthPlugin;
 use Modules\Backoffice\Filament\Vendor\Pages\StoreIdentity;
 use Modules\Backoffice\Filament\Vendor\Pages\VendorDashboard;
 use Modules\Backoffice\Http\Middleware\SetStoreContextFromTenant;
@@ -36,6 +37,7 @@ class VendorPanelProvider extends PanelProvider
             ->tenantMenu(false)
             ->plugin(CatalogPlugin::make())
             ->plugin(ThemingPlugin::make())
+            ->plugin(AuthPlugin::make())
             ->colors([
                 'primary' => Color::Rose,
                 'gray' => Color::Slate,

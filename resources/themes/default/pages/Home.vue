@@ -4,34 +4,17 @@ import EmptyState from '../components/EmptyState.vue';
 import ProductCard from '../components/ProductCard.vue';
 import type { ProductCardData } from '../components/ProductCard.vue';
 import StoreLayout from '../layouts/StoreLayout.vue';
-import type {
-    NavLink,
-    Seo,
-    ShellUrls,
-    StoreShell,
-} from '../layouts/StoreLayout.vue';
+import type { Seo } from '../layouts/StoreLayout.vue';
 
 defineProps<{
-    store: StoreShell;
-    tokens: Record<string, string>;
     seo: Seo;
-    urls: ShellUrls;
-    navigation: NavLink[];
-    cartCount: number;
     latest: ProductCardData[];
     categories: { name: string; url: string }[];
 }>();
 </script>
 
 <template>
-    <StoreLayout
-        :store="store"
-        :tokens="tokens"
-        :seo="seo"
-        :urls="urls"
-        :navigation="navigation"
-        :cart-count="cartCount"
-    >
+    <StoreLayout :seo="seo">
         <nav
             v-if="categories.length"
             class="mb-6 flex flex-wrap gap-2"

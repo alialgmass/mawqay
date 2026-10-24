@@ -17,6 +17,7 @@ use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Modules\Auth\Filament\AuthPlugin;
 use Modules\Backoffice\Filament\Admin\Pages\PlatformSettings;
 use Modules\Backoffice\Http\Middleware\UseArabicLocale;
 use Modules\Catalog\Filament\CatalogPlugin;
@@ -46,6 +47,7 @@ class AdminPanelProvider extends PanelProvider
             ->plugin(TenancyPlugin::make())
             ->plugin(CatalogPlugin::make())
             ->plugin(ThemingPlugin::make())
+            ->plugin(AuthPlugin::make())
             ->pages([
                 Dashboard::class,
                 PlatformSettings::class,

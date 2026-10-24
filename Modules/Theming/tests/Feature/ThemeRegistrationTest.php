@@ -5,6 +5,7 @@ namespace Modules\Theming\Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\File;
 use Modules\Theming\Models\Theme;
+use Modules\Theming\Support\ThemeContract;
 use Modules\Theming\Testing\FakesThemeFolder;
 use Tests\TestCase;
 
@@ -36,7 +37,7 @@ class ThemeRegistrationTest extends TestCase
         $theme = Theme::query()->where('slug', 'noor')->firstOrFail();
         $this->assertTrue($theme->is_active);
         $this->assertSame('2.1.0', $theme->version);
-        $this->assertSame('1.0.0', $theme->manifest['contract_version']);
+        $this->assertSame(ThemeContract::VERSION, $theme->manifest['contract_version']);
     }
 
     public function test_an_invalid_manifest_is_rejected_with_reasons_and_nothing_is_stored(): void

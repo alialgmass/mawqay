@@ -6,20 +6,10 @@ import type { Crumb } from '../components/StorefrontBreadcrumbs.vue';
 import VariantPicker from '../components/VariantPicker.vue';
 import type { VariantData } from '../components/VariantPicker.vue';
 import StoreLayout from '../layouts/StoreLayout.vue';
-import type {
-    NavLink,
-    Seo,
-    ShellUrls,
-    StoreShell,
-} from '../layouts/StoreLayout.vue';
+import type { Seo } from '../layouts/StoreLayout.vue';
 
 const props = defineProps<{
-    store: StoreShell;
-    tokens: Record<string, string>;
     seo: Seo;
-    urls: ShellUrls;
-    navigation: NavLink[];
-    cartCount: number;
     breadcrumbs: Crumb[];
     product: {
         name: string;
@@ -37,14 +27,7 @@ const image = computed(() => props.product.images[activeImage.value] ?? null);
 </script>
 
 <template>
-    <StoreLayout
-        :store="store"
-        :tokens="tokens"
-        :seo="seo"
-        :urls="urls"
-        :navigation="navigation"
-        :cart-count="cartCount"
-    >
+    <StoreLayout :seo="seo">
         <StorefrontBreadcrumbs :items="breadcrumbs" />
 
         <div class="grid gap-6 md:grid-cols-2">

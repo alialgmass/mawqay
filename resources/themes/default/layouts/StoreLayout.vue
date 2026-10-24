@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, router, usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
 
 export type StoreShell = {
@@ -22,32 +22,63 @@ export type Seo = {
     image: string | null;
 };
 
-export type ShellUrls = { home: string; search: string; cart: string };
-
 export type NavLink = { name: string; url: string };
 
-const props = defineProps<{
+/** What every page of the contract receives next to its own data. */
+export type Shell = {
     store: StoreShell;
+    customer: { name: string } | null;
     tokens: Record<string, string>;
-    seo: Seo;
-    urls: ShellUrls;
+    urls: {
+        home: string;
+        search: string;
+        cart: string;
+        login: string;
+        register: string;
+        forgotPassword: string;
+        account: string;
+        addresses: string;
+    };
+    actions: {
+        login: string;
+        register: string;
+        logout: string;
+        forgotPassword: string;
+        resetPassword: string;
+        profile: string;
+        password: string;
+        addresses: string;
+    };
     navigation: NavLink[];
     cartCount: number;
+    status: string | null;
+};
+
+defineProps<{
+    seo: Seo;
     query?: string;
 }>();
 
+const page = usePage();
+const shell = computed(() => page.props as unknown as Shell);
+const store = computed(() => shell.value.store);
+
 const whatsappUrl = computed(() =>
-    props.store.contact.whatsapp
-        ? `https://wa.me/${props.store.contact.whatsapp.replace(/\D/g, '')}`
+    store.value.contact.whatsapp
+        ? `https://wa.me/${store.value.contact.whatsapp.replace(/\D/g, '')}`
         : null,
 );
 
 const showSocial = computed(
-    () => props.tokens['--theme-show-footer-social'] !== '0',
+    () => shell.value.tokens['--theme-show-footer-social'] !== '0',
 );
 
 const focusRing =
     'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current';
+
+function logout() {
+    router.post(shell.value.actions.logout);
+}
 </script>
 
 <template>
@@ -78,7 +109,7 @@ const focusRing =
         dir="rtl"
         class="flex min-h-screen flex-col"
         :style="{
-            ...tokens,
+            ...shell.tokens,
             backgroundColor: 'var(--color-bg)',
             color: 'var(--color-text)',
             fontFamily: 'var(--font-body)',
@@ -95,7 +126,7 @@ const focusRing =
                 class="mx-auto flex max-w-6xl flex-wrap items-center gap-3 px-4 py-3"
             >
                 <Link
-                    :href="urls.home"
+                    :href="shell.urls.home"
                     :class="['flex min-h-11 items-center gap-3', focusRing]"
                     :aria-label="`${store.name} - الصفحة الرئيسية`"
                 >
@@ -114,7 +145,7 @@ const focusRing =
                 </Link>
 
                 <form
-                    :action="urls.search"
+                    :action="shell.urls.search"
                     method="get"
                     role="search"
                     aria-label="البحث في المتجر"
@@ -152,26 +183,61 @@ const focusRing =
                     </button>
                 </form>
 
+                <nav
+                    aria-label="الحساب"
+                    class="flex items-center gap-3 text-sm"
+                    data-account-nav
+                >
+                    <template v-if="shell.customer">
+                        <Link
+                            :href="shell.urls.account"
+                            :class="['flex min-h-11 items-center', focusRing]"
+                            data-account-link
+                            >{{ shell.customer.name }}</Link
+                        >
+                        <button
+                            type="button"
+                            :class="['flex min-h-11 items-center', focusRing]"
+                            @click="logout"
+                        >
+                            تسجيل الخروج
+                        </button>
+                    </template>
+                    <template v-else>
+                        <Link
+                            :href="shell.urls.login"
+                            :class="['flex min-h-11 items-center', focusRing]"
+                            data-login-link
+                            >تسجيل الدخول</Link
+                        >
+                        <Link
+                            :href="shell.urls.register"
+                            :class="['flex min-h-11 items-center', focusRing]"
+                            >إنشاء حساب</Link
+                        >
+                    </template>
+                </nav>
+
                 <a
-                    :href="urls.cart"
+                    :href="shell.urls.cart"
                     :class="[
                         'flex min-h-11 min-w-11 items-center gap-1',
                         focusRing,
                     ]"
-                    :aria-label="`سلة التسوق، ${cartCount} منتج`"
+                    :aria-label="`سلة التسوق، ${shell.cartCount} منتج`"
                 >
                     <span aria-hidden="true">🛒</span>
-                    <span data-cart-count>{{ cartCount }}</span>
+                    <span data-cart-count>{{ shell.cartCount }}</span>
                 </a>
             </div>
 
             <nav
-                v-if="navigation.length"
+                v-if="shell.navigation.length"
                 aria-label="التصنيفات"
                 class="mx-auto max-w-6xl overflow-x-auto px-4 pb-2"
             >
                 <ul class="flex gap-4 text-sm">
-                    <li v-for="link in navigation" :key="link.url">
+                    <li v-for="link in shell.navigation" :key="link.url">
                         <Link
                             :href="link.url"
                             :class="['flex min-h-11 items-center', focusRing]"
@@ -183,6 +249,18 @@ const focusRing =
         </header>
 
         <main class="mx-auto w-full max-w-6xl flex-1 px-4 py-6">
+            <p
+                v-if="shell.status"
+                role="status"
+                class="mb-4 p-3 text-sm"
+                :style="{
+                    backgroundColor: 'var(--color-secondary)',
+                    color: 'var(--color-on-secondary)',
+                    borderRadius: 'var(--radius-md)',
+                }"
+            >
+                {{ shell.status }}
+            </p>
             <slot />
         </main>
 

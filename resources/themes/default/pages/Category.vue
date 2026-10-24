@@ -5,20 +5,10 @@ import type { ProductPage } from '../components/ProductGrid.vue';
 import StorefrontBreadcrumbs from '../components/StorefrontBreadcrumbs.vue';
 import type { Crumb } from '../components/StorefrontBreadcrumbs.vue';
 import StoreLayout from '../layouts/StoreLayout.vue';
-import type {
-    NavLink,
-    Seo,
-    ShellUrls,
-    StoreShell,
-} from '../layouts/StoreLayout.vue';
+import type { Seo } from '../layouts/StoreLayout.vue';
 
 defineProps<{
-    store: StoreShell;
-    tokens: Record<string, string>;
     seo: Seo;
-    urls: ShellUrls;
-    navigation: NavLink[];
-    cartCount: number;
     category: { name: string; slug: string };
     products: ProductPage;
     sort: string;
@@ -35,14 +25,7 @@ function sortBy(event: Event) {
 </script>
 
 <template>
-    <StoreLayout
-        :store="store"
-        :tokens="tokens"
-        :seo="seo"
-        :urls="urls"
-        :navigation="navigation"
-        :cart-count="cartCount"
-    >
+    <StoreLayout :seo="seo">
         <StorefrontBreadcrumbs :items="breadcrumbs" />
 
         <div class="mb-4 flex items-center justify-between gap-3">

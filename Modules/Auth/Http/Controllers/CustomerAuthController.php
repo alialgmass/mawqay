@@ -3,52 +3,56 @@
 namespace Modules\Auth\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\ValidationException;
+use Modules\Auth\Actions\AttemptCustomerLogin;
+use Modules\Auth\Actions\RegisterCustomer;
+use Modules\Auth\Http\Controllers\Concerns\RespondsToCustomer;
 use Modules\Auth\Http\Requests\LoginCustomerRequest;
 use Modules\Auth\Http\Requests\RegisterCustomerRequest;
-use Modules\Auth\Models\Customer;
+use Modules\Auth\Support\CustomerSession;
 
 class CustomerAuthController
 {
-    public function register(RegisterCustomerRequest $request): JsonResponse
+    use RespondsToCustomer;
+
+    public function register(RegisterCustomerRequest $request, RegisterCustomer $register): JsonResponse|RedirectResponse
     {
-        $customer = Customer::query()->create($request->validated());
+        $customer = $register($request->validated());
 
-        Auth::guard('customer')->login($customer);
-        $request->session()->regenerate();
-
-        return response()->json(['name' => $customer->name], 201);
-    }
-
-    public function login(LoginCustomerRequest $request): JsonResponse
-    {
-        $identifier = $request->validated('identifier');
-        $field = filter_var($identifier, FILTER_VALIDATE_EMAIL) ? 'email' : 'phone';
-
-        $signedIn = Auth::guard('customer')->attempt([
-            $field => $identifier,
-            'password' => $request->validated('password'),
-        ]);
-
-        if (! $signedIn) {
-            throw ValidationException::withMessages([
-                'identifier' => 'These credentials do not match our records.',
-            ]);
+        if ($customer->needsEmailVerification()) {
+            return $this->respond($request, ['verification_required' => true], $this->storeUrl('/login'), __('auth::customers.unverified'), 202);
         }
 
+        Auth::guard('customer')->login($customer);
+        CustomerSession::remember($customer);
         $request->session()->regenerate();
+        CustomerSession::remember($customer);
 
-        return response()->json(['name' => Auth::guard('customer')->user()->name]);
+        return $this->respond($request, ['name' => $customer->name], $this->afterLoginUrl($request), __('auth::customers.registered'), 201);
     }
 
-    public function logout(Request $request): Response
+    public function login(LoginCustomerRequest $request, AttemptCustomerLogin $attempt): JsonResponse|RedirectResponse
+    {
+        $customer = $attempt($request->validated('identifier'), $request->validated('password'));
+
+        $request->session()->regenerate();
+        CustomerSession::remember($customer);
+
+        return $this->respond($request, ['name' => $customer->name], $this->afterLoginUrl($request));
+    }
+
+    public function logout(Request $request): JsonResponse|RedirectResponse|Response
     {
         Auth::guard('customer')->logout();
         $request->session()->regenerateToken();
 
-        return response()->noContent();
+        if ($request->expectsJson()) {
+            return response()->noContent();
+        }
+
+        return redirect($this->storeUrl(''));
     }
 }

@@ -7,7 +7,7 @@ final class AccountPageData extends PageData
     /**
      * @param  array<string, mixed>  $shell
      * @param  array{title: string, description: string|null, image: string|null}  $seo
-     * @param  array{name: string}|null  $customer
+     * @param  array{name: string, email: string|null, phone: string|null, emailVerified: bool}|null  $customer
      */
     public function __construct(
         array $shell,
