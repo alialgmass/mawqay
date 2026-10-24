@@ -27,14 +27,14 @@ final class IntendedUrl
             return null;
         }
 
-        $path = $parts['path'] ?? '';
+        $path = rawurldecode($parts['path'] ?? '');
         $prefix = '/'.$store->slug;
 
         if ($path !== $prefix && ! str_starts_with($path, $prefix.'/')) {
             return null;
         }
 
-        if (str_contains($path, '//') || in_array('..', explode('/', $path), true)) {
+        if (str_contains($path, '//') || str_contains($path, '\\') || in_array('..', explode('/', $path), true)) {
             return null;
         }
 

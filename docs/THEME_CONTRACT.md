@@ -46,7 +46,7 @@ Components, layouts and assets are up to the Theme; keep them inside its folder.
 | `version` | yes | Your Theme's semantic version |
 | `contract_version` | yes | The contract version you built against |
 | `preview` | yes | Image file in the Theme folder |
-| `pages` | yes | The pages you provide. Each needs `pages/{Name}.vue`. Allowed: `Home`, `Category`, `Product`, `Cart`, `Checkout`, `Account`, `Orders`, `NotFound` (required for the `default` Theme) and `Search`, `Login`, `Register`, `ForgotPassword`, `ResetPassword`, `Addresses` (optional) |
+| `pages` | yes | The pages you provide. Each needs `pages/{Name}.vue`. Allowed: `Home`, `Category`, `Product`, `Cart`, `Checkout`, `Account`, `Orders`, `NotFound` (the `default` Theme must provide all of these; another Theme may omit any page and the default's is used) and `Search`, `Login`, `Register`, `ForgotPassword`, `ResetPassword`, `Addresses` (optional) |
 | `settings` | no | Extra Vendor-editable fields (below) |
 | `defaults` | no | Override the default of a core setting: `primary_color`, `secondary_color`, `heading_font`, `body_font`, `corner_style` |
 

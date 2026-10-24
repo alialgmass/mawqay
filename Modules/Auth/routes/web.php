@@ -10,7 +10,7 @@ use Modules\Auth\Http\Controllers\InvitationController;
 use Modules\Auth\Http\Middleware\EnsureCustomerBelongsToStore;
 use Modules\Auth\Http\Middleware\EnsureCustomerIsAuthenticated;
 use Modules\Auth\Http\Middleware\EnsureCustomerSessionIsValid;
-use Modules\Storefront\Http\Middleware\UseArabicLocale;
+use Modules\Core\Http\Middleware\UseArabicLocale;
 use Modules\Tenancy\Http\Middleware\EnsureStoreIsPublic;
 use Modules\Tenancy\Http\Middleware\IdentifyStore;
 use Modules\Tenancy\Support\StoreRoutes;
@@ -49,7 +49,9 @@ Route::middleware(['web', UseArabicLocale::class, IdentifyStore::class, EnsureSt
 
         Route::middleware(EnsureCustomerIsAuthenticated::class)->group(function () {
             Route::put('profile', [CustomerProfileController::class, 'update'])->name('customer.profile.update');
-            Route::put('password', [CustomerProfileController::class, 'password'])->name('customer.password.update');
+            Route::put('password', [CustomerProfileController::class, 'password'])
+                ->middleware('throttle:10,1')
+                ->name('customer.password.update');
 
             Route::post('addresses', [CustomerAddressController::class, 'store'])->name('customer.addresses.store');
             Route::put('addresses/{address}', [CustomerAddressController::class, 'update'])->whereNumber('address')->name('customer.addresses.update');

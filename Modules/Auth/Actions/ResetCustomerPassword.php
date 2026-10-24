@@ -11,28 +11,43 @@ use Modules\Tenancy\Models\Store;
 
 /**
  * Sets a new password from a reset link. The link must belong to this Store,
- * be unexpired and unused; using it consumes it. Every session ends.
+ * be unexpired and unused; using it consumes it, atomically, so two
+ * submissions of the same link cannot both succeed.
  */
 class ResetCustomerPassword
 {
     public function __invoke(Store $store, string $email, string $token, string $password): Customer
     {
-        $row = DB::table('customer_password_reset_tokens')->where('store_id', $store->id)->where('email', $email)->first();
+        return DB::transaction(function () use ($store, $email, $token, $password): Customer {
+            $customer = Customer::query()->where('email', $email)->where('is_active', true)->first();
 
-        $valid = $row !== null
-            && Carbon::parse($row->created_at)->addMinutes(config('customers.reset_minutes'))->isFuture()
-            && Hash::check($token, $row->token);
+            $row = $customer === null ? null : DB::table('customer_password_reset_tokens')
+                ->where('store_id', $store->id)
+                ->where('email', $customer->email)
+                ->lockForUpdate()
+                ->first();
 
-        $customer = $valid ? Customer::query()->where('email', $email)->where('is_active', true)->first() : null;
+            $valid = $row !== null
+                && Carbon::parse($row->created_at)->addMinutes(config('customers.reset_minutes'))->isFuture()
+                && Hash::check($token, $row->token);
 
-        if ($customer === null) {
-            throw ValidationException::withMessages(['email' => __('auth::customers.reset_invalid')]);
-        }
+            if (! $valid) {
+                throw ValidationException::withMessages(['email' => __('auth::customers.reset_invalid')]);
+            }
 
-        $customer->forceFill(['password' => $password, 'remember_token' => null])->save();
+            $consumed = DB::table('customer_password_reset_tokens')
+                ->where('store_id', $store->id)
+                ->where('email', $customer->email)
+                ->where('token', $row->token)
+                ->delete();
 
-        DB::table('customer_password_reset_tokens')->where('store_id', $store->id)->where('email', $email)->delete();
+            if ($consumed !== 1) {
+                throw ValidationException::withMessages(['email' => __('auth::customers.reset_invalid')]);
+            }
 
-        return $customer;
+            $customer->forceFill(['password' => $password, 'remember_token' => null])->save();
+
+            return $customer;
+        });
     }
 }

@@ -133,8 +133,11 @@ class CustomerPagesTest extends TestCase
             'climbing out' => ['/store-a/../store-b'],
             'a store with the same prefix' => ['/store-abc'],
             'script' => ['javascript:alert(1)'],
+            'encoded climbing' => ['/store-a/%2e%2e/store-b'],
+            'encoded slash' => ['/store-a%2f%2fevil'],
             'backslash' => ['/store-a\evil'],
-            'header injection' => ['/store-a/
+            'header injection' => ['/store-a/
+
 Set-Cookie: x=1'],
         ];
     }

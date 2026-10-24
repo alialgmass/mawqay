@@ -37,6 +37,7 @@ final class CustomerSession
     public static function end(): void
     {
         Auth::guard('customer')->logout();
+        session()->forget([self::KEY, 'customer.intended']);
     }
 
     private static function hash(Customer $customer): string

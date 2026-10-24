@@ -20,6 +20,9 @@ class CreateAddress
     public function __invoke(Customer $customer, array $data): Address
     {
         return DB::transaction(function () use ($customer, $data): Address {
+            // Serialise concurrent additions for this Customer so the limit holds.
+            Customer::query()->whereKey($customer->getKey())->lockForUpdate()->first();
+
             if ($customer->addresses()->count() >= config('customers.max_addresses')) {
                 throw ValidationException::withMessages(['label' => __('auth::addresses.limit', ['max' => config('customers.max_addresses')])]);
             }

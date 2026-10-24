@@ -87,6 +87,23 @@ class ThemeRenderingTest extends TestCase
         $this->get('/noor/categories/abayas')->assertInertia(fn (Assert $page) => $page->component('storefront/lean/Category'));
     }
 
+    public function test_the_customer_pages_fall_back_to_the_default_when_a_theme_lacks_them(): void
+    {
+        $this->useTheme($this->registerTheme('lean'));
+
+        foreach (['login' => 'Login', 'register' => 'Register', 'forgot-password' => 'ForgotPassword', 'reset-password/abc' => 'ResetPassword'] as $path => $component) {
+            $this->get("/noor/{$path}")->assertInertia(fn (Assert $page) => $page->component("storefront/default/{$component}"));
+        }
+    }
+
+    public function test_a_theme_that_provides_a_customer_page_is_used_for_it(): void
+    {
+        $this->useTheme($this->registerTheme('full', pages: [...ThemeContract::REQUIRED_PAGES, 'Login']));
+
+        $this->get('/noor/login')->assertInertia(fn (Assert $page) => $page->component('storefront/full/Login'));
+        $this->get('/noor/register')->assertInertia(fn (Assert $page) => $page->component('storefront/default/Register'));
+    }
+
     public function test_a_theme_for_an_unsupported_contract_uses_the_default_everywhere(): void
     {
         $theme = $this->registerTheme('future', ['contract_version' => '2.0.0']);

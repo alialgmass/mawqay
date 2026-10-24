@@ -35,8 +35,10 @@ trait RespondsToCustomer
     {
         $store = Store::current();
 
+        $remembered = IntendedUrl::pull($store);
+
         return IntendedUrl::sanitize($request->input('redirect'), $store)
-            ?? IntendedUrl::pull($store)
+            ?? $remembered
             ?? "/{$store->slug}/account";
     }
 

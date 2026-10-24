@@ -33,7 +33,7 @@ class SendCustomerPasswordReset
             ['token', 'created_at'],
         );
 
-        $url = url("/{$store->slug}/reset-password/{$token}").'?email='.urlencode($customer->email);
+        $url = rtrim(config('app.url'), '/')."/{$store->slug}/reset-password/{$token}".'?email='.urlencode($customer->email);
 
         Mail::to($customer->email)->send(new CustomerPasswordReset($store, $customer, $url));
     }

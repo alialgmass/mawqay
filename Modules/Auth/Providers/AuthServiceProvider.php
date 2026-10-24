@@ -40,15 +40,21 @@ class AuthServiceProvider extends ServiceProvider
             $store = (string) $request->route('store');
             $identifier = (string) ($request->input('identifier') ?? $request->input('email') ?? $request->input('phone'));
 
-            return Limit::perMinute(5)
-                ->by($store.'|'.mb_strtolower($identifier).'|'.$request->ip())
-                ->response(function (Request $request, array $headers) {
-                    $message = __('auth::customers.throttled', ['seconds' => $headers['Retry-After'] ?? 60]);
+            $field = $request->has('identifier') ? 'identifier' : 'email';
 
-                    return $request->expectsJson()
-                        ? response()->json(['message' => $message], 429, $headers)
-                        : back()->withErrors(['identifier' => $message]);
-                });
+            $tooMany = function (Request $request, array $headers) use ($field) {
+                $message = __('auth::customers.throttled', ['seconds' => $headers['Retry-After'] ?? 60]);
+
+                return $request->expectsJson()
+                    ? response()->json(['message' => $message], 429, $headers)
+                    : back()->withErrors([$field => $message]);
+            };
+
+            // One bucket per identifier, plus a wider one per IP so rotating identifiers does not help.
+            return [
+                Limit::perMinute(5)->by($store.'|'.mb_strtolower($identifier).'|'.$request->ip())->response($tooMany),
+                Limit::perMinute(30)->by($store.'|'.$request->ip())->response($tooMany),
+            ];
         });
     }
 }

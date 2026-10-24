@@ -174,6 +174,33 @@ class CustomerAccountFlowsTest extends TestCase
         $this->register('store-b', ['email' => 'dup@example.com'])->assertStatus(429);
     }
 
+    public function test_rotating_identifiers_from_one_address_is_limited_too(): void
+    {
+        foreach (range(1, 30) as $number) {
+            $this->postJson('/store-a/customer/login', ['identifier' => "user{$number}@example.com", 'password' => 'wrong-wrong'])->assertUnprocessable();
+        }
+
+        $this->postJson('/store-a/customer/login', ['identifier' => 'user31@example.com', 'password' => 'wrong-wrong'])->assertStatus(429);
+    }
+
+    public function test_reset_submissions_are_rate_limited(): void
+    {
+        foreach (range(1, 5) as $unused) {
+            $this->postJson('/store-a/customer/reset-password', ['email' => 'e@example.com', 'token' => 'x', 'password' => 'brand-new-password', 'password_confirmation' => 'brand-new-password'])->assertUnprocessable();
+        }
+
+        $this->postJson('/store-a/customer/reset-password', ['email' => 'e@example.com', 'token' => 'x', 'password' => 'brand-new-password', 'password_confirmation' => 'brand-new-password'])->assertStatus(429);
+    }
+
+    public function test_a_throttled_forgot_password_form_shows_the_wait_on_the_email_field(): void
+    {
+        foreach (range(1, 5) as $unused) {
+            $this->post('/store-a/customer/forgot-password', ['email' => 'x@example.com']);
+        }
+
+        $this->post('/store-a/customer/forgot-password', ['email' => 'x@example.com'])->assertSessionHasErrors('email');
+    }
+
     public function test_a_deactivated_customer_cannot_log_in_and_a_session_ends_on_the_next_request(): void
     {
         $customer = $this->customer($this->storeA, ['email' => 'e@example.com']);
@@ -199,6 +226,17 @@ class CustomerAccountFlowsTest extends TestCase
 
         $this->assertNull($this->signedInAs('store-b'));
         $this->assertNotNull($this->signedInAs('store-a'));
+    }
+
+    public function test_logout_forgets_the_remembered_return_address(): void
+    {
+        $this->customer($this->storeA, ['email' => 'e@example.com']);
+        $this->get('/store-a/account');
+        $this->assertSame('/store-a/account', session('customer.intended'));
+
+        $this->post('/store-a/customer/logout');
+
+        $this->assertNull(session('customer.intended'));
     }
 
     public function test_logout_signs_the_customer_out(): void
@@ -470,6 +508,30 @@ class CustomerAccountFlowsTest extends TestCase
         $this->get($url.'x')->assertForbidden();
         $this->get(str_replace('/store-a/', '/store-b/', $url))->assertForbidden();
         $this->assertNull(Customer::query()->withoutGlobalScopes()->first()->email_verified_at);
+    }
+
+    public function test_a_customer_with_a_phone_can_still_log_in_by_phone_while_the_email_is_unverified(): void
+    {
+        config(['customers.verify_email' => true]);
+        Mail::fake();
+        $this->customer($this->storeA, ['email' => 'e@example.com', 'phone' => '01012345678']);
+
+        $this->postJson('/store-a/customer/login', ['identifier' => 'e@example.com', 'password' => 'a-strong-password'])->assertUnprocessable();
+        $this->postJson('/store-a/customer/login', ['identifier' => '01012345678', 'password' => 'a-strong-password'])->assertOk();
+    }
+
+    public function test_adding_an_email_later_does_not_lock_out_a_phone_only_customer(): void
+    {
+        config(['customers.verify_email' => true]);
+        Mail::fake();
+        $this->customer($this->storeA, ['email' => null, 'phone' => '01012345678']);
+        $this->postJson('/store-a/customer/login', ['identifier' => '01012345678', 'password' => 'a-strong-password'])->assertOk();
+
+        $this->putJson('/store-a/customer/profile', ['name' => 'Mona', 'email' => 'new@example.com', 'phone' => '01012345678'])->assertOk();
+        Mail::assertSent(CustomerVerifyEmail::class, 1);
+
+        $this->postJson('/store-a/customer/logout');
+        $this->postJson('/store-a/customer/login', ['identifier' => '01012345678', 'password' => 'a-strong-password'])->assertOk();
     }
 
     public function test_verification_can_be_resent_and_does_not_affect_phone_only_customers(): void

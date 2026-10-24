@@ -27,7 +27,6 @@ class CustomerAuthController
         }
 
         Auth::guard('customer')->login($customer);
-        CustomerSession::remember($customer);
         $request->session()->regenerate();
         CustomerSession::remember($customer);
 
@@ -46,7 +45,7 @@ class CustomerAuthController
 
     public function logout(Request $request): JsonResponse|RedirectResponse|Response
     {
-        Auth::guard('customer')->logout();
+        CustomerSession::end();
         $request->session()->regenerateToken();
 
         if ($request->expectsJson()) {
