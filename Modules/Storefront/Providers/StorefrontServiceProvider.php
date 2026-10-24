@@ -13,6 +13,7 @@ class StorefrontServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        $this->loadTranslationsFrom(__DIR__.'/../lang', 'storefront');
         $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
     }
 }

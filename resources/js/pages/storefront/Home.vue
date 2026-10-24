@@ -1,98 +1,53 @@
 <script setup lang="ts">
-import { Head } from '@inertiajs/vue3';
-import { computed } from 'vue';
+import { Link } from '@inertiajs/vue3';
+import EmptyState from '@/components/storefront/EmptyState.vue';
+import ProductCard from '@/components/storefront/ProductCard.vue';
+import type { ProductCardData } from '@/components/storefront/ProductCard.vue';
+import StoreLayout from '@/components/storefront/StoreLayout.vue';
+import type { Seo, StoreShell } from '@/components/storefront/StoreLayout.vue';
 
-const props = defineProps<{
-    store: {
-        name: string;
-        slug: string;
-        logoUrl: string | null;
-        faviconUrl: string | null;
-        footerText: string | null;
-        contact: {
-            email: string | null;
-            phone: string | null;
-            whatsapp: string | null;
-        };
-        social: Record<string, string>;
-    };
+defineProps<{
+    store: StoreShell;
     tokens: Record<string, string>;
+    seo: Seo;
+    latest: ProductCardData[];
+    categories: { name: string; url: string }[];
 }>();
-
-const style = computed(() => props.tokens);
-const whatsappUrl = computed(() =>
-    props.store.contact.whatsapp
-        ? `https://wa.me/${props.store.contact.whatsapp.replace(/\D/g, '')}`
-        : null,
-);
 </script>
 
 <template>
-    <Head :title="store.name">
-        <link v-if="store.faviconUrl" rel="icon" :href="store.faviconUrl" />
-    </Head>
-
-    <div
-        dir="rtl"
-        class="flex min-h-screen flex-col"
-        :style="{
-            ...style,
-            backgroundColor: 'var(--color-bg)',
-            color: 'var(--color-text)',
-            fontFamily: 'var(--font-body)',
-        }"
-    >
-        <header
-            class="flex items-center gap-3 px-4 py-4"
-            :style="{
-                backgroundColor: 'var(--color-primary)',
-                color: 'var(--color-on-primary)',
-            }"
+    <StoreLayout :store="store" :tokens="tokens" :seo="seo">
+        <nav
+            v-if="categories.length"
+            class="mb-6 flex flex-wrap gap-2"
+            aria-label="التصنيفات"
         >
-            <img
-                v-if="store.logoUrl"
-                :src="store.logoUrl"
-                :alt="store.name"
-                class="h-10 w-auto"
-            />
-            <h1
-                class="text-xl font-semibold"
-                :style="{ fontFamily: 'var(--font-heading)' }"
+            <Link
+                v-for="category in categories"
+                :key="category.url"
+                :href="category.url"
+                class="rounded-full px-4 py-2 text-sm"
+                :style="{
+                    backgroundColor: 'var(--color-secondary)',
+                    color: 'var(--color-on-secondary)',
+                }"
             >
-                {{ store.name }}
-            </h1>
-        </header>
+                {{ category.name }}
+            </Link>
+        </nav>
 
-        <main class="flex-1" />
+        <h2 class="mb-4 text-lg font-semibold">أحدث المنتجات</h2>
 
-        <footer
-            class="space-y-2 px-4 py-6 text-sm"
-            :style="{
-                backgroundColor: 'var(--color-surface)',
-                borderTop: '1px solid var(--color-border)',
-            }"
+        <EmptyState v-if="latest.length === 0" message="لا توجد منتجات بعد" />
+        <div
+            v-else
+            class="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4"
         >
-            <p v-if="store.footerText">{{ store.footerText }}</p>
-            <ul class="flex flex-wrap gap-x-4 gap-y-2">
-                <li v-if="store.contact.phone">
-                    <a :href="`tel:${store.contact.phone}`">{{
-                        store.contact.phone
-                    }}</a>
-                </li>
-                <li v-if="store.contact.email">
-                    <a :href="`mailto:${store.contact.email}`">{{
-                        store.contact.email
-                    }}</a>
-                </li>
-                <li v-if="whatsappUrl">
-                    <a :href="whatsappUrl" rel="noopener">WhatsApp</a>
-                </li>
-                <li v-for="(url, network) in store.social" :key="network">
-                    <a :href="url" rel="noopener" target="_blank">{{
-                        network
-                    }}</a>
-                </li>
-            </ul>
-        </footer>
-    </div>
+            <ProductCard
+                v-for="product in latest"
+                :key="product.url"
+                :product="product"
+            />
+        </div>
+    </StoreLayout>
 </template>

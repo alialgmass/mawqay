@@ -2,6 +2,7 @@
     "Core": true,
     "Tenancy": true,
     "Auth": true,
+    "Catalog": true,
     "Storefront": true,
     "Backoffice": true
 }

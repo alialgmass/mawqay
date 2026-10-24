@@ -19,6 +19,7 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Modules\Backoffice\Filament\Admin\Pages\PlatformSettings;
 use Modules\Backoffice\Http\Middleware\UseArabicLocale;
+use Modules\Catalog\Filament\CatalogPlugin;
 use Modules\Tenancy\Filament\TenancyPlugin;
 
 class AdminPanelProvider extends PanelProvider
@@ -42,6 +43,7 @@ class AdminPanelProvider extends PanelProvider
             ->brandName(fn (): string => __('panel.brand'))
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->plugin(TenancyPlugin::make())
+            ->plugin(CatalogPlugin::make())
             ->pages([
                 Dashboard::class,
                 PlatformSettings::class,
