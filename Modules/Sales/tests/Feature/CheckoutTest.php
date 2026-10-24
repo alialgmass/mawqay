@@ -7,8 +7,11 @@ use Illuminate\Support\Facades\Event;
 use Inertia\Testing\AssertableInertia as Assert;
 use Modules\Auth\Models\Address;
 use Modules\Auth\Models\Customer;
+use Modules\Catalog\Exceptions\InsufficientStock;
 use Modules\Catalog\Models\Variant;
+use Modules\Catalog\Services\StockService;
 use Modules\Core\Support\PlatformSettings;
+use Modules\Core\Support\StoreContext;
 use Modules\Sales\Enums\OrderStatus;
 use Modules\Sales\Events\OrderPlaced;
 use Modules\Sales\Models\Cart;
@@ -348,6 +351,60 @@ class CheckoutTest extends TestCase
         $this->assertSame(1, Order::query()->count());
         $this->assertSame($layla->id, Order::query()->firstOrFail()->customer_id);
         $this->assertSame([1, 1], $this->stock($variant));
+    }
+
+    public function test_submitting_the_same_cart_twice_creates_one_order(): void
+    {
+        $variant = $this->variant($this->store, stock: 10);
+        $this->fill($variant, 2);
+        $this->logInCustomer($this->store);
+
+        $this->place()->assertRedirect();
+        $this->place()->assertUnprocessable();
+
+        $this->assertSame(1, Order::query()->count());
+        $this->assertSame([10, 2], $this->stock($variant));
+    }
+
+    public function test_every_line_that_is_short_is_named_not_just_the_first(): void
+    {
+        $first = $this->variant($this->store, stock: 5, product: ['name' => 'First']);
+        $second = $this->variant($this->store, stock: 5, product: ['name' => 'Second']);
+        $third = $this->variant($this->store, stock: 5, product: ['name' => 'Third']);
+        $this->fill($first, 2);
+        $this->fill($second, 2);
+        $this->fill($third, 2);
+        $this->logInCustomer($this->store);
+
+        // Someone else holds most of the stock of two of the three.
+        $reserveBehindTheBack = function () use ($first, $third): void {
+            $first->update(['reserved' => 4]);
+            $third->update(['reserved' => 4]);
+        };
+        $reserveBehindTheBack();
+
+        $this->place()->assertUnprocessable()->assertJsonPath('errors.lines', ['First', 'Third']);
+
+        $this->assertSame(0, Order::query()->count());
+        $this->assertSame([5, 0], $this->stock($second));
+    }
+
+    public function test_the_last_unit_race_is_replayed_with_stale_copies_because_sqlite_cannot_run_parallel_requests(): void
+    {
+        // The in-memory SQLite database cannot run two requests at once or honour row locks, so the race
+        // is replayed here: both buyers loaded the Variant while one unit was left, the second hold fails.
+        $variant = $this->variant($this->store, stock: 1);
+        $context = app(StoreContext::class);
+        $buyerA = $context->runAs($this->store->id, fn () => Variant::query()->find($variant->id));
+        $buyerB = $context->runAs($this->store->id, fn () => Variant::query()->find($variant->id));
+        $stock = app(StockService::class);
+
+        $context->runAs($this->store->id, function () use ($stock, $buyerA, $buyerB): void {
+            $stock->reserve($buyerA, 1);
+
+            $this->expectException(InsufficientStock::class);
+            $stock->reserve($buyerB, 1);
+        });
     }
 
     public function test_order_numbers_are_sequential_per_store(): void

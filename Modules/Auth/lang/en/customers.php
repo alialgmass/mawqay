@@ -10,6 +10,7 @@ return [
     'phone_taken' => 'This mobile number is already used in this store.',
     'current_password_wrong' => 'The current password is incorrect.',
     'keep_one_identifier' => 'Keep at least one of email or mobile number.',
+    'login_required' => 'Log in to continue.',
     'registered' => 'Your account was created.',
     'profile_saved' => 'Your details were saved.',
     'password_changed' => 'Your password was changed.',

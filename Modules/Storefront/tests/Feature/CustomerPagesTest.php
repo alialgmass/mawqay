@@ -111,6 +111,13 @@ class CustomerPagesTest extends TestCase
             ->assertRedirect('/store-a/account/addresses');
     }
 
+    public function test_a_guest_sent_to_login_is_told_why(): void
+    {
+        $this->get('/store-a/account')->assertRedirect('/store-a/login')->assertSessionHas('status', __('auth::customers.login_required'));
+
+        $this->get('/store-a/login')->assertInertia(fn (Assert $page) => $page->where('status', __('auth::customers.login_required')));
+    }
+
     public function test_the_return_address_can_also_come_from_the_page_that_sent_the_guest(): void
     {
         Customer::factory()->create(['store_id' => $this->store->id, 'email' => 'mona@example.com', 'password' => 'a-strong-password']);

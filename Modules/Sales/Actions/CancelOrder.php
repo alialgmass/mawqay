@@ -24,12 +24,16 @@ class CancelOrder
 
     /**
      * @param  string  $actorType  customer, admin or system
+     * @param  list<OrderStatus>|null  $onlyFrom  cancel only if the Order is still in one of these statuses when
+     *                                            the lock is taken; defaults to every status that holds stock
      */
-    public function __invoke(Order $order, string $actorType, ?int $actorId = null, ?string $reason = null): Order
+    public function __invoke(Order $order, string $actorType, ?int $actorId = null, ?string $reason = null, ?array $onlyFrom = null): Order
     {
-        return $this->context->runAs($order->store_id, function () use ($order, $actorType, $actorId, $reason): Order {
-            DB::transaction(function () use ($order, $actorType, $actorId, $reason): void {
-                $this->machine->transition($order, OrderStatus::Cancelled, $actorType, $actorId, $reason);
+        $onlyFrom ??= [OrderStatus::PendingPayment, OrderStatus::PaymentReview];
+
+        return $this->context->runAs($order->store_id, function () use ($order, $actorType, $actorId, $reason, $onlyFrom): Order {
+            DB::transaction(function () use ($order, $actorType, $actorId, $reason, $onlyFrom): void {
+                $this->machine->transition($order, OrderStatus::Cancelled, $actorType, $actorId, $reason, $onlyFrom);
 
                 foreach ($order->items()->with('variant')->get() as $item) {
                     $this->stock->release($item->variant, $item->quantity);

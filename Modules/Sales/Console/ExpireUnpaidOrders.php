@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use Modules\Core\Support\StoreContext;
 use Modules\Sales\Actions\CancelOrder;
 use Modules\Sales\Enums\OrderStatus;
+use Modules\Sales\Exceptions\InvalidOrderTransition;
 use Modules\Sales\Models\Order;
 use Modules\Tenancy\Models\Store;
 use Throwable;
@@ -35,8 +36,10 @@ class ExpireUnpaidOrders extends Command
 
                 foreach ($due as $order) {
                     try {
-                        $cancel($order, 'system', null, 'Reservation window ended');
+                        $cancel($order, 'system', null, 'Reservation window ended', [OrderStatus::PendingPayment]);
                         $expired++;
+                    } catch (InvalidOrderTransition) {
+                        // Paid, sent for review or cancelled since it was selected: not ours to expire.
                     } catch (Throwable $exception) {
                         report($exception);
                         $failed++;

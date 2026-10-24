@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\ValidationException;
 use Modules\Auth\Models\Customer;
 use Modules\Sales\Actions\CancelOrder;
+use Modules\Sales\Enums\OrderStatus;
+use Modules\Sales\Exceptions\InvalidOrderTransition;
 use Modules\Sales\Models\Order;
 use Modules\Storefront\Pages\OrderConfirmationPageData;
 use Modules\Storefront\Pages\OrderDetailPageData;
@@ -74,7 +76,11 @@ class OrderController
             throw ValidationException::withMessages(['order' => __('sales::checkout.errors.cannot_cancel')]);
         }
 
-        $cancel($order, 'customer', $this->customer()->id);
+        try {
+            $cancel($order, 'customer', $this->customer()->id, null, [OrderStatus::PendingPayment]);
+        } catch (InvalidOrderTransition) {
+            throw ValidationException::withMessages(['order' => __('sales::checkout.errors.cannot_cancel')]);
+        }
 
         return redirect('/'.Store::current()->slug."/orders/{$order->number}")->with('status', __('sales::checkout.cancelled'));
     }

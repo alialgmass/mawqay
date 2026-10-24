@@ -96,6 +96,41 @@ class CartTest extends TestCase
         $this->assertSame(1, $item->fresh()->quantity);
     }
 
+    public function test_raising_a_quantity_on_a_product_taken_off_sale_is_refused(): void
+    {
+        $variant = $this->variant($this->store, stock: 10);
+        $this->add($variant->id, 1);
+        $item = CartItem::query()->firstOrFail();
+        Product::query()->withoutGlobalScopes()->whereKey($variant->product_id)->update(['status' => ProductStatus::Draft]);
+
+        $this->putJson("/store-a/cart/items/{$item->id}", ['quantity' => 3])->assertUnprocessable();
+        $this->assertSame(1, $item->fresh()->quantity);
+    }
+
+    public function test_a_guest_cart_adopted_on_login_is_capped_at_available_stock(): void
+    {
+        $this->customerWithAddress($this->store);
+        $variant = $this->variant($this->store, stock: 5);
+        $this->add($variant->id, 5);
+        $variant->update(['stock' => 2]);
+
+        $this->logInCustomer($this->store);
+
+        $this->assertSame(2, CartItem::query()->firstOrFail()->quantity);
+    }
+
+    public function test_a_guest_cart_adopted_on_login_drops_what_is_no_longer_for_sale(): void
+    {
+        $this->customerWithAddress($this->store);
+        $variant = $this->variant($this->store);
+        $this->add($variant->id, 1);
+        $variant->product->update(['status' => ProductStatus::Draft]);
+
+        $this->logInCustomer($this->store);
+
+        $this->assertSame(0, CartItem::query()->count());
+    }
+
     public function test_a_quantity_below_one_is_refused(): void
     {
         $variant = $this->variant($this->store);

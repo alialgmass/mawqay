@@ -31,6 +31,6 @@ class EnsureCustomerIsAuthenticated
             IntendedUrl::remember($request->getRequestUri(), $store);
         }
 
-        return redirect("/{$store->slug}/login");
+        return redirect("/{$store->slug}/login")->with('status', __('auth::customers.login_required'));
     }
 }

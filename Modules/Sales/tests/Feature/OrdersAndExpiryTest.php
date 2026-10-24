@@ -13,9 +13,12 @@ use Modules\Sales\Actions\CancelOrder;
 use Modules\Sales\Enums\OrderStatus;
 use Modules\Sales\Events\OrderCancelled;
 use Modules\Sales\Exceptions\InvalidOrderTransition;
+use Modules\Sales\Models\Cart;
+use Modules\Sales\Models\CartItem;
 use Modules\Sales\Models\Order;
 use Modules\Sales\Models\OrderItem;
 use Modules\Sales\Models\OrderStatusLog;
+use Modules\Sales\Models\ShippingRate;
 use Modules\Sales\Services\OrderStateMachine;
 use Modules\Sales\Testing\BuildsShop;
 use Modules\Tenancy\Models\Store;
@@ -340,6 +343,73 @@ class OrdersAndExpiryTest extends TestCase
         $this->assertSame(OrderStatus::PendingPayment, $badOrder->fresh()->status);
         $this->assertSame(OrderStatus::Cancelled, $goodOrder->fresh()->status);
         $this->assertSame(0, $this->reserved($good));
+    }
+
+    public function test_an_order_that_moved_to_review_since_it_was_selected_is_not_cancelled_by_the_timer(): void
+    {
+        $variant = $this->variant($this->store);
+        $order = $this->order(OrderStatus::PaymentReview, $variant, expiresAt: now()->subHour());
+
+        // The command selected it while pending, then payment was submitted before the cancel ran.
+        try {
+            app(CancelOrder::class)($order, 'system', null, 'Reservation window ended', [OrderStatus::PendingPayment]);
+            $this->fail('An order under review must not be expired.');
+        } catch (InvalidOrderTransition) {
+            $this->assertSame(OrderStatus::PaymentReview, $order->fresh()->status);
+            $this->assertSame(2, $this->reserved($variant));
+        }
+    }
+
+    public function test_a_customers_stale_cancel_of_an_order_now_under_review_is_refused_not_a_server_error(): void
+    {
+        $variant = $this->variant($this->store);
+        $order = $this->order(variant: $variant);
+        $this->logInCustomer($this->store);
+
+        // The page was opened while the order was unpaid; payment is submitted before the click lands.
+        $order->update(['status' => OrderStatus::PaymentReview]);
+        $stale = Order::query()->find($order->id)->setRawAttributes([...$order->getAttributes(), 'status' => 'pending_payment']);
+
+        $this->assertTrue(app(OrderStateMachine::class) !== null);
+        $this->postJson("/store-a/orders/{$order->number}/cancel")->assertUnprocessable();
+
+        $this->assertSame(OrderStatus::PaymentReview, $order->fresh()->status);
+        $this->assertSame(2, $this->reserved($variant));
+        $this->assertNotNull($stale);
+    }
+
+    public function test_the_command_skips_an_order_that_changed_underneath_it_without_reporting_a_failure(): void
+    {
+        $paid = $this->order(OrderStatus::PendingPayment, expiresAt: now()->subMinute());
+        $paid->update(['status' => OrderStatus::Paid]);
+
+        $this->artisan('orders:expire')->assertSuccessful();
+
+        $this->assertSame(OrderStatus::Paid, $paid->fresh()->status);
+    }
+
+    public function test_admin_cancel_still_covers_orders_under_review(): void
+    {
+        $variant = $this->variant($this->store);
+        $order = $this->order(OrderStatus::PaymentReview, $variant);
+
+        app(CancelOrder::class)($order, 'admin', 1, 'Receipt was fake');
+
+        $this->assertSame(OrderStatus::Cancelled, $order->fresh()->status);
+        $this->assertSame(0, $this->reserved($variant));
+    }
+
+    public function test_cart_lines_and_shipping_rates_are_isolated_between_stores(): void
+    {
+        $this->assertModelIsIsolatedBetweenStores(CartItem::class, function (Store $store): CartItem {
+            $variant = $this->variant($store);
+            $cart = Cart::query()->create(['store_id' => $store->id, 'guest_token' => 'tok-'.$store->id]);
+
+            return $cart->items()->create(['store_id' => $store->id, 'variant_id' => $variant->id, 'quantity' => 1, 'price_when_added' => 1]);
+        });
+        $this->assertModelIsIsolatedBetweenStores(ShippingRate::class, function (Store $store): ShippingRate {
+            return ShippingRate::query()->create(['store_id' => $store->id, 'kind' => 'flat', 'governorate' => null, 'fee' => 100]);
+        });
     }
 
     public function test_the_command_is_scheduled_every_five_minutes(): void

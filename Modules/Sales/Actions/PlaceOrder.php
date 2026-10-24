@@ -11,6 +11,7 @@ use Modules\Core\Support\PlatformSettings;
 use Modules\Sales\Enums\OrderStatus;
 use Modules\Sales\Events\OrderPlaced;
 use Modules\Sales\Exceptions\OrderCannotBePlaced;
+use Modules\Sales\Models\Cart;
 use Modules\Sales\Models\Order;
 use Modules\Sales\Services\CartService;
 use Modules\Sales\Services\OrderNumberGenerator;
@@ -44,6 +45,14 @@ class PlaceOrder
             $this->assertCanPlace($store, $customer, $address, $paymentMethod);
 
             $cart = $this->carts->current();
+
+            // Two submissions of the same Cart must not both succeed: the second waits here, then finds it gone.
+            $cart = $cart === null ? null : Cart::query()->whereKey($cart->getKey())->lockForUpdate()->first();
+
+            if ($cart === null) {
+                throw new OrderCannotBePlaced(__('sales::checkout.errors.empty'));
+            }
+
             $summary = $this->carts->summary($cart);
             $this->assertCartIsReady($summary);
 
@@ -68,7 +77,10 @@ class PlaceOrder
                 'expires_at' => now()->addHours($this->settings->stockReservationHours()),
             ]);
 
-            foreach ($cart->items()->with('variant.product')->get() as $item) {
+            $short = [];
+
+            // A fixed order (by Variant) so two Orders sharing Variants lock them the same way round.
+            foreach ($cart->items()->with('variant.product')->orderBy('variant_id')->get() as $item) {
                 $variant = $item->variant;
                 $unitPrice = $variant->price()->piasters();
                 $lineTotal = $unitPrice * $item->quantity;
@@ -89,8 +101,12 @@ class PlaceOrder
                 try {
                     $this->stock->reserve($variant, $item->quantity);
                 } catch (InsufficientStock) {
-                    throw new OrderCannotBePlaced(__('sales::checkout.errors.out_of_stock'), [$variant->product->name]);
+                    $short[] = $variant->product->name;
                 }
+            }
+
+            if ($short !== []) {
+                throw new OrderCannotBePlaced(__('sales::checkout.errors.out_of_stock'), array_values(array_unique($short)));
             }
 
             $order->statusLogs()->create([

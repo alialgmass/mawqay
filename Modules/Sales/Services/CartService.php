@@ -2,6 +2,7 @@
 
 namespace Modules\Sales\Services;
 
+use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -78,6 +79,7 @@ class CartService
             throw ValidationException::withMessages(['quantity' => __('sales::cart.errors.quantity')]);
         }
 
+        $this->assertCanBuy($item->variant);
         $this->assertAvailable($item->variant, $quantity);
         $item->update(['quantity' => $quantity]);
 
@@ -170,11 +172,7 @@ class CartService
 
             $mine = Cart::query()->where('customer_id', $customer->getKey())->first();
 
-            if ($mine === null) {
-                $guest->update(['customer_id' => $customer->getKey(), 'guest_token' => null]);
-
-                return;
-            }
+            $mine ??= Cart::query()->create(['customer_id' => $customer->getKey()]);
 
             foreach ($guest->items()->with('variant')->get() as $item) {
                 if (! $this->isBuyable($item->variant)) {
@@ -212,13 +210,27 @@ class CartService
         $customer = $this->customer();
 
         if ($customer !== null) {
-            return Cart::query()->create(['customer_id' => $customer->getKey()]);
+            return $this->createOrFind(['customer_id' => $customer->getKey()]);
         }
 
         $token = session(self::TOKEN_KEY) ?? Str::random(40);
         session([self::TOKEN_KEY => $token]);
 
-        return Cart::query()->create(['guest_token' => $token]);
+        return $this->createOrFind(['guest_token' => $token]);
+    }
+
+    /**
+     * Two first additions at the same moment both try to create the Cart; the loser uses the winner's.
+     *
+     * @param  array<string, mixed>  $attributes
+     */
+    private function createOrFind(array $attributes): Cart
+    {
+        try {
+            return Cart::query()->create($attributes);
+        } catch (UniqueConstraintViolationException) {
+            return Cart::query()->where($attributes)->firstOrFail();
+        }
     }
 
     private function customer(): ?Customer
