@@ -126,6 +126,7 @@ class ProductResource extends Resource
                         FileUpload::make('path')
                             ->label(__('catalog::products.image'))
                             ->image()
+                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                             ->maxSize(5120)
                             ->disk('public')
                             ->directory(fn (): string => 'stores/'.Filament::getTenant()?->getKey().'/products')

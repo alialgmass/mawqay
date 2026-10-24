@@ -211,6 +211,40 @@ class VendorCatalogPanelTest extends TestCase
         $this->assertSame(ProductStatus::Draft, $product->fresh()->status);
     }
 
+    public function test_only_jpeg_png_and_webp_images_are_accepted(): void
+    {
+        $category = Category::factory()->create(['store_id' => $this->store->id]);
+
+        Livewire::test(CreateProduct::class)
+            ->fillForm($this->productPayload($category, ['media' => [['path' => [UploadedFile::fake()->image('a.gif')]]]]))
+            ->call('create')
+            ->assertHasFormErrors();
+    }
+
+    public function test_a_published_product_that_loses_its_images_returns_to_draft(): void
+    {
+        $product = Product::factory()->published()->create(['store_id' => $this->store->id]);
+        Variant::factory()->forProduct($product)->create();
+
+        Livewire::test(EditProduct::class, ['record' => $product->getRouteKey()])
+            ->fillForm(['name' => 'Renamed'])
+            ->call('save');
+
+        $this->assertSame(ProductStatus::Draft, $product->fresh()->status);
+    }
+
+    public function test_the_vendor_cannot_republish_a_hidden_product_from_the_panel(): void
+    {
+        $product = Product::factory()->hiddenByAdmin()->create(['store_id' => $this->store->id]);
+        Variant::factory()->forProduct($product)->create();
+        ProductMedia::factory()->forProduct($product)->create();
+
+        Livewire::test(EditProduct::class, ['record' => $product->getRouteKey()])
+            ->assertActionHidden('publish');
+
+        $this->assertSame(ProductStatus::HiddenByAdmin, $product->fresh()->status);
+    }
+
     public function test_publishing_an_incomplete_product_is_refused(): void
     {
         $product = Product::factory()->create(['store_id' => $this->store->id]);

@@ -16,7 +16,7 @@ class ProductController
     {
         $current = Product::query()
             ->published()
-            ->with(['media', 'variants', 'category.parent'])
+            ->with(['media', 'variants' => fn ($variants) => $variants->orderBy('id'), 'category.parent'])
             ->where('slug', $product)
             ->firstOrFail();
 

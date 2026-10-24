@@ -8,11 +8,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use Modules\Catalog\Database\Factories\ProductFactory;
 use Modules\Catalog\Enums\ProductStatus;
 use Modules\Core\Concerns\BelongsToStore;
 use Modules\Core\Money\Money;
+use Modules\Core\Support\StoreContext;
 use Modules\Tenancy\Models\Store;
 
 #[Fillable([
@@ -32,6 +34,10 @@ class Product extends Model
     protected static function booted(): void
     {
         static::saving(function (self $product): void {
+            if ($product->isDirty('category_id') && ! DB::table('categories')->where('id', $product->category_id)->where('store_id', $product->store_id ?? app(StoreContext::class)->id())->exists()) {
+                throw ValidationException::withMessages(['category_id' => __('catalog::products.errors.foreign_category')]);
+            }
+
             if ($product->sale_price !== null && $product->sale_price >= $product->base_price) {
                 throw ValidationException::withMessages(['sale_price' => __('catalog::products.errors.sale_price')]);
             }

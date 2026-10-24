@@ -37,6 +37,7 @@ return [
         'restore' => 'Restore',
         'published' => 'Product published',
         'unpublished' => 'Product unpublished',
+        'unpublished_incomplete' => 'Product moved back to draft: it needs a variant and an image to stay published',
         'hidden' => 'Product hidden',
         'restored' => 'Product restored as a draft',
     ],
@@ -45,6 +46,7 @@ return [
         'low_stock_heading' => 'Low stock',
     ],
     'errors' => [
+        'foreign_category' => 'Choose one of your own categories.',
         'sale_price' => 'The sale price must be lower than the price.',
         'max_images' => 'A product can have at most 8 images.',
         'hidden_by_admin' => 'The Platform hid this product; it cannot be published.',

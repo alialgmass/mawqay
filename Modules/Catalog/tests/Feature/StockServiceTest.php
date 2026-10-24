@@ -11,6 +11,11 @@ use Modules\Core\Support\StoreContext;
 use Modules\Tenancy\Models\Store;
 use Tests\TestCase;
 
+/**
+ * The race test below replays a lost race with stale models in one process.
+ * The test database is in-memory SQLite, which cannot run parallel requests or
+ * honour row locks, so the lock itself is only proven on MySQL/PostgreSQL.
+ */
 class StockServiceTest extends TestCase
 {
     use RefreshDatabase;

@@ -165,6 +165,15 @@ class CatalogDomainTest extends TestCase
         $this->assertSame([$inStock->id], Product::query()->inStock()->pluck('id')->all());
     }
 
+    public function test_a_product_cannot_point_at_another_stores_category(): void
+    {
+        $other = Store::factory()->create();
+        $foreign = Category::factory()->create(['store_id' => $other->id]);
+
+        $this->expectException(ValidationException::class);
+        Product::factory()->create(['store_id' => $this->store->id, 'category_id' => $foreign->id]);
+    }
+
     public function test_a_ninth_image_is_refused(): void
     {
         $product = Product::factory()->create(['store_id' => $this->store->id]);
