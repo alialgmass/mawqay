@@ -42,6 +42,14 @@ trait RespondsToCustomer
             ?? "/{$store->slug}/account";
     }
 
+    /**
+     * The page asked for in `redirect` when it is inside the Store, else the default.
+     */
+    protected function redirectOr(Request $request, string $default): string
+    {
+        return IntendedUrl::sanitize($request->input('redirect'), Store::current()) ?? $default;
+    }
+
     protected function storeUrl(string $path): string
     {
         return '/'.Store::current()->slug.$path;

@@ -8,5 +8,8 @@ return [
     'reset_password' => 'Reset password',
     'account' => 'My account',
     'addresses' => 'My addresses',
+    'cart' => 'Cart',
+    'checkout' => 'Checkout',
+    'orders' => 'My orders',
     'search' => 'Search',
 ];

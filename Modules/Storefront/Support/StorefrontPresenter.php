@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Modules\Catalog\Models\Category;
 use Modules\Catalog\Models\Product;
+use Modules\Sales\Services\CartService;
 use Modules\Tenancy\Models\Store;
 use Modules\Theming\Support\ActiveTheme;
 use Modules\Theming\Support\ThemeManager;
@@ -70,6 +71,8 @@ class StorefrontPresenter
                 'home' => route('storefront.home', ['store' => $slug]),
                 'search' => route('storefront.search', ['store' => $slug]),
                 'cart' => url("/{$slug}/cart"),
+                'checkout' => url("/{$slug}/checkout"),
+                'orders' => url("/{$slug}/orders"),
                 'login' => url("/{$slug}/login"),
                 'register' => url("/{$slug}/register"),
                 'forgotPassword' => url("/{$slug}/forgot-password"),
@@ -85,11 +88,14 @@ class StorefrontPresenter
                 'profile' => url("/{$slug}/customer/profile"),
                 'password' => url("/{$slug}/customer/password"),
                 'addresses' => url("/{$slug}/customer/addresses"),
+                'cartItems' => url("/{$slug}/cart/items"),
+                'acceptPrices' => url("/{$slug}/cart/accept-prices"),
+                'checkout' => url("/{$slug}/checkout"),
             ],
             'status' => session('status'),
             'navigation' => Category::query()->shown()->topLevel()->orderBy('sort')->orderBy('id')->get()
                 ->map(fn (Category $category): array => $this->categoryLink($category))->all(),
-            'cartCount' => 0,
+            'cartCount' => app(CartService::class)->count(),
         ];
     }
 

@@ -7,7 +7,7 @@ final class OrdersPageData extends PageData
     /**
      * @param  array<string, mixed>  $shell
      * @param  array{title: string, description: string|null, image: string|null}  $seo
-     * @param  list<array{number: string, status: string, total: string}>  $orders
+     * @param  list<array<string, mixed>>  $orders
      */
     public function __construct(
         array $shell,

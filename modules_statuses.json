@@ -5,5 +5,6 @@
     "Catalog": true,
     "Storefront": true,
     "Backoffice": true,
-    "Theming": true
+    "Theming": true,
+    "Sales": true
 }

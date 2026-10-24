@@ -1,10 +1,12 @@
 <script setup lang="ts">
+import { useForm, usePage } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
 import MoneyText from '../components/MoneyText.vue';
 import StorefrontBreadcrumbs from '../components/StorefrontBreadcrumbs.vue';
 import type { Crumb } from '../components/StorefrontBreadcrumbs.vue';
 import VariantPicker from '../components/VariantPicker.vue';
 import type { VariantData } from '../components/VariantPicker.vue';
+import { useShell } from '../composables/useShell';
 import StoreLayout from '../layouts/StoreLayout.vue';
 import type { Seo } from '../layouts/StoreLayout.vue';
 
@@ -20,6 +22,22 @@ const props = defineProps<{
         variants: VariantData[];
     };
 }>();
+
+const shell = useShell();
+const page = usePage();
+const errors = computed(
+    () => (page.props.errors ?? {}) as Record<string, string>,
+);
+const cart = useForm({ variant_id: 0, quantity: 1 });
+
+function addToCart() {
+    if (chosen.value === null) {
+        return;
+    }
+
+    cart.variant_id = chosen.value.id;
+    cart.post(shell.value.actions.cartItems, { preserveScroll: true });
+}
 
 const activeImage = ref(0);
 const chosen = ref<VariantData | null>(null);
@@ -78,6 +96,50 @@ const image = computed(() => props.product.images[activeImage.value] ?? null);
                     :variants="product.variants"
                     @select="chosen = $event"
                 />
+                <form class="space-y-2" @submit.prevent="addToCart">
+                    <label class="flex items-center gap-2 text-sm">
+                        الكمية
+                        <input
+                            v-model.number="cart.quantity"
+                            type="number"
+                            min="1"
+                            class="min-h-11 w-20 px-2"
+                            :style="{
+                                border: '1px solid var(--color-border)',
+                                borderRadius: 'var(--radius-md)',
+                            }"
+                        />
+                    </label>
+                    <button
+                        type="submit"
+                        class="min-h-11 px-6 text-sm font-medium disabled:opacity-50"
+                        :disabled="chosen === null || cart.processing"
+                        :style="{
+                            backgroundColor: 'var(--color-primary)',
+                            color: 'var(--color-on-primary)',
+                            borderRadius: 'var(--radius-md)',
+                        }"
+                    >
+                        أضيفي إلى السلة
+                    </button>
+                    <p
+                        v-if="chosen === null"
+                        class="text-xs"
+                        :style="{ color: 'var(--color-text-muted)' }"
+                    >
+                        اختاري المقاس واللون أولًا.
+                    </p>
+                    <p
+                        v-for="error in [errors.quantity, errors.variant]"
+                        v-show="error"
+                        :key="String(error)"
+                        role="alert"
+                        class="text-sm"
+                        :style="{ color: 'var(--color-danger)' }"
+                    >
+                        {{ error }}
+                    </p>
+                </form>
                 <p
                     v-if="product.description"
                     class="text-sm leading-7 whitespace-pre-line"

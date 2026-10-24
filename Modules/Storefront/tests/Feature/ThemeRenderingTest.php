@@ -14,14 +14,21 @@ use Modules\Catalog\Models\ProductMedia;
 use Modules\Catalog\Models\Variant;
 use Modules\Core\Support\StoreContext;
 use Modules\Storefront\Pages\AccountPageData;
+use Modules\Storefront\Pages\AddressesPageData;
 use Modules\Storefront\Pages\CartPageData;
 use Modules\Storefront\Pages\CategoryPageData;
 use Modules\Storefront\Pages\CheckoutPageData;
+use Modules\Storefront\Pages\ForgotPasswordPageData;
 use Modules\Storefront\Pages\HomePageData;
+use Modules\Storefront\Pages\LoginPageData;
 use Modules\Storefront\Pages\NotFoundPageData;
+use Modules\Storefront\Pages\OrderConfirmationPageData;
+use Modules\Storefront\Pages\OrderDetailPageData;
 use Modules\Storefront\Pages\OrdersPageData;
 use Modules\Storefront\Pages\PageData;
 use Modules\Storefront\Pages\ProductPageData;
+use Modules\Storefront\Pages\RegisterPageData;
+use Modules\Storefront\Pages\ResetPasswordPageData;
 use Modules\Storefront\Pages\SearchPageData;
 use Modules\Tenancy\Models\Store;
 use Modules\Theming\Models\Theme;
@@ -332,15 +339,22 @@ class ThemeRenderingTest extends TestCase
             new CategoryPageData($shell, $seo, ['name' => 'a', 'slug' => 'a'], [], 'newest', []),
             new ProductPageData($shell, $seo, [], []),
             new SearchPageData($shell, $seo, 'q', [], []),
-            new CartPageData($shell, $seo, [], null),
-            new CheckoutPageData($shell, $seo, false),
+            new CartPageData($shell, $seo, [], '0 EGP', false, false, true),
+            new CheckoutPageData($shell, $seo, false, [], '0 EGP', [], [], [], 10, []),
             new AccountPageData($shell, $seo, null),
             new OrdersPageData($shell, $seo, []),
+            new OrderDetailPageData($shell, $seo, []),
+            new OrderConfirmationPageData($shell, $seo, []),
+            new LoginPageData($shell, $seo, null),
+            new RegisterPageData($shell, $seo, null),
+            new ForgotPasswordPageData($shell, $seo),
+            new ResetPasswordPageData($shell, $seo, 't', 'e'),
+            new AddressesPageData($shell, $seo, [], [], 10),
             new NotFoundPageData($shell, $seo),
         ];
 
         $this->assertEqualsCanonicalizing(
-            [...ThemeContract::REQUIRED_PAGES, 'Search'],
+            ThemeContract::knownPages(),
             array_map(fn (PageData $page): string => $page::page(), $pages),
         );
 

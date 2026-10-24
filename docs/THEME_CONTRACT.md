@@ -1,6 +1,6 @@
 # Theme contract
 
-How to build and register a Storefront Theme. Contract version: **1.1.0** (`Modules/Theming/Support/ThemeContract.php`). Only the Platform team changes the contract.
+How to build and register a Storefront Theme. Contract version: **1.2.0** (`Modules/Theming/Support/ThemeContract.php`). Only the Platform team changes the contract.
 
 ## What a Theme is
 
@@ -20,6 +20,8 @@ resources/themes/noor/
     ├── ForgotPassword.vue  (optional)
     ├── ResetPassword.vue   (optional)
     ├── Addresses.vue       (optional)
+    ├── OrderDetail.vue     (optional)
+    ├── OrderConfirmation.vue (optional)
     ├── Cart.vue
     ├── Checkout.vue
     ├── Account.vue
@@ -46,7 +48,7 @@ Components, layouts and assets are up to the Theme; keep them inside its folder.
 | `version` | yes | Your Theme's semantic version |
 | `contract_version` | yes | The contract version you built against |
 | `preview` | yes | Image file in the Theme folder |
-| `pages` | yes | The pages you provide. Each needs `pages/{Name}.vue`. Allowed: `Home`, `Category`, `Product`, `Cart`, `Checkout`, `Account`, `Orders`, `NotFound` (the `default` Theme must provide all of these; another Theme may omit any page and the default's is used) and `Search`, `Login`, `Register`, `ForgotPassword`, `ResetPassword`, `Addresses` (optional) |
+| `pages` | yes | The pages you provide. Each needs `pages/{Name}.vue`. Allowed: `Home`, `Category`, `Product`, `Cart`, `Checkout`, `Account`, `Orders`, `NotFound` (the `default` Theme must provide all of these; another Theme may omit any page and the default's is used) and `Search`, `Login`, `Register`, `ForgotPassword`, `ResetPassword`, `Addresses`, `OrderDetail`, `OrderConfirmation` (optional) |
 | `settings` | no | Extra Vendor-editable fields (below) |
 | `defaults` | no | Override the default of a core setting: `primary_color`, `secondary_color`, `heading_font`, `body_font`, `corner_style` |
 
@@ -87,11 +89,11 @@ Every page receives plain props only. There are no models and a Theme never quer
 | `store` | `name`, `slug`, `logoUrl`, `faviconUrl`, `footerText`, `contact { email, phone, whatsapp }`, `social { network: url }` |
 | `customer` | `{ name }` or `null` (signed-in Customer) |
 | `tokens` | The CSS variables above, as `{ "--name": "value" }`; set them on your root element |
-| `urls` | Page addresses: `home`, `search`, `cart`, `login`, `register`, `forgotPassword`, `account`, `addresses` |
-| `actions` | Form endpoints: `login`, `register`, `logout` (POST), `forgotPassword`, `resetPassword`, `profile` (PUT), `password` (PUT), `addresses` (POST; `PUT`/`DELETE` on `{addresses}/{id}`; `POST {addresses}/{id}/default`) |
+| `urls` | Page addresses: `home`, `search`, `cart`, `login`, `register`, `forgotPassword`, `account`, `addresses`, `checkout`, `orders` |
+| `actions` | Form endpoints: `login`, `register`, `logout` (POST), `forgotPassword`, `resetPassword`, `profile` (PUT), `password` (PUT), `addresses` (POST; `PUT`/`DELETE` on `{addresses}/{id}`; `POST {addresses}/{id}/default`), `cartItems` (POST to add; `PUT`/`DELETE` on `{cartItems}/{id}`), `acceptPrices` (POST), `checkout` (POST) |
 | `status` | A one-off message from the last action, or `null` |
 | `navigation` | `[{ name, url }]` top-level categories |
-| `cartCount` | Number |
+| `cartCount` | Number of items in the visitor's Cart |
 | `seo` | `title`, `description`, `image` |
 
 Plus, per page:
@@ -102,27 +104,30 @@ Plus, per page:
 | `Category` | `category { name, slug }`, `products` (page of cards), `sort`, `breadcrumbs` |
 | `Product` | `product { name, description, price, originalPrice, images [{ thumb, large }], variants [{ id, size, color, price, available }] }`, `breadcrumbs` |
 | `Search` | `query`, `products`, `breadcrumbs` |
-| `Cart` | `items [{ name, quantity, price }]`, `total` |
-| `Checkout` | `ready` |
+| `Cart` | `items [{ id, variantId, name, sku, size, color, imageUrl, productUrl, quantity, available, unavailable, priceChanged, unitPrice, lineTotal, previousPrice }]`, `total`, `canCheckout`, `hasChanges`, `storeOpen` |
+| `Checkout` | `ready`, `items [{ name, size, color, quantity, lineTotal }]`, `subtotal`, `addresses [{ id, label, recipientName, phone, governorateName, city, addressLine, isDefault, shippingFee, total }]` (`shippingFee` is `null` when the Store does not deliver there), `paymentMethods [{ value, label }]`, `governorates`, `maxAddresses`, `issues` (`store_paused`, `empty`, `cart_needs_review`, `shipping_not_set`) |
 | `Account` | `customer { name, email, phone, emailVerified }` |
 | `Login` | `redirect` (a safe same-Store address to return to, or `null`) |
 | `Register` | `redirect` |
 | `ForgotPassword` | nothing extra |
 | `ResetPassword` | `token`, `email` |
 | `Addresses` | `addresses [{ id, label, recipientName, phone, governorate, governorateName, city, addressLine, notes, isDefault }]`, `governorates [{ value, name }]`, `maxAddresses` |
-| `Orders` | `orders [{ number, status, total }]` |
+| `Orders` | `orders [{ number, status, statusLabel, total, placedAt, url, canCancel }]` |
+| `OrderDetail` | `order { number, status, statusLabel, total, subtotal, shippingFee, placedAt, expiresAt, paymentMethod, paymentMethodLabel, address, items [{ name, sku, size, color, quantity, unitPrice, lineTotal }], canCancel, cancelUrl, url }` |
+| `OrderConfirmation` | `order` (same shape as `OrderDetail`); show the Order number and a place for payment instructions |
 | `NotFound` | nothing extra (rendered with status 404) |
 
 A product card is `{ name, url, price, originalPrice, imageUrl }`; a page of cards is `{ data, prevUrl, nextUrl, currentPage, lastPage, total }`; a breadcrumb is `{ name, url | null }`. Prices are already formatted strings.
 
-Cart, Checkout and Orders carry placeholder data until their features ship; build the pages against the shapes above.
+Order statuses are `pending_payment`, `payment_review`, `paid`, `processing`, `shipped`, `delivered`, `completed`, `cancelled` and `refunded`; `statusLabel` is already translated. Payment instructions arrive in a later release; the `default` Theme shows a placeholder.
 
 ### Forms
 
-Submit forms to the `actions` URLs with the field names the Platform expects (Inertia's `useForm` works as is). Validation errors come back as the standard `errors` prop, keyed by field. Login takes `identifier` (an email or a mobile number), `password` and an optional `redirect`; Register takes `name`, `email`, `phone`, `password`, `redirect` (email or phone is required); ForgotPassword takes `email`; ResetPassword takes `token`, `email`, `password`, `password_confirmation`; profile takes `name`, `email`, `phone`; password takes `current_password`, `password`, `password_confirmation`; an address takes `label`, `recipient_name`, `phone`, `governorate`, `city`, `address_line`, `notes`, `is_default`.
+Adding to the Cart posts `variant_id` and `quantity` to `actions.cartItems`; changing a line is a PUT with `quantity`; Checkout posts `address_id` and `payment_method`, and refusals come back under `errors.checkout` (with `errors.lines` naming the items). Submit forms to the `actions` URLs with the field names the Platform expects (Inertia's `useForm` works as is). Validation errors come back as the standard `errors` prop, keyed by field. Login takes `identifier` (an email or a mobile number), `password` and an optional `redirect`; Register takes `name`, `email`, `phone`, `password`, `redirect` (email or phone is required); ForgotPassword takes `email`; ResetPassword takes `token`, `email`, `password`, `password_confirmation`; profile takes `name`, `email`, `phone`; password takes `current_password`, `password`, `password_confirmation`; an address takes `label`, `recipient_name`, `phone`, `governorate`, `city`, `address_line`, `notes`, `is_default`.
 
 ### Changelog
 
+- **1.2.0**: Cart, Checkout and Orders carry real data; added the `OrderDetail` and `OrderConfirmation` pages, the `checkout` and `orders` URLs, and the `cartItems`, `acceptPrices` and `checkout` actions. Additive only.
 - **1.1.0**: added the `Login`, `Register`, `ForgotPassword`, `ResetPassword` and `Addresses` pages, the `actions` and `status` shell data, more `urls`, and extra `Account` customer fields. Additive only: a 1.0.0 Theme keeps working and uses the default Theme for the new pages.
 
 ## Versioning

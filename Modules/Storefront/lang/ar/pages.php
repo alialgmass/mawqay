@@ -8,5 +8,8 @@ return [
     'reset_password' => 'إعادة تعيين كلمة المرور',
     'account' => 'حسابي',
     'addresses' => 'عناويني',
+    'cart' => 'سلة التسوق',
+    'checkout' => 'إتمام الطلب',
+    'orders' => 'طلباتي',
     'search' => 'البحث',
 ];

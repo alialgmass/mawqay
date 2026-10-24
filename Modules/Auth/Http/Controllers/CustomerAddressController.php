@@ -26,7 +26,7 @@ class CustomerAddressController
 
         $address = $create($customer, $request->validated());
 
-        return $this->respond($request, ['id' => $address->id], $this->storeUrl('/account/addresses'), __('auth::addresses.saved'), 201);
+        return $this->respond($request, ['id' => $address->id], $this->redirectOr($request, $this->storeUrl('/account/addresses')), __('auth::addresses.saved'), 201);
     }
 
     public function update(CustomerAddressRequest $request, UpdateAddress $update, string $store, int $address): JsonResponse|RedirectResponse
@@ -36,7 +36,7 @@ class CustomerAddressController
 
         $update($model, $request->validated());
 
-        return $this->respond($request, ['id' => $model->id], $this->storeUrl('/account/addresses'), __('auth::addresses.saved'));
+        return $this->respond($request, ['id' => $model->id], $this->redirectOr($request, $this->storeUrl('/account/addresses')), __('auth::addresses.saved'));
     }
 
     public function destroy(Request $request, DeleteAddress $delete, string $store, int $address): JsonResponse|RedirectResponse

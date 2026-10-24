@@ -38,6 +38,8 @@ export type Shell = {
         forgotPassword: string;
         account: string;
         addresses: string;
+        checkout: string;
+        orders: string;
     };
     actions: {
         login: string;
@@ -48,6 +50,9 @@ export type Shell = {
         profile: string;
         password: string;
         addresses: string;
+        cartItems: string;
+        acceptPrices: string;
+        checkout: string;
     };
     navigation: NavLink[];
     cartCount: number;
@@ -194,6 +199,11 @@ function logout() {
                             :class="['flex min-h-11 items-center', focusRing]"
                             data-account-link
                             >{{ shell.customer.name }}</Link
+                        >
+                        <Link
+                            :href="shell.urls.orders"
+                            :class="['flex min-h-11 items-center', focusRing]"
+                            >طلباتي</Link
                         >
                         <button
                             type="button"

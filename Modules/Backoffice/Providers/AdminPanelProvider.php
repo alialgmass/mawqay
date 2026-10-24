@@ -21,6 +21,7 @@ use Modules\Auth\Filament\AuthPlugin;
 use Modules\Backoffice\Filament\Admin\Pages\PlatformSettings;
 use Modules\Backoffice\Http\Middleware\UseArabicLocale;
 use Modules\Catalog\Filament\CatalogPlugin;
+use Modules\Sales\Filament\SalesPlugin;
 use Modules\Tenancy\Filament\TenancyPlugin;
 use Modules\Theming\Filament\ThemingPlugin;
 
@@ -48,6 +49,7 @@ class AdminPanelProvider extends PanelProvider
             ->plugin(CatalogPlugin::make())
             ->plugin(ThemingPlugin::make())
             ->plugin(AuthPlugin::make())
+            ->plugin(SalesPlugin::make())
             ->pages([
                 Dashboard::class,
                 PlatformSettings::class,

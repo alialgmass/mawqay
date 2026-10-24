@@ -22,6 +22,7 @@ use Modules\Backoffice\Filament\Vendor\Pages\VendorDashboard;
 use Modules\Backoffice\Http\Middleware\SetStoreContextFromTenant;
 use Modules\Backoffice\Http\Middleware\UseArabicLocale;
 use Modules\Catalog\Filament\CatalogPlugin;
+use Modules\Sales\Filament\SalesPlugin;
 use Modules\Tenancy\Models\Store;
 use Modules\Theming\Filament\ThemingPlugin;
 
@@ -38,6 +39,7 @@ class VendorPanelProvider extends PanelProvider
             ->plugin(CatalogPlugin::make())
             ->plugin(ThemingPlugin::make())
             ->plugin(AuthPlugin::make())
+            ->plugin(SalesPlugin::make())
             ->colors([
                 'primary' => Color::Rose,
                 'gray' => Color::Slate,
