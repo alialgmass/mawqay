@@ -12,6 +12,6 @@ final class StoreRoutes
     {
         $reserved = implode('|', array_map('preg_quote', config('tenancy.reserved_slugs', [])));
 
-        return "^(?!(?:{$reserved})$)[^/]+$";
+        return "^(?!(?:{$reserved})(?:/|$))[^/]+$";
     }
 }

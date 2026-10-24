@@ -3,32 +3,57 @@
 namespace Modules\Storefront\Support;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Modules\Catalog\Models\Category;
 use Modules\Catalog\Models\Product;
-use Modules\Core\Support\ColorContrast;
 use Modules\Tenancy\Models\Store;
+use Modules\Theming\Support\ActiveTheme;
+use Modules\Theming\Support\ThemeManager;
 
 /**
  * Turns models into the plain arrays the Storefront pages receive, so pages
- * never see an Eloquent model.
+ * never see an Eloquent model. It remembers the Theme for the request it is asked about.
  */
 class StorefrontPresenter
 {
+    private ?ActiveTheme $theme = null;
+
+    private ?Request $themeRequest = null;
+
+    public function __construct(private readonly ThemeManager $themes) {}
+
     /**
-     * What every Storefront page needs: the Store's identity and design tokens.
+     * The Theme and settings this request renders with (a Vendor Owner's
+     * preview included).
+     */
+    public function activeTheme(): ActiveTheme
+    {
+        if ($this->theme === null || $this->themeRequest !== request()) {
+            $this->themeRequest = request();
+            $this->theme = $this->themes->activeFor($this->store(), $this->themeRequest);
+        }
+
+        return $this->theme;
+    }
+
+    /**
+     * What every Storefront page needs: the Store's identity, design tokens,
+     * navigation and URLs.
      *
      * @return array<string, mixed>
      */
-    public function shell(Store $store): array
+    public function shell(): array
     {
+        $store = $this->store();
         $customer = Auth::guard('customer')->user();
+        $slug = $store->slug;
 
         return [
             'store' => [
                 'name' => $store->name,
-                'slug' => $store->slug,
+                'slug' => $slug,
                 'logoUrl' => $store->logoUrl(),
                 'faviconUrl' => $store->faviconUrl(),
                 'footerText' => $store->footer_text,
@@ -40,7 +65,15 @@ class StorefrontPresenter
                 'social' => $store->social_links ?? [],
             ],
             'customer' => $customer ? ['name' => $customer->name] : null,
-            'tokens' => $this->tokensFor($store),
+            'tokens' => $this->activeTheme()->styleVariables(),
+            'urls' => [
+                'home' => route('storefront.home', ['store' => $slug]),
+                'search' => route('storefront.search', ['store' => $slug]),
+                'cart' => url("/{$slug}/cart"),
+            ],
+            'navigation' => Category::query()->shown()->topLevel()->orderBy('sort')->orderBy('id')->get()
+                ->map(fn (Category $category): array => $this->categoryLink($category))->all(),
+            'cartCount' => 0,
         ];
     }
 
@@ -97,6 +130,14 @@ class StorefrontPresenter
     }
 
     /**
+     * @return array{title: string, description: string|null, image: string|null}
+     */
+    public function seo(string $title, ?string $description = null, ?string $image = null): array
+    {
+        return ['title' => $title, 'description' => $description, 'image' => $image];
+    }
+
+    /**
      * A short plain-text version of the Product description for meta tags and display.
      */
     public function plainText(?string $html): string
@@ -109,30 +150,6 @@ class StorefrontPresenter
     public function metaDescription(?string $html): string
     {
         return Str::limit(preg_replace('/\s+/u', ' ', $this->plainText($html)) ?? '', 157);
-    }
-
-    /**
-     * The default tokens with the Store's own colours laid over them, plus the
-     * text colour that reads best on each.
-     *
-     * @return array<string, string>
-     */
-    private function tokensFor(Store $store): array
-    {
-        $tokens = config('storefront.tokens');
-
-        if ($store->primary_color && ColorContrast::isHex($store->primary_color)) {
-            $tokens['--color-primary'] = $store->primary_color;
-        }
-
-        if ($store->secondary_color && ColorContrast::isHex($store->secondary_color)) {
-            $tokens['--color-secondary'] = $store->secondary_color;
-        }
-
-        $tokens['--color-on-primary'] = ColorContrast::readableTextOn($tokens['--color-primary']);
-        $tokens['--color-on-secondary'] = ColorContrast::readableTextOn($tokens['--color-secondary']);
-
-        return $tokens;
     }
 
     private function store(): Store

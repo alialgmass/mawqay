@@ -1,0 +1,26 @@
+{
+    "name": "الافتراضي",
+    "slug": "default",
+    "version": "1.0.0",
+    "contract_version": "1.0.0",
+    "preview": "preview.png",
+    "pages": [
+        "Home",
+        "Category",
+        "Product",
+        "Search",
+        "Cart",
+        "Checkout",
+        "Account",
+        "Orders",
+        "NotFound"
+    ],
+    "settings": [
+        {
+            "key": "show_footer_social",
+            "type": "toggle",
+            "label": "إظهار روابط التواصل في التذييل",
+            "default": true
+        }
+    ]
+}

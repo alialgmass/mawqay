@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import MoneyText from '@/components/storefront/MoneyText.vue';
+import MoneyText from './MoneyText.vue';
 
 export type ProductCardData = {
     name: string;

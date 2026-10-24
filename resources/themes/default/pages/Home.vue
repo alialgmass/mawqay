@@ -1,22 +1,37 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import EmptyState from '@/components/storefront/EmptyState.vue';
-import ProductCard from '@/components/storefront/ProductCard.vue';
-import type { ProductCardData } from '@/components/storefront/ProductCard.vue';
-import StoreLayout from '@/components/storefront/StoreLayout.vue';
-import type { Seo, StoreShell } from '@/components/storefront/StoreLayout.vue';
+import EmptyState from '../components/EmptyState.vue';
+import ProductCard from '../components/ProductCard.vue';
+import type { ProductCardData } from '../components/ProductCard.vue';
+import StoreLayout from '../layouts/StoreLayout.vue';
+import type {
+    NavLink,
+    Seo,
+    ShellUrls,
+    StoreShell,
+} from '../layouts/StoreLayout.vue';
 
 defineProps<{
     store: StoreShell;
     tokens: Record<string, string>;
     seo: Seo;
+    urls: ShellUrls;
+    navigation: NavLink[];
+    cartCount: number;
     latest: ProductCardData[];
     categories: { name: string; url: string }[];
 }>();
 </script>
 
 <template>
-    <StoreLayout :store="store" :tokens="tokens" :seo="seo">
+    <StoreLayout
+        :store="store"
+        :tokens="tokens"
+        :seo="seo"
+        :urls="urls"
+        :navigation="navigation"
+        :cart-count="cartCount"
+    >
         <nav
             v-if="categories.length"
             class="mb-6 flex flex-wrap gap-2"

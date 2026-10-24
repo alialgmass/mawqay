@@ -4,12 +4,13 @@ namespace Modules\Storefront\Http\Controllers;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
-use Inertia\Response;
 use Modules\Catalog\Models\Category;
 use Modules\Catalog\Models\Product;
+use Modules\Storefront\Pages\CategoryPageData;
 use Modules\Storefront\Support\StorefrontPresenter;
+use Modules\Storefront\Support\ThemeRenderer;
 use Modules\Tenancy\Models\Store;
+use Symfony\Component\HttpFoundation\Response;
 
 class CategoryController
 {
@@ -17,9 +18,14 @@ class CategoryController
 
     private const SORTS = ['newest', 'price_asc', 'price_desc'];
 
-    public function __invoke(Request $request, StorefrontPresenter $presenter, string $store, string $category): Response
+    public function __invoke(Request $request, StorefrontPresenter $presenter, ThemeRenderer $renderer, string $store, string $category): Response
     {
-        $current = Category::query()->shown()->with('parent')->where('slug', $category)->firstOrFail();
+        $current = Category::query()->shown()->with('parent')->where('slug', $category)->first();
+
+        if ($current === null) {
+            return $renderer->notFound();
+        }
+
         $sort = in_array($request->query('sort'), self::SORTS, true) ? $request->query('sort') : 'newest';
 
         $products = Product::query()
@@ -35,14 +41,14 @@ class CategoryController
             ['name' => $current->name, 'url' => null],
         ];
 
-        return Inertia::render('storefront/Category', [
-            ...$presenter->shell(Store::current()),
-            'category' => ['name' => $current->name, 'slug' => $current->slug],
-            'products' => $presenter->cards($products),
-            'sort' => $sort,
-            'breadcrumbs' => $presenter->breadcrumbs($trail),
-            'seo' => ['title' => $current->name.' | '.Store::current()->name, 'description' => $current->name, 'image' => null],
-        ]);
+        return $renderer->render(new CategoryPageData(
+            $presenter->shell(),
+            $presenter->seo($current->name.' | '.Store::current()->name, $current->name),
+            category: ['name' => $current->name, 'slug' => $current->slug],
+            products: $presenter->cards($products),
+            sort: $sort,
+            breadcrumbs: $presenter->breadcrumbs($trail),
+        ));
     }
 
     /**

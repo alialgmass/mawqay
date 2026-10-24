@@ -57,7 +57,7 @@ class CatalogPagesTest extends TestCase
         $this->get('/noor')
             ->assertOk()
             ->assertInertia(fn (Assert $page) => $page
-                ->component('storefront/Home')
+                ->component('storefront/default/Home')
                 ->has('latest', 1)
                 ->where('latest.0.name', 'Black Abaya')
                 ->where('latest.0.url', url('/noor/products/'.$visible->slug))
@@ -86,7 +86,7 @@ class CatalogPagesTest extends TestCase
         $this->get('/noor/categories/abayas')
             ->assertOk()
             ->assertInertia(fn (Assert $page) => $page
-                ->component('storefront/Category')
+                ->component('storefront/default/Category')
                 ->where('products.total', 2)
                 ->where('breadcrumbs.0.name', 'Noor Hijab')
                 ->where('breadcrumbs.1.name', $top->name));
@@ -147,7 +147,7 @@ class CatalogPagesTest extends TestCase
         $this->get('/noor/products/black-abaya')
             ->assertOk()
             ->assertInertia(fn (Assert $page) => $page
-                ->component('storefront/Product')
+                ->component('storefront/default/Product')
                 ->where('product.name', 'Black Abaya')
                 ->where('product.price', '1,500 EGP')
                 ->has('product.images', 2)
@@ -199,7 +199,7 @@ class CatalogPagesTest extends TestCase
         $this->get('/noor/search?q=abaya')
             ->assertOk()
             ->assertInertia(fn (Assert $page) => $page
-                ->component('storefront/Search')
+                ->component('storefront/default/Search')
                 ->where('query', 'abaya')
                 ->where('products.total', 1)
                 ->where('products.data.0.name', 'Black Abaya'));

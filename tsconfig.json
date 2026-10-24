@@ -121,6 +121,8 @@
         "resources/js/**/*.d.ts",
         "resources/js/**/*.tsx", 
         "resources/js/**/*.vue",
+        "resources/themes/**/*.ts",
+        "resources/themes/**/*.vue",
         "Modules/*/resources/js/**/*.ts",
         "Modules/*/resources/js/**/*.d.ts",
         "Modules/*/resources/js/**/*.tsx",

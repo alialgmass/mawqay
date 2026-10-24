@@ -1,0 +1,11 @@
+{
+    "name": "Theming",
+    "alias": "theming",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Theming\\Providers\\ThemingServiceProvider"
+    ],
+    "files": []
+}

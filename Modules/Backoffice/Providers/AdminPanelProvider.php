@@ -21,6 +21,7 @@ use Modules\Backoffice\Filament\Admin\Pages\PlatformSettings;
 use Modules\Backoffice\Http\Middleware\UseArabicLocale;
 use Modules\Catalog\Filament\CatalogPlugin;
 use Modules\Tenancy\Filament\TenancyPlugin;
+use Modules\Theming\Filament\ThemingPlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -44,6 +45,7 @@ class AdminPanelProvider extends PanelProvider
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->plugin(TenancyPlugin::make())
             ->plugin(CatalogPlugin::make())
+            ->plugin(ThemingPlugin::make())
             ->pages([
                 Dashboard::class,
                 PlatformSettings::class,

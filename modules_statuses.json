@@ -4,5 +4,6 @@
     "Auth": true,
     "Catalog": true,
     "Storefront": true,
-    "Backoffice": true
+    "Backoffice": true,
+    "Theming": true
 }

@@ -19,5 +19,6 @@ return [
         'livewire',
         'filament',
         'invitations',
+        'theme-previews',
     ],
 ];

@@ -19,6 +19,21 @@ const { i18n } = createAppI18n(moduleLangFiles);
 
 createInertiaApp({
     resolve: async (name) => {
+        if (name.startsWith('storefront/')) {
+            // Themes are loaded lazily, so a Store downloads only its own Theme.
+            const themePages = import.meta.glob('../themes/*/pages/*.vue');
+            const [, theme, page] = name.split('/');
+            const loader = themePages[`../themes/${theme}/pages/${page}.vue`];
+
+            if (!loader) {
+                throw new Error(`Theme page not found: ${name}`);
+            }
+
+            const themed = (await loader()) as { default?: DefineComponent };
+
+            return themed.default ?? (themed as DefineComponent);
+        }
+
         const appPages = import.meta.glob('./pages/**/*.vue');
         const modulePages = import.meta.glob(
             '../../Modules/*/resources/js/pages/**/*.vue',
@@ -67,6 +82,8 @@ createInertiaApp({
     layout: (name) => {
         switch (true) {
             case name === 'Welcome':
+                return null;
+            case name.startsWith('storefront/'):
                 return null;
             case name.startsWith('Tenancy/'):
                 return AuthLayout;

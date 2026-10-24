@@ -21,7 +21,7 @@ class StoreResolutionTest extends TestCase
         $this->get('/noor-hijab')
             ->assertOk()
             ->assertInertia(fn (Assert $page) => $page
-                ->component('storefront/Home')
+                ->component('storefront/default/Home')
                 ->where('store.name', 'Noor Hijab')
                 ->where('store.slug', 'noor-hijab'));
     }

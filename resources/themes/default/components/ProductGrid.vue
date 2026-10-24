@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import EmptyState from '@/components/storefront/EmptyState.vue';
-import ProductCard from '@/components/storefront/ProductCard.vue';
-import type { ProductCardData } from '@/components/storefront/ProductCard.vue';
+import EmptyState from './EmptyState.vue';
+import ProductCard from './ProductCard.vue';
+import type { ProductCardData } from './ProductCard.vue';
 
 export type ProductPage = {
     data: ProductCardData[];

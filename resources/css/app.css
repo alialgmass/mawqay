@@ -4,6 +4,43 @@
 
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap');
 
+/* Approved Storefront fonts, self-hosted. Drop the .woff2 files into public/fonts/storefront/. */
+@font-face {
+    font-family: 'Cairo';
+    src: url('/fonts/storefront/cairo.woff2') format('woff2');
+    font-weight: 300 700;
+    font-display: swap;
+    unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF, U+0020-007F;
+}
+@font-face {
+    font-family: 'IBM Plex Sans Arabic';
+    src: url('/fonts/storefront/ibm-plex-sans-arabic.woff2') format('woff2');
+    font-weight: 300 700;
+    font-display: swap;
+    unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF, U+0020-007F;
+}
+@font-face {
+    font-family: 'Tajawal';
+    src: url('/fonts/storefront/tajawal.woff2') format('woff2');
+    font-weight: 300 700;
+    font-display: swap;
+    unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF, U+0020-007F;
+}
+@font-face {
+    font-family: 'Almarai';
+    src: url('/fonts/storefront/almarai.woff2') format('woff2');
+    font-weight: 300 700;
+    font-display: swap;
+    unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF, U+0020-007F;
+}
+@font-face {
+    font-family: 'Noto Kufi Arabic';
+    src: url('/fonts/storefront/noto-kufi-arabic.woff2') format('woff2');
+    font-weight: 300 700;
+    font-display: swap;
+    unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF, U+0020-007F;
+}
+
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 

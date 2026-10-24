@@ -23,6 +23,20 @@ final class StoreCache
         return "store:{$storeId}:{$key}";
     }
 
+    /**
+     * The key for a specific Store, for code that clears another Store's entry
+     * (a Platform-level change) rather than the current Store's own.
+     */
+    public static function keyFor(int $storeId, string $key): string
+    {
+        return "store:{$storeId}:{$key}";
+    }
+
+    public static function forgetFor(int $storeId, string $key): bool
+    {
+        return Cache::forget(self::keyFor($storeId, $key));
+    }
+
     public static function get(string $key, mixed $default = null): mixed
     {
         return Cache::get(self::key($key), $default);

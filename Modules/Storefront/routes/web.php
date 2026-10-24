@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Modules\Auth\Http\Middleware\EnsureCustomerBelongsToStore;
 use Modules\Storefront\Http\Controllers\CategoryController;
 use Modules\Storefront\Http\Controllers\HomeController;
+use Modules\Storefront\Http\Controllers\NotFoundController;
 use Modules\Storefront\Http\Controllers\ProductController;
 use Modules\Storefront\Http\Controllers\SearchController;
 use Modules\Storefront\Http\Middleware\UseArabicLocale;
@@ -19,4 +20,5 @@ Route::middleware(['web', UseArabicLocale::class, IdentifyStore::class, EnsureSt
         Route::get('/categories/{category}', CategoryController::class)->name('storefront.category');
         Route::get('/products/{product}', ProductController::class)->name('storefront.product');
         Route::get('/search', SearchController::class)->name('storefront.search');
+        Route::get('/{path}', NotFoundController::class)->where('path', '.*')->name('storefront.not-found');
     });

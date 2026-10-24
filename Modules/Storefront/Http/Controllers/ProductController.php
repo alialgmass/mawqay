@@ -2,23 +2,28 @@
 
 namespace Modules\Storefront\Http\Controllers;
 
-use Inertia\Inertia;
-use Inertia\Response;
 use Modules\Catalog\Models\Product;
 use Modules\Catalog\Models\ProductMedia;
 use Modules\Catalog\Models\Variant;
+use Modules\Storefront\Pages\ProductPageData;
 use Modules\Storefront\Support\StorefrontPresenter;
+use Modules\Storefront\Support\ThemeRenderer;
 use Modules\Tenancy\Models\Store;
+use Symfony\Component\HttpFoundation\Response;
 
 class ProductController
 {
-    public function __invoke(StorefrontPresenter $presenter, string $store, string $product): Response
+    public function __invoke(StorefrontPresenter $presenter, ThemeRenderer $renderer, string $store, string $product): Response
     {
         $current = Product::query()
             ->published()
             ->with(['media', 'variants' => fn ($variants) => $variants->orderBy('id'), 'category.parent'])
             ->where('slug', $product)
-            ->firstOrFail();
+            ->first();
+
+        if ($current === null) {
+            return $renderer->notFound();
+        }
 
         $current->variants->each->setRelation('product', $current);
 
@@ -33,9 +38,14 @@ class ProductController
             'large' => $media->url('large'),
         ])->all();
 
-        return Inertia::render('storefront/Product', [
-            ...$presenter->shell(Store::current()),
-            'product' => [
+        return $renderer->render(new ProductPageData(
+            $presenter->shell(),
+            $presenter->seo(
+                $current->name.' | '.Store::current()->name,
+                $presenter->metaDescription($current->description) ?: $current->name,
+                $current->media->first()?->url('large'),
+            ),
+            product: [
                 'name' => $current->name,
                 'description' => $presenter->plainText($current->description),
                 'price' => $current->currentPrice()->format(),
@@ -49,12 +59,7 @@ class ProductController
                     'available' => $variant->isAvailable(),
                 ])->values()->all(),
             ],
-            'breadcrumbs' => $presenter->breadcrumbs($trail),
-            'seo' => [
-                'title' => $current->name.' | '.Store::current()->name,
-                'description' => $presenter->metaDescription($current->description) ?: $current->name,
-                'image' => $current->media->first()?->url('large'),
-            ],
-        ]);
+            breadcrumbs: $presenter->breadcrumbs($trail),
+        ));
     }
 }
