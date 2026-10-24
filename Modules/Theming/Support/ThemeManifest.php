@@ -53,6 +53,10 @@ final class ThemeManifest
             }
         }
 
+        if (is_string($data['preview'] ?? null) && preg_match('/^[A-Za-z0-9_-]+\.(png|jpe?g|webp)$/', $data['preview']) !== 1) {
+            $errors[] = '"preview" must be a png, jpg or webp file name inside the theme folder.';
+        }
+
         $pages = $data['pages'] ?? null;
 
         if (! is_array($pages) || $pages === [] || ! array_is_list($pages)) {

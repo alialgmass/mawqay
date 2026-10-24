@@ -5,7 +5,9 @@ namespace Modules\Storefront\Tests\Feature;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\File;
 use Inertia\Testing\AssertableInertia as Assert;
+use Modules\Auth\Models\Customer;
 use Modules\Catalog\Models\Category;
 use Modules\Catalog\Models\Product;
 use Modules\Catalog\Models\ProductMedia;
@@ -24,6 +26,7 @@ use Modules\Storefront\Pages\SearchPageData;
 use Modules\Tenancy\Models\Store;
 use Modules\Theming\Models\Theme;
 use Modules\Theming\Support\ThemeContract;
+use Modules\Theming\Support\ThemeManager;
 use Modules\Theming\Support\ThemeRegistry;
 use Modules\Theming\Testing\FakesThemeFolder;
 use Tests\TestCase;
@@ -242,6 +245,27 @@ class ThemeRenderingTest extends TestCase
 
         $this->actingAs(User::factory()->admin()->create())->get($query)
             ->assertInertia(fn (Assert $page) => $page->component('storefront/default/Home'));
+    }
+
+    public function test_preview_is_ignored_for_a_customer(): void
+    {
+        $this->registerTheme('preview-me');
+        $customer = Customer::factory()->create(['store_id' => $this->store->id]);
+
+        $this->actingAs($customer, 'customer')->get('/noor?preview_theme=preview-me')
+            ->assertInertia(fn (Assert $page) => $page->component('storefront/default/Home'));
+    }
+
+    public function test_a_theme_whose_folder_has_vanished_falls_back_to_the_default(): void
+    {
+        $theme = $this->registerTheme('gone');
+        $this->useTheme($theme);
+        $this->get('/noor')->assertInertia(fn (Assert $page) => $page->component('storefront/gone/Home'));
+
+        File::deleteDirectory("{$this->themeFolder}/gone");
+        ThemeManager::flush();
+
+        $this->get('/noor')->assertInertia(fn (Assert $page) => $page->component('storefront/default/Home'));
     }
 
     public function test_preview_cannot_show_an_inactive_or_unregistered_theme(): void

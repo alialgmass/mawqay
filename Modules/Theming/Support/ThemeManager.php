@@ -45,7 +45,8 @@ class ThemeManager
      */
     public static function flush(): void
     {
-        Cache::forever(self::VERSION_KEY, (Cache::get(self::VERSION_KEY, 0)) + 1);
+        Cache::add(self::VERSION_KEY, 0);
+        Cache::increment(self::VERSION_KEY);
     }
 
     /**
@@ -92,9 +93,9 @@ class ThemeManager
             return $cached;
         }
 
-        $chosen = $store->theme_id ? Theme::query()->whereKey($store->theme_id)->where('is_active', true)->first() : null;
+        $chosen = $store->theme_id ? Theme::query()->active()->whereKey($store->theme_id)->first() : null;
 
-        $theme = $this->supportedOrDefault($chosen);
+        $theme = $this->chosenOrDefault($chosen);
 
         $payload = ['slug' => $theme->slug, 'manifest' => $theme->manifest, 'version' => $version, 'theme_id' => $store->theme_id];
 
@@ -103,9 +104,16 @@ class ThemeManager
         return $payload;
     }
 
-    private function supportedOrDefault(?Theme $chosen): Theme
+    /**
+     * The chosen Theme, unless it is gone from disk, in which case the default.
+     */
+    private function chosenOrDefault(?Theme $chosen): Theme
     {
-        return $chosen ?? Theme::query()->where('slug', config('theming.default'))->first()
+        if ($chosen !== null && is_file($this->registry->path()."/{$chosen->slug}/theme.json")) {
+            return $chosen;
+        }
+
+        return Theme::query()->where('slug', config('theming.default'))->first()
             ?? $this->registry->register(config('theming.default'));
     }
 
@@ -120,7 +128,7 @@ class ThemeManager
             return null;
         }
 
-        $theme = Theme::query()->where('slug', $slug)->where('is_active', true)->first();
+        $theme = Theme::query()->active()->where('slug', $slug)->first();
 
         return $theme ? ['slug' => $theme->slug, 'manifest' => $theme->manifest] : null;
     }

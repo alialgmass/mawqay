@@ -6,6 +6,7 @@ use App\Models\User;
 use Filament\Actions\Testing\TestAction;
 use Filament\Facades\Filament;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Validation\ValidationException;
 use Livewire\Livewire;
 use Modules\Core\Support\StoreContext;
 use Modules\Tenancy\Models\Store;
@@ -170,6 +171,33 @@ class ThemePanelsTest extends TestCase
             ->where('tokens.--color-primary', '#1B2A49')
             ->where('tokens.--radius-md', '0px')
             ->where('tokens.--theme-columns', '4'));
+    }
+
+    public function test_publishing_stores_only_what_differs_from_the_defaults(): void
+    {
+        $this->actAsOwner();
+
+        Livewire::test(Appearance::class)
+            ->call('chooseTheme', 'noor')
+            ->fillForm(['settings' => ['corner_style' => 'sharp']])
+            ->call('publish');
+
+        $this->assertSame(['corner_style' => 'sharp'], $this->store->fresh()->theme_settings['noor']);
+    }
+
+    public function test_the_default_theme_cannot_be_deleted(): void
+    {
+        $this->expectException(ValidationException::class);
+
+        Theme::query()->where('slug', 'default')->firstOrFail()->delete();
+    }
+
+    public function test_preview_images_are_served_for_active_themes_only(): void
+    {
+        $this->get('/theme-previews/noor')->assertOk();
+
+        Theme::query()->where('slug', 'noor')->update(['is_active' => false]);
+        $this->get('/theme-previews/noor')->assertNotFound();
     }
 
     public function test_invalid_settings_are_not_published(): void

@@ -17,6 +17,7 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use Livewire\Attributes\Locked;
 use Modules\Core\Support\ColorContrast;
 use Modules\Tenancy\Models\Store;
 use Modules\Theming\Models\Theme;
@@ -35,6 +36,7 @@ class Appearance extends Page
 
     protected string $view = 'theming::vendor.appearance';
 
+    #[Locked]
     public string $theme = '';
 
     /**
@@ -95,7 +97,7 @@ class Appearance extends Page
     {
         $live = app(ThemeManager::class)->activeFor($this->store())->slug();
 
-        return Theme::query()->where('is_active', true)->orderBy('slug')->get()->map(fn (Theme $theme): array => [
+        return Theme::query()->active()->orderBy('slug')->get()->map(fn (Theme $theme): array => [
             'slug' => $theme->slug,
             'name' => $theme->name,
             'version' => $theme->version,
@@ -107,7 +109,7 @@ class Appearance extends Page
 
     public function chooseTheme(string $slug): void
     {
-        abort_unless(Theme::query()->where('slug', $slug)->where('is_active', true)->exists(), 404);
+        abort_unless(Theme::query()->active()->where('slug', $slug)->exists(), 404);
 
         $this->theme = $slug;
         $this->fillSettingsFor($slug);
@@ -145,9 +147,12 @@ class Appearance extends Page
         }
 
         $store = $this->store();
+        $baseline = app(ThemeManager::class)->resolve($theme->manifest(), [], $store);
+        $changed = array_filter($clean, fn (mixed $value, string $key): bool => $value != ($baseline[$key] ?? null), ARRAY_FILTER_USE_BOTH);
+
         $store->update([
             'theme_id' => $theme->id,
-            'theme_settings' => [...($store->theme_settings ?? []), $theme->slug => $clean],
+            'theme_settings' => [...($store->theme_settings ?? []), $theme->slug => $changed],
         ]);
 
         Notification::make()->title(__('theming::appearance.published'))->success()->send();
@@ -171,7 +176,7 @@ class Appearance extends Page
 
     private function selectedTheme(): ?Theme
     {
-        return Theme::query()->where('slug', $this->theme)->where('is_active', true)->first();
+        return Theme::query()->active()->where('slug', $this->theme)->first();
     }
 
     /**

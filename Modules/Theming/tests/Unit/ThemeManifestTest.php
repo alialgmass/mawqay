@@ -43,6 +43,9 @@ class ThemeManifestTest extends TestCase
     {
         return [
             'missing name' => [['name' => '']],
+            'preview climbing out of the folder' => [['preview' => '../../.env']],
+            'preview in a subfolder' => [['preview' => 'img/preview.png']],
+            'preview that is not an image' => [['preview' => 'preview.php']],
             'bad slug' => [['slug' => 'Bad Slug']],
             'bad version' => [['version' => '1.0']],
             'bad contract version' => [['contract_version' => 'latest']],
