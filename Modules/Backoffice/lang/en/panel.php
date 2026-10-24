@@ -1,0 +1,48 @@
+<?php
+
+return [
+    'settings' => [
+        'navigation' => 'Platform settings',
+        'title' => 'Platform settings',
+        'save' => 'Save',
+        'saved' => 'Settings saved',
+        'fields' => [
+            'default_commission_rate' => 'Default commission rate (%)',
+            'stock_reservation_hours' => 'Stock reservation window (hours)',
+            'return_window_days' => 'Return window (days)',
+            'survey_delay_days' => 'Satisfaction survey delay (days)',
+            'payment_review_sla_hours' => 'Payment review target (hours)',
+            'payment_review_overdue_hours' => 'Payment review overdue after (hours)',
+            'payment_retry_window_hours' => 'Payment retry window (hours)',
+            'min_payout_amount' => 'Minimum payout (piasters)',
+        ],
+    ],
+    'identity' => [
+        'navigation' => 'Store identity',
+        'title' => 'Store identity',
+        'save' => 'Save',
+        'saved' => 'Store identity saved',
+        'general' => 'Basics',
+        'branding' => 'Logo and colours',
+        'contact' => 'Contact',
+        'name' => 'Store name',
+        'logo' => 'Logo',
+        'favicon' => 'Favicon',
+        'primary_color' => 'Primary colour',
+        'secondary_color' => 'Secondary colour',
+        'contrast_warning' => 'Text is hard to read on this colour. Try a darker or lighter one.',
+        'contact_email' => 'Email',
+        'contact_phone' => 'Phone',
+        'contact_whatsapp' => 'WhatsApp',
+        'social_links' => 'Social links',
+        'social_network' => 'Network',
+        'social_url' => 'URL',
+        'social_url_invalid' => 'Every link must start with http:// or https://',
+        'footer_text' => 'Footer text',
+        'shipping_origin' => 'Shipping origin',
+    ],
+    'dashboard' => [
+        'status' => 'Store status',
+        'visit_store' => 'Visit store',
+    ],
+];

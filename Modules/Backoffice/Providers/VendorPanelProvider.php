@@ -6,7 +6,6 @@ use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
-use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
@@ -17,6 +16,8 @@ use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Modules\Backoffice\Filament\Vendor\Pages\StoreIdentity;
+use Modules\Backoffice\Filament\Vendor\Pages\VendorDashboard;
 use Modules\Backoffice\Http\Middleware\SetStoreContextFromTenant;
 use Modules\Backoffice\Http\Middleware\UseArabicLocale;
 use Modules\Tenancy\Models\Store;
@@ -40,7 +41,8 @@ class VendorPanelProvider extends PanelProvider
             ->sidebarCollapsibleOnDesktop()
             ->brandName(fn (): string => __('panel.vendor_brand'))
             ->pages([
-                Dashboard::class,
+                VendorDashboard::class,
+                StoreIdentity::class,
             ])
             ->widgets([
                 AccountWidget::class,

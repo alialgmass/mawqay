@@ -1,0 +1,48 @@
+<?php
+
+return [
+    'settings' => [
+        'navigation' => 'إعدادات المنصة',
+        'title' => 'إعدادات المنصة',
+        'save' => 'حفظ',
+        'saved' => 'تم حفظ الإعدادات',
+        'fields' => [
+            'default_commission_rate' => 'نسبة العمولة الافتراضية (%)',
+            'stock_reservation_hours' => 'مهلة حجز المخزون (ساعات)',
+            'return_window_days' => 'فترة الاسترجاع (أيام)',
+            'survey_delay_days' => 'تأخير استبيان الرضا (أيام)',
+            'payment_review_sla_hours' => 'مهلة مراجعة الدفع المستهدفة (ساعات)',
+            'payment_review_overdue_hours' => 'حد تأخر مراجعة الدفع (ساعات)',
+            'payment_retry_window_hours' => 'مهلة إعادة محاولة الدفع (ساعات)',
+            'min_payout_amount' => 'الحد الأدنى للصرف (قرش)',
+        ],
+    ],
+    'identity' => [
+        'navigation' => 'هوية المتجر',
+        'title' => 'هوية المتجر',
+        'save' => 'حفظ',
+        'saved' => 'تم حفظ هوية المتجر',
+        'general' => 'البيانات الأساسية',
+        'branding' => 'الشعار والألوان',
+        'contact' => 'التواصل',
+        'name' => 'اسم المتجر',
+        'logo' => 'الشعار',
+        'favicon' => 'أيقونة المتصفح',
+        'primary_color' => 'اللون الأساسي',
+        'secondary_color' => 'اللون الثانوي',
+        'contrast_warning' => 'هذا اللون يصعّب قراءة النص عليه. جرّبي لونًا أغمق أو أفتح.',
+        'contact_email' => 'البريد الإلكتروني',
+        'contact_phone' => 'الهاتف',
+        'contact_whatsapp' => 'واتساب',
+        'social_links' => 'روابط التواصل الاجتماعي',
+        'social_network' => 'الشبكة',
+        'social_url' => 'الرابط',
+        'social_url_invalid' => 'يجب أن يبدأ كل رابط بـ http:// أو https://',
+        'footer_text' => 'نص التذييل',
+        'shipping_origin' => 'مكان الشحن',
+    ],
+    'dashboard' => [
+        'status' => 'حالة المتجر',
+        'visit_store' => 'زيارة المتجر',
+    ],
+];

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Modules\Core\Database\Seeders\PlatformSettingsSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -11,6 +12,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $this->call(PlatformSettingsSeeder::class);
         $this->call(DemoSeeder::class);
     }
 }

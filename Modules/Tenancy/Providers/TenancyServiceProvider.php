@@ -24,6 +24,7 @@ class TenancyServiceProvider extends ServiceProvider
     {
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         $this->loadTranslationsFrom(__DIR__.'/../lang', 'tenancy');
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'tenancy');
 
         Gate::policy(Store::class, StorePolicy::class);
     }

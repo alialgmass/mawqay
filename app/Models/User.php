@@ -21,7 +21,7 @@ use Modules\Auth\Enums\UserRole;
 use Modules\Tenancy\Models\Store;
 use Spatie\Permission\Traits\HasRoles;
 
-#[Fillable(['name', 'email', 'password', 'role', 'store_id'])]
+#[Fillable(['name', 'email', 'phone', 'password', 'role', 'store_id'])]
 #[Hidden(['password', 'two_factor_secret', 'two_factor_recovery_codes', 'remember_token'])]
 class User extends Authenticatable implements FilamentUser, HasName, HasTenants
 {

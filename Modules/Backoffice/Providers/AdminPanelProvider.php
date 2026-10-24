@@ -17,6 +17,7 @@ use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Modules\Backoffice\Filament\Admin\Pages\PlatformSettings;
 use Modules\Backoffice\Http\Middleware\UseArabicLocale;
 use Modules\Tenancy\Filament\TenancyPlugin;
 
@@ -43,6 +44,7 @@ class AdminPanelProvider extends PanelProvider
             ->plugin(TenancyPlugin::make())
             ->pages([
                 Dashboard::class,
+                PlatformSettings::class,
             ])
             ->widgets([
                 AccountWidget::class,

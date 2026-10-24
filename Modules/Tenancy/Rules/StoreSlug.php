@@ -5,6 +5,7 @@ namespace Modules\Tenancy\Rules;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Modules\Tenancy\Models\Store;
+use Modules\Tenancy\Models\StoreSlugRedirect;
 
 class StoreSlug implements ValidationRule
 {
@@ -29,7 +30,9 @@ class StoreSlug implements ValidationRule
             ->when($this->ignoreStoreId, fn ($query, $id) => $query->whereKeyNot($id))
             ->exists();
 
-        if ($taken) {
+        $usedAsOldAddress = StoreSlugRedirect::query()->where('old_slug', $value)->exists();
+
+        if ($taken || $usedAsOldAddress) {
             $fail('The :attribute has already been taken.');
         }
     }

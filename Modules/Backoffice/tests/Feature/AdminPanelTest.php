@@ -67,15 +67,15 @@ class AdminPanelTest extends TestCase
             ->assertSee('Noor Hijab');
     }
 
-    public function test_stores_cannot_be_created_edited_or_deleted_here(): void
+    public function test_a_platform_admin_can_open_the_store_create_and_edit_pages(): void
     {
         $admin = User::factory()->admin()->create();
         $store = Store::factory()->create();
 
         $this->actingAs($admin);
 
-        $this->get('/admin/stores/create')->assertNotFound();
-        $this->get("/admin/stores/{$store->id}/edit")->assertNotFound();
+        $this->get('/admin/stores/create')->assertOk();
+        $this->get("/admin/stores/{$store->id}/edit")->assertOk();
     }
 
     public function test_the_store_resource_arrives_through_a_module_plugin(): void
