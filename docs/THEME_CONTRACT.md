@@ -1,6 +1,6 @@
 # Theme contract
 
-How to build and register a Storefront Theme. Contract version: **1.2.0** (`Modules/Theming/Support/ThemeContract.php`). Only the Platform team changes the contract.
+How to build and register a Storefront Theme. Contract version: **1.3.0** (`Modules/Theming/Support/ThemeContract.php`). Only the Platform team changes the contract.
 
 ## What a Theme is
 
@@ -113,13 +113,14 @@ Plus, per page:
 | `ResetPassword` | `token`, `email` |
 | `Addresses` | `addresses [{ id, label, recipientName, phone, governorate, governorateName, city, addressLine, notes, isDefault }]`, `governorates [{ value, name }]`, `maxAddresses` |
 | `Orders` | `orders [{ number, status, statusLabel, total, placedAt, url, canCancel }]` |
-| `OrderDetail` | `order { number, status, statusLabel, total, subtotal, shippingFee, placedAt, expiresAt, paymentMethod, paymentMethodLabel, address, items [{ name, sku, size, color, quantity, unitPrice, lineTotal }], canCancel, cancelUrl, url }` |
-| `OrderConfirmation` | `order` (same shape as `OrderDetail`); show the Order number and a place for payment instructions |
+| `OrderDetail` | `order { number, status, statusLabel, total, subtotal, shippingFee, placedAt, expiresAt, paymentMethod, paymentMethodLabel, address, items [{ name, sku, size, color, quantity, unitPrice, lineTotal }], canCancel, cancelUrl, url, payment }` (see below) |
+| `OrderConfirmation` | `order` (same shape as `OrderDetail`); show the Order number and the payment instructions |
 | `NotFound` | nothing extra (rendered with status 404) |
 
 A product card is `{ name, url, price, originalPrice, imageUrl }`; a page of cards is `{ data, prevUrl, nextUrl, currentPage, lastPage, total }`; a breadcrumb is `{ name, url | null }`. Prices are already formatted strings.
 
-Order statuses are `pending_payment`, `payment_review`, `paid`, `processing`, `shipped`, `delivered`, `completed`, `cancelled` and `refunded`; `statusLabel` is already translated. Payment instructions arrive in a later release; the `default` Theme shows a placeholder.
+Order statuses are `pending_payment`, `payment_review`, `paid`, `processing`, `shipped`, `delivered`, `completed`, `cancelled` and `refunded`; `statusLabel` is already translated. 
+`order.payment` is `{ state, amount, reference, account, expiresAt, attemptsUsed, attemptsLeft, maxAttempts, canSubmit, rejectionReason, receiptUrl, submitUrl, maxKilobytes, acceptedTypes }`. `state` is `awaiting_receipt`, `under_review`, `rejected`, `exhausted`, `paid` or `closed`. `account` is `{ name, number, instructions }` to transfer to, or `null` when the Platform has no active account for the chosen method (say payment details are not available). `amount` is the exact total to transfer and `reference` the Order number to quote. `expiresAt` is `null` while the Order is under review (its timer is paused). `canSubmit` says whether a Receipt can be sent now; `receiptUrl` is a temporary link (a few minutes) to the Customer's latest Receipt, or `null`. A Receipt is posted as multipart form data to `submitUrl` with `receipt` (JPG, PNG, WebP or PDF up to `maxKilobytes`), and optional `transfer_reference` and `sender_phone`; refusals come back under `errors.receipt`, `errors.sender_phone` and `errors.order`.
 
 ### Forms
 
@@ -127,6 +128,7 @@ Adding to the Cart posts `variant_id` and `quantity` to `actions.cartItems`; cha
 
 ### Changelog
 
+- **1.3.0**: `OrderDetail` and `OrderConfirmation` gain `order.payment` (payment instructions, Receipt state and upload data). Additive only.
 - **1.2.0**: Cart, Checkout and Orders carry real data; added the `OrderDetail` and `OrderConfirmation` pages, the `checkout` and `orders` URLs, and the `cartItems`, `acceptPrices` and `checkout` actions. Additive only.
 - **1.1.0**: added the `Login`, `Register`, `ForgotPassword`, `ResetPassword` and `Addresses` pages, the `actions` and `status` shell data, more `urls`, and extra `Account` customer fields. Additive only: a 1.0.0 Theme keeps working and uses the default Theme for the new pages.
 

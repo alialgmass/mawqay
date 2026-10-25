@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { router } from '@inertiajs/vue3';
+import PaymentInstructions from '../components/PaymentInstructions.vue';
+import type { PaymentData } from '../components/PaymentInstructions.vue';
 import StatusBadge from '../components/StatusBadge.vue';
 import StoreLayout from '../layouts/StoreLayout.vue';
 import type { Seo } from '../layouts/StoreLayout.vue';
@@ -16,6 +18,7 @@ type OrderData = {
     paymentMethodLabel: string;
     canCancel: boolean;
     cancelUrl: string;
+    payment: PaymentData;
     address: Record<string, string | null>;
     items: {
         name: string;
@@ -56,6 +59,11 @@ function cancel(url: string) {
                 ينتهي حجز المنتجات في
                 <time :datetime="order.expiresAt">{{ order.expiresAt }}</time>
             </p>
+
+            <PaymentInstructions
+                :method-label="order.paymentMethodLabel"
+                :payment="order.payment"
+            />
 
             <ul class="space-y-2">
                 <li

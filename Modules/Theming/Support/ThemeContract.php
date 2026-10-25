@@ -10,7 +10,7 @@ namespace Modules\Theming\Support;
 final class ThemeContract
 {
     /** Semantic version of the page data. Minor adds data only; major breaks. */
-    public const VERSION = '1.2.0';
+    public const VERSION = '1.3.0';
 
     /** @var list<string> */
     public const REQUIRED_PAGES = ['Home', 'Category', 'Product', 'Cart', 'Checkout', 'Account', 'Orders', 'NotFound'];

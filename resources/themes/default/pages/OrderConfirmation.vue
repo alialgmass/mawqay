@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
 import PaymentInstructions from '../components/PaymentInstructions.vue';
+import type { PaymentData } from '../components/PaymentInstructions.vue';
 import StatusBadge from '../components/StatusBadge.vue';
 import { useShell } from '../composables/useShell';
 import StoreLayout from '../layouts/StoreLayout.vue';
@@ -16,6 +17,7 @@ defineProps<{
         expiresAt: string | null;
         paymentMethodLabel: string;
         url: string;
+        payment: PaymentData;
     };
 }>();
 
@@ -52,7 +54,7 @@ const shell = useShell();
 
             <PaymentInstructions
                 :method-label="order.paymentMethodLabel"
-                :total="order.total"
+                :payment="order.payment"
             />
 
             <div class="flex flex-wrap gap-4 text-sm">

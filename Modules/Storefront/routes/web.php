@@ -12,6 +12,7 @@ use Modules\Storefront\Http\Controllers\CustomerPageController;
 use Modules\Storefront\Http\Controllers\HomeController;
 use Modules\Storefront\Http\Controllers\NotFoundController;
 use Modules\Storefront\Http\Controllers\OrderController;
+use Modules\Storefront\Http\Controllers\PaymentController;
 use Modules\Storefront\Http\Controllers\ProductController;
 use Modules\Storefront\Http\Controllers\SearchController;
 use Modules\Tenancy\Http\Middleware\EnsureStoreIsPublic;
@@ -41,6 +42,7 @@ Route::middleware(['web', UseArabicLocale::class, IdentifyStore::class, EnsureSt
             Route::get('/orders', [OrderController::class, 'index'])->name('storefront.orders');
             Route::get('/orders/{number}', [OrderController::class, 'show'])->name('storefront.order');
             Route::get('/orders/{number}/confirmation', [OrderController::class, 'confirmation'])->name('storefront.order.confirmation');
+            Route::post('/orders/{number}/receipt', [PaymentController::class, 'store'])->name('storefront.order.receipt');
             Route::post('/orders/{number}/cancel', [OrderController::class, 'cancel'])->name('storefront.order.cancel');
             Route::get('/account', [CustomerPageController::class, 'account'])->name('storefront.account');
             Route::get('/account/addresses', [CustomerPageController::class, 'addresses'])->name('storefront.addresses');

@@ -20,5 +20,6 @@ return [
         'filament',
         'invitations',
         'theme-previews',
+        'payment-receipts',
     ],
 ];

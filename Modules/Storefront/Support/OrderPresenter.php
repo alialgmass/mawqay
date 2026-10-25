@@ -3,6 +3,7 @@
 namespace Modules\Storefront\Support;
 
 use Modules\Core\Money\Money;
+use Modules\Payments\Support\PaymentBlock;
 use Modules\Sales\Enums\OrderStatus;
 use Modules\Sales\Models\Order;
 use Modules\Sales\Models\OrderItem;
@@ -13,6 +14,8 @@ use Modules\Tenancy\Models\Store;
  */
 class OrderPresenter
 {
+    public function __construct(private readonly PaymentBlock $payments) {}
+
     /**
      * @return array<string, mixed>
      */
@@ -56,6 +59,7 @@ class OrderPresenter
                 'lineTotal' => $item->lineTotal()->format(),
             ])->values()->all(),
             'cancelUrl' => url("/{$slug}/orders/{$order->number}/cancel"),
+            'payment' => $this->payments->for($order, url("/{$slug}/orders/{$order->number}/receipt")),
         ];
     }
 }

@@ -1,0 +1,52 @@
+<?php
+
+return [
+    'errors' => [
+        'not_pending' => 'This receipt is no longer waiting for review.',
+        'order_not_in_review' => 'The order is no longer in payment review.',
+    ],
+    'payment' => [
+        'label' => 'Payment receipt',
+        'plural' => 'Payment review',
+        'order' => 'Order',
+        'store' => 'Store',
+        'customer' => 'Customer',
+        'method' => 'Payment method',
+        'order_total' => 'Order total',
+        'expected' => 'Amount to transfer',
+        'transfer_reference' => 'Transfer reference',
+        'sender_phone' => 'Sender number',
+        'attempt' => 'Attempt',
+        'status' => 'Status',
+        'submitted_at' => 'Submitted',
+        'reviewed_by' => 'Reviewed by',
+        'reviewed_at' => 'Reviewed at',
+        'rejection_reason' => 'Rejection reason',
+        'duplicate' => 'Duplicate reference',
+        'duplicate_hint' => 'This transfer reference was used before.',
+        'account' => 'Account transferred to',
+        'history' => 'Payment history',
+        'none' => 'No payments yet.',
+        'statuses' => [
+            'pending_review' => 'Waiting for review',
+            'approved' => 'Approved',
+            'rejected' => 'Rejected',
+        ],
+    ],
+    'actions' => [
+        'preview' => 'View receipt',
+        'approve' => 'Approve',
+        'approve_confirm' => 'Approving this receipt marks the order as paid.',
+        'approved' => 'Payment approved.',
+        'reject' => 'Reject',
+        'reason' => 'Reason for rejection',
+        'rejected' => 'Payment rejected.',
+        'failed' => 'The review could not be completed.',
+    ],
+    'widget' => [
+        'heading' => 'Receipts past the review target',
+        'overdue' => 'Overdue',
+        'waiting' => 'Waiting since',
+        'empty' => 'No receipts are overdue.',
+    ],
+];
