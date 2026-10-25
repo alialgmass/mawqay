@@ -11,6 +11,7 @@ use Modules\Auth\Models\Customer;
 use Modules\Core\Support\StoreContext;
 use Modules\Payments\Enums\PaymentStatus;
 use Modules\Payments\Models\Payment;
+use Modules\Payments\Models\PaymentMethod;
 use Modules\Payments\Notifications\ReceiptAwaitingReview;
 use Modules\Payments\Notifications\ReceiptReceived;
 use Modules\Payments\Testing\BuildsPayments;
@@ -81,6 +82,16 @@ class SubmitReceiptTest extends TestCase
         Notification::assertSentTo($this->customer, ReceiptReceived::class);
         Notification::assertSentTo($admin, ReceiptAwaitingReview::class);
         Notification::assertNotSentTo($vendor, ReceiptAwaitingReview::class);
+    }
+
+    public function test_a_resubmission_keeps_the_account_snapshotted_on_the_first_receipt(): void
+    {
+        $this->paymentFor($this->order, PaymentStatus::Rejected, ['method_snapshot' => ['name' => 'Mawqaay', 'number' => '01012345678', 'instructions' => null]]);
+        PaymentMethod::query()->update(['account_number' => '01000000000', 'is_active' => false]);
+
+        $this->submit()->assertRedirect();
+
+        $this->assertSame('01012345678', $this->payments()->last()->method_snapshot['number']);
     }
 
     public function test_the_reference_and_sender_number_are_optional(): void

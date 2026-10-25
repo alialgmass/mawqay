@@ -73,7 +73,7 @@ class SubmitReceipt
                         'receipt_mime' => $file->mime,
                         'transfer_reference' => $transferReference,
                         'sender_phone' => $senderPhone,
-                        'method_snapshot' => PaymentMethod::activeFor($locked->payment_method)?->details(),
+                        'method_snapshot' => $this->firstSnapshot($locked) ?? PaymentMethod::activeFor($locked->payment_method)?->details(),
                     ]);
 
                     $this->flagDuplicate($payment);
@@ -126,6 +126,16 @@ class SubmitReceipt
         if ($payments->count() >= config('payments.max_attempts')) {
             throw new ReceiptCannotBeSubmitted('order', __('payments::receipt.errors.no_attempts_left'));
         }
+    }
+
+    /**
+     * The account the Order was first paid against, so later edits to the Platform's account do not change it.
+     *
+     * @return array{name: string, number: string, instructions: string|null}|null
+     */
+    private function firstSnapshot(Order $order): ?array
+    {
+        return Payment::query()->where('order_id', $order->id)->whereNotNull('method_snapshot')->orderBy('attempt')->first()?->method_snapshot;
     }
 
     private function normalizePhone(?string $phone): ?string
