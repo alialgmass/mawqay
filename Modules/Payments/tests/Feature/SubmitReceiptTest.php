@@ -72,7 +72,7 @@ class SubmitReceiptTest extends TestCase
         $payment = $this->payments()->sole();
         $this->assertSame(PaymentStatus::PendingReview, $payment->status);
         $this->assertSame(1, $payment->attempt);
-        $this->assertSame(105000, $payment->amount);
+        $this->assertSame(25000, $payment->amount);
         $this->assertSame('vodafone_cash', $payment->method);
         $this->assertSame('TX-998877', $payment->transfer_reference);
         $this->assertSame('+201012345678', $payment->sender_phone);

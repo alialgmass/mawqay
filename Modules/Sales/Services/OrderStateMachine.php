@@ -37,6 +37,10 @@ class OrderStateMachine
                 $current->cancelled_at = now();
             }
 
+            if ($to === OrderStatus::Completed) {
+                $current->completed_at = now();
+            }
+
             $current->save();
 
             $current->statusLogs()->create([

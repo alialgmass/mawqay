@@ -44,7 +44,15 @@ trait BuildsPayments
         $variant->update(['reserved' => $variant->reserved + $quantity]);
 
         return app(StoreContext::class)->runAs($store->id, function () use ($store, $customer, $status, $variant, $quantity, $attributes): Order {
-            $order = Order::factory()->status($status)->create(['store_id' => $store->id, 'customer_id' => $customer->id, ...$attributes]);
+            $order = Order::factory()->status($status)->create([
+                'store_id' => $store->id,
+                'customer_id' => $customer->id,
+                // Totals add up to the one line below, as a real Order's do.
+                'subtotal' => 10000 * $quantity,
+                'shipping_fee' => 5000,
+                'total' => 10000 * $quantity + 5000,
+                ...$attributes,
+            ]);
             $order->items()->create([
                 'variant_id' => $variant->id, 'product_name' => 'Black Abaya', 'sku' => $variant->sku, 'size' => 'M', 'color' => 'Black',
                 'unit_price' => 10000, 'quantity' => $quantity, 'line_total' => 10000 * $quantity, 'commission_rate' => '10.00', 'commission_amount' => 1000 * $quantity,

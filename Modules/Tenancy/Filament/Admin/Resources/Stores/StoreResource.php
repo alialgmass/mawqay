@@ -75,7 +75,7 @@ class StoreResource extends Resource
                     ->label(__('tenancy::stores.commission_rate'))
                     ->numeric()
                     ->minValue(0)
-                    ->maxValue(100)
+                    ->maxValue(50)
                     ->suffix('%'),
             ]),
             Section::make(__('tenancy::stores.owner'))->columns(2)->visibleOn('create')->schema([

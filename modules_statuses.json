@@ -7,5 +7,6 @@
     "Backoffice": true,
     "Theming": true,
     "Sales": true,
-    "Payments": true
+    "Payments": true,
+    "Ledger": true
 }

@@ -57,7 +57,7 @@ class StorefrontPaymentBlockTest extends TestCase
 
             $this->assertSame('awaiting_receipt', $payment['state']);
             $this->assertSame(['name' => 'Mawqaay Wallet', 'number' => '01099998888', 'instructions' => 'Send from your own wallet.'], $payment['account']);
-            $this->assertSame('1,050 EGP', $payment['amount']);
+            $this->assertSame('250 EGP', $payment['amount']);
             $this->assertSame($order->number, $payment['reference']);
             $this->assertNotNull($payment['expiresAt']);
             $this->assertSame([0, 3, 3], [$payment['attemptsUsed'], $payment['attemptsLeft'], $payment['maxAttempts']]);

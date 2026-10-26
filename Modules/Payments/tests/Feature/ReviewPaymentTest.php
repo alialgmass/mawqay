@@ -119,7 +119,7 @@ class ReviewPaymentTest extends TestCase
         $payment = $this->underReview(['amount' => 99000, 'transfer_reference' => 'TX-1', 'sender_phone' => '+201012345678', 'attempt' => 2]);
 
         Livewire::test(ListPayments::class)
-            ->assertTableColumnFormattedStateSet('order.total', '1,050 EGP', $payment)
+            ->assertTableColumnFormattedStateSet('order.total', '250 EGP', $payment)
             ->assertTableColumnFormattedStateSet('amount', '990 EGP', $payment)
             ->assertTableColumnStateSet('transfer_reference', 'TX-1', $payment)
             ->assertTableColumnStateSet('sender_phone', '+201012345678', $payment)
