@@ -5,6 +5,7 @@ namespace Modules\Ledger\Actions;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Modules\Auth\Enums\UserRole;
+use Modules\Core\Support\Audit;
 use Modules\Core\Support\StoreContext;
 use Modules\Ledger\Enums\PayoutStatus;
 use Modules\Ledger\Exceptions\PayoutNotAllowed;
@@ -40,6 +41,7 @@ class SettlePayout
             ]);
 
             $this->poster->paid($locked);
+            Audit::record('payout_paid', $locked, ['status' => PayoutStatus::Requested->value], ['status' => PayoutStatus::Paid->value, 'amount' => $locked->amount, 'transfer_reference' => $transferReference], null, $locked->store_id, $adminId);
         });
 
         $this->tell($settled, 'paid');
@@ -65,6 +67,7 @@ class SettlePayout
             ]);
 
             $this->poster->handBack($locked, 'reject');
+            Audit::record('payout_rejected', $locked, ['status' => PayoutStatus::Requested->value], ['status' => PayoutStatus::Rejected->value, 'amount' => $locked->amount], $reason, $locked->store_id, $adminId);
         });
 
         $this->tell($settled, 'rejected', ['reason' => $reason]);

@@ -45,7 +45,7 @@ Route::middleware(['web', UseArabicLocale::class, IdentifyStore::class, EnsureSt
             Route::get('/orders', [OrderController::class, 'index'])->name('storefront.orders');
             Route::get('/orders/{number}', [OrderController::class, 'show'])->name('storefront.order');
             Route::get('/orders/{number}/confirmation', [OrderController::class, 'confirmation'])->name('storefront.order.confirmation');
-            Route::post('/orders/{number}/receipt', [PaymentController::class, 'store'])->name('storefront.order.receipt');
+            Route::post('/orders/{number}/receipt', [PaymentController::class, 'store'])->middleware('throttle:10,1')->name('storefront.order.receipt');
             Route::post('/orders/{number}/received', [OrderController::class, 'received'])->name('storefront.order.received');
             Route::post('/orders/{number}/cancel', [OrderController::class, 'cancel'])->name('storefront.order.cancel');
             Route::get('/account', [CustomerPageController::class, 'account'])->name('storefront.account');

@@ -5,12 +5,15 @@ namespace Modules\Payments\Providers;
 use Filament\Support\Facades\FilamentView;
 use Filament\View\PanelsRenderHook;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Modules\Payments\Contracts\PaymentGateway;
 use Modules\Payments\Events\PaymentApproved;
 use Modules\Payments\Filament\Admin\Support\OrderPaymentHistory;
 use Modules\Payments\Gateways\ManualPaymentGateway;
 use Modules\Payments\Listeners\NotifyVendorOfPaidOrder;
+use Modules\Payments\Models\PaymentMethod;
+use Modules\Payments\Policies\PaymentMethodPolicy;
 use Modules\Sales\Filament\Admin\Resources\Orders\Pages\ViewOrder;
 
 class PaymentsServiceProvider extends ServiceProvider
@@ -28,6 +31,8 @@ class PaymentsServiceProvider extends ServiceProvider
         $this->loadTranslationsFrom(__DIR__.'/../lang', 'payments');
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'payments');
         $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
+
+        Gate::policy(PaymentMethod::class, PaymentMethodPolicy::class);
 
         Event::listen(PaymentApproved::class, [NotifyVendorOfPaidOrder::class, 'handle']);
 

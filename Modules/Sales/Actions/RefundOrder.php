@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Modules\Catalog\Models\Variant;
 use Modules\Catalog\Services\StockService;
 use Modules\Core\Money\Money;
+use Modules\Core\Support\Audit;
 use Modules\Sales\Contracts\ReversesOrderMoney;
 use Modules\Sales\Enums\OrderStatus;
 use Modules\Sales\Enums\RefundReason;
@@ -14,7 +15,6 @@ use Modules\Sales\Events\OrderRefunded;
 use Modules\Sales\Exceptions\RefundNotAllowed;
 use Modules\Sales\Models\Order;
 use Modules\Sales\Models\OrderItem;
-use Modules\Sales\Models\OrderOverride;
 use Modules\Sales\Models\Refund;
 use Modules\Sales\Services\OrderStateMachine;
 use Modules\Sales\Support\OrderNotifier;
@@ -109,6 +109,8 @@ class RefundOrder
 
             $this->books->reverse($locked, $amount, "refund:{$refund->id}");
 
+            Audit::record('order_refunded', $locked, ['refunded_total' => (int) $earlier->sum('amount')], ['refunded_total' => (int) $earlier->sum('amount') + $amount, 'refund_id' => $refund->id, 'amount' => $amount], $reason->value.($note === null ? '' : ": {$note}"), $locked->store_id, $actorId);
+
             foreach ($restocked as $itemId => $quantity) {
                 $variant = Variant::query()->find(OrderItem::query()->whereKey($itemId)->value('variant_id'));
 
@@ -118,14 +120,7 @@ class RefundOrder
             }
 
             if ($locked->status === OrderStatus::Completed) {
-                OrderOverride::query()->create([
-                    'store_id' => $locked->store_id,
-                    'order_id' => $locked->id,
-                    'actor_id' => $actorId,
-                    'action' => 'refund_completed',
-                    'reason' => (string) $overrideReason,
-                    'meta' => ['refund_id' => $refund->id, 'amount' => $amount],
-                ]);
+                Audit::record('refund_of_completed_order', $locked, null, ['refund_id' => $refund->id, 'amount' => $amount], (string) $overrideReason, $locked->store_id, $actorId);
             }
 
             if ($amount === $refundable) {

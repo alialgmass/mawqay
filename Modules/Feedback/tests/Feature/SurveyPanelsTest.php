@@ -268,4 +268,15 @@ class SurveyPanelsTest extends TestCase
 
         $this->get('/admin/surveys')->assertForbidden();
     }
+
+    public function test_the_response_rate_counts_a_survey_in_the_period_it_was_invited(): void
+    {
+        $this->seedFeedback();
+        $old = $this->surveys['a1'];
+        $this->inStore($this->storeA, fn () => $old->forceFill(['sent_at' => now()->subDays(40), 'submitted_at' => now()->subDays(40)])->save());
+        [$from, $until] = $this->range();
+
+        $this->assertSame(66.7, app(FeedbackReport::class)->responseRate($this->storeA->id, $from, $until));
+        $this->assertSame(100.0, app(FeedbackReport::class)->responseRate($this->storeA->id, now()->subDays(60)->startOfDay()->toImmutable(), now()->subDays(35)->endOfDay()->toImmutable()));
+    }
 }

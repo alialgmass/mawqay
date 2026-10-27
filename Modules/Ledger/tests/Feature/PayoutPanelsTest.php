@@ -272,4 +272,28 @@ class PayoutPanelsTest extends TestCase
         $this->artisan('ledger:reconcile')->assertSuccessful();
         $this->assertSame(['pending' => 0, 'available' => 20000, 'payout_pending' => 0, 'paid' => 70000], app(BalanceService::class)->forStore($this->storeA->id)->toArray());
     }
+
+    public function test_the_payouts_page_is_for_the_vendor_owner_only(): void
+    {
+        $this->actAsOwnerOfA();
+        $this->assertTrue(Payouts::canAccess());
+
+        $this->actAsAdmin();
+        $this->assertFalse(Payouts::canAccess());
+    }
+
+    public function test_a_payout_proof_may_be_a_pdf(): void
+    {
+        Storage::fake(config('filesystems.default'));
+        $this->fund($this->storeA);
+        $payout = $this->openRequest($this->storeA);
+        $this->actAsAdmin();
+
+        Livewire::test(ViewPayout::class, ['record' => $payout->id])
+            ->callAction('markPaid', ['transfer_reference' => 'TX-9', 'proof' => UploadedFile::fake()->create('proof.pdf', 40, 'application/pdf')])
+            ->assertHasNoActionErrors();
+
+        $this->assertStringEndsWith('.pdf', (string) $payout->fresh()->proof_path);
+        Livewire::test(ViewPayout::class, ['record' => $payout->id])->assertSee('.pdf');
+    }
 }

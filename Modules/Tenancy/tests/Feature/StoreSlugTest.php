@@ -83,7 +83,7 @@ class StoreSlugTest extends TestCase
 
     public function test_the_reserved_list_covers_the_platform_routes(): void
     {
-        $expected = ['admin', 'vendor', 'api', 'login', 'register', 'logout', 'storage', 'assets', 'build', 'up', 'livewire', 'filament', 'invitations', 'theme-previews', 'payment-receipts'];
+        $expected = ['admin', 'vendor', 'api', 'login', 'register', 'logout', 'storage', 'assets', 'build', 'up', 'livewire', 'filament', 'invitations', 'theme-previews', 'payment-receipts', 'health'];
 
         $this->assertEqualsCanonicalizing($expected, config('tenancy.reserved_slugs'));
     }

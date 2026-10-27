@@ -378,4 +378,22 @@ class SurveyFlowTest extends TestCase
         $this->assertSame(1, $this->inStore($this->storeA, fn (): int => Survey::query()->count()));
         $this->assertSame(1, $this->inStore($this->storeB, fn (): int => Survey::query()->count()));
     }
+
+    public function test_the_order_page_offers_the_survey_only_for_due_orders_that_were_not_refunded_or_cancelled(): void
+    {
+        $order = $this->deliveredOrder($this->storeA, daysAgo: 1);
+        $this->logInCustomer($this->storeA);
+        $url = "/store-a/orders/{$order->number}";
+
+        $this->get($url)->assertInertia(fn (Assert $page) => $page->where('order.survey', null));
+
+        $this->inStore($this->storeA, fn () => Order::query()->whereKey($order->id)->update(['delivered_at' => now()->subDays(3)]));
+        $this->get($url)->assertInertia(fn (Assert $page) => $page->where('order.survey.pending', true));
+
+        foreach ([OrderStatus::Refunded, OrderStatus::Cancelled] as $status) {
+            $this->inStore($this->storeA, fn () => Order::query()->whereKey($order->id)->update(['status' => $status->value]));
+
+            $this->get($url)->assertInertia(fn (Assert $page) => $page->where('order.survey', null));
+        }
+    }
 }

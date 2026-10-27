@@ -52,7 +52,7 @@ class RequestPayout
                 throw new PayoutNotAllowed('open_request');
             }
 
-            if ($amount < $this->settings->minPayoutAmount()) {
+            if ($amount < max(1, $this->settings->minPayoutAmount())) {
                 throw new PayoutNotAllowed('below_minimum');
             }
 

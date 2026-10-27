@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
+use Modules\Core\Support\PlatformSettings;
 use Modules\Core\Support\StoreContext;
 use Modules\Ledger\Actions\RequestPayout;
 use Modules\Ledger\Actions\SettlePayout;
@@ -309,5 +310,18 @@ class PayoutActionsTest extends TestCase
         $this->request(60000);
 
         $this->assertSame(30000, $this->balance()['available']);
+    }
+
+    public function test_a_zero_or_negative_request_is_refused_even_when_the_minimum_is_zero(): void
+    {
+        $this->ready();
+        app(PlatformSettings::class)->update(['min_payout_amount' => 0]);
+
+        $this->refuses('below_minimum', fn () => $this->request(0));
+        $this->refuses('below_minimum', fn () => $this->request(-500));
+        $this->assertSame(90000, $this->balance()['available']);
+
+        $this->request(1);
+        $this->assertSame(89999, $this->balance()['available']);
     }
 }

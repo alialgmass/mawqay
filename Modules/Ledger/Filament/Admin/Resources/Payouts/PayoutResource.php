@@ -8,7 +8,6 @@ use Filament\Actions\ViewAction;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
-use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
@@ -19,6 +18,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Storage;
 use Modules\Core\Money\Money;
 use Modules\Core\Support\AdminScope;
 use Modules\Ledger\Actions\SettlePayout;
@@ -29,6 +29,7 @@ use Modules\Ledger\Filament\Admin\Resources\Payouts\Pages\ListPayouts;
 use Modules\Ledger\Filament\Admin\Resources\Payouts\Pages\ViewPayout;
 use Modules\Ledger\Models\Payout;
 use Modules\Tenancy\Models\Store;
+use Throwable;
 
 /**
  * The Platform Admin's queue of Payout requests. The transfer details are shown here, decrypted, and
@@ -95,7 +96,10 @@ class PayoutResource extends Resource
                 TextEntry::make('transfer_reference')->label(__('ledger::payouts.columns.reference'))->placeholder('—'),
                 TextEntry::make('processed_at')->label(__('ledger::payouts.columns.processed_at'))->dateTime()->placeholder('—'),
                 TextEntry::make('reject_reason')->label(__('ledger::payouts.columns.reason'))->placeholder('—'),
-                ImageEntry::make('proof_path')->label(__('ledger::payouts.columns.proof'))->disk(config('filesystems.default'))->visibility('private')->visible(fn (Payout $record): bool => $record->proof_path !== null),
+                TextEntry::make('proof_path')->label(__('ledger::payouts.columns.proof'))
+                    ->formatStateUsing(fn (string $state): string => basename($state))
+                    ->url(fn (Payout $record): ?string => self::proofUrl($record), shouldOpenInNewTab: true)
+                    ->visible(fn (Payout $record): bool => $record->proof_path !== null),
             ]),
         ]);
     }
@@ -147,7 +151,7 @@ class PayoutResource extends Resource
             ->visible(fn (Payout $record): bool => $record->isOpen())
             ->schema([
                 TextInput::make('transfer_reference')->label(__('ledger::payouts.admin.transfer_reference'))->required()->maxLength(255),
-                FileUpload::make('proof')->label(__('ledger::payouts.admin.proof'))->image()->disk(config('filesystems.default'))->directory('payout-proofs')->visibility('private')->maxSize(5120),
+                FileUpload::make('proof')->label(__('ledger::payouts.admin.proof'))->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'application/pdf'])->disk(config('filesystems.default'))->directory('payout-proofs')->visibility('private')->maxSize(5120),
             ])
             ->action(function (array $data, Payout $record): void {
                 self::settle(fn () => app(SettlePayout::class)->markPaid($record, $data['transfer_reference'], $data['proof'] ?? null, auth()->id()), 'paid_done');
@@ -166,6 +170,18 @@ class PayoutResource extends Resource
             ->action(function (array $data, Payout $record): void {
                 self::settle(fn () => app(SettlePayout::class)->reject($record, $data['reason'], auth()->id()), 'rejected_done');
             });
+    }
+
+    /**
+     * A short-lived address for a private proof, or none when the disk cannot make one.
+     */
+    private static function proofUrl(Payout $payout): ?string
+    {
+        try {
+            return Storage::disk(config('filesystems.default'))->temporaryUrl($payout->proof_path, now()->addMinutes(10));
+        } catch (Throwable) {
+            return null;
+        }
     }
 
     private static function settle(callable $step, string $done): void

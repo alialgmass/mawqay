@@ -105,8 +105,15 @@ final class PlatformSettings
             'min_payout_amount' => ['integer', 'min:0'],
         ])->validate();
 
+        $current = $this->all();
+        $changed = array_filter($validated, fn ($value, string $key): bool => (float) $current[$key] !== (float) $value, ARRAY_FILTER_USE_BOTH);
+
         foreach ($validated as $key => $value) {
             PlatformSetting::query()->updateOrCreate(['key' => $key], ['value' => $value + 0]);
+        }
+
+        if ($changed !== []) {
+            Audit::record('platform_settings_changed', null, array_intersect_key($current, $changed), $changed);
         }
 
         Cache::forget(self::CACHE_KEY);

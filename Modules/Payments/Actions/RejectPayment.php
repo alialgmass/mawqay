@@ -3,6 +3,7 @@
 namespace Modules\Payments\Actions;
 
 use Illuminate\Support\Facades\DB;
+use Modules\Core\Support\Audit;
 use Modules\Core\Support\PlatformSettings;
 use Modules\Core\Support\StoreContext;
 use Modules\Payments\Enums\PaymentStatus;
@@ -58,6 +59,7 @@ class RejectPayment
                 $order->forceFill(['expires_at' => now()->addHours($this->settings->paymentRetryWindowHours())])->save();
 
                 $locked->forceFill(['status' => PaymentStatus::Rejected, 'reviewed_by' => $reviewerId, 'reviewed_at' => now(), 'rejection_reason' => $reason])->save();
+                Audit::record('payment_rejected', $locked, ['status' => PaymentStatus::PendingReview->value], ['status' => PaymentStatus::Rejected->value], $reason, $locked->store_id, $reviewerId);
                 $payment->setRawAttributes($locked->getAttributes(), true);
                 $rejectedNow = true;
 

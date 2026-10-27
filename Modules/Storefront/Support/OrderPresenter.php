@@ -3,6 +3,7 @@
 namespace Modules\Storefront\Support;
 
 use Modules\Core\Money\Money;
+use Modules\Core\Support\PlatformSettings;
 use Modules\Feedback\Models\Survey;
 use Modules\Feedback\Services\SurveyLinks;
 use Modules\Payments\Support\PaymentBlock;
@@ -18,7 +19,11 @@ use Modules\Tenancy\Models\Store;
  */
 class OrderPresenter
 {
-    public function __construct(private readonly PaymentBlock $payments, private readonly SurveyLinks $surveyLinks) {}
+    public function __construct(
+        private readonly PaymentBlock $payments,
+        private readonly SurveyLinks $surveyLinks,
+        private readonly PlatformSettings $settings,
+    ) {}
 
     /**
      * @return array<string, mixed>
@@ -88,6 +93,12 @@ class OrderPresenter
      */
     private function survey(Order $order): ?array
     {
+        $due = $order->delivered_at !== null && $order->delivered_at->lessThanOrEqualTo(now()->subDays($this->settings->surveyDelayDays()));
+
+        if (! $due || in_array($order->status, [OrderStatus::Refunded, OrderStatus::Cancelled], true)) {
+            return null;
+        }
+
         $survey = Survey::query()->where('order_id', $order->id)->whereNull('submitted_at')->first();
 
         return $survey === null ? null : ['pending' => true, 'url' => $this->surveyLinks->show($survey)];

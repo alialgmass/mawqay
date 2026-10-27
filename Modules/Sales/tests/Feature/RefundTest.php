@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Notification;
 use Livewire\Livewire;
 use Modules\Catalog\Models\Variant;
+use Modules\Core\Models\AuditEntry;
 use Modules\Core\Support\StoreContext;
 use Modules\Ledger\Enums\LedgerAccount;
 use Modules\Ledger\Services\BalanceService;
@@ -21,7 +22,6 @@ use Modules\Sales\Exceptions\InvalidOrderTransition;
 use Modules\Sales\Exceptions\RefundNotAllowed;
 use Modules\Sales\Filament\Admin\Resources\Orders\Pages\ViewOrder as AdminViewOrder;
 use Modules\Sales\Models\Order;
-use Modules\Sales\Models\OrderOverride;
 use Modules\Sales\Models\Refund;
 use Modules\Sales\Notifications\OrderUpdate;
 use Modules\Tenancy\Models\Store;
@@ -168,9 +168,9 @@ class RefundTest extends TestCase
         $this->assertSame(114000 - (30000 - 2857), $books[LedgerAccount::VendorPayableAvailable->value]);
         $this->assertSame(OrderStatus::Completed, $this->fresh($order)->status);
 
-        $audit = app(StoreContext::class)->runAs($this->store->id, fn (): OrderOverride => OrderOverride::query()->firstOrFail());
-        $this->assertSame('refund_completed', $audit->action);
+        $audit = AuditEntry::query()->where('action', 'refund_of_completed_order')->firstOrFail();
         $this->assertSame('Customer escalated to support', $audit->reason);
+        $this->assertSame(1, AuditEntry::query()->where('action', 'order_refunded')->count());
         $this->artisan('ledger:reconcile')->assertSuccessful();
     }
 
@@ -293,14 +293,12 @@ class RefundTest extends TestCase
         $this->assertSame(OrderStatus::Delivered, $forced->status);
         $this->assertNotNull($forced->delivered_at);
 
-        app(StoreContext::class)->runAs($this->store->id, function () use ($forced, $admin): void {
-            $audit = OrderOverride::query()->firstOrFail();
-            $this->assertSame('force_status', $audit->action);
-            $this->assertSame('Courier confirmed by phone', $audit->reason);
-            $this->assertSame($admin->id, $audit->actor_id);
-            $this->assertSame(['from' => 'shipped', 'to' => 'delivered'], $audit->meta);
-            $this->assertStringStartsWith('Forced:', $forced->statusLogs()->get()->last()->note);
-        });
+        $audit = AuditEntry::query()->where('action', 'order_status_forced')->firstOrFail();
+        $this->assertSame('Courier confirmed by phone', $audit->reason);
+        $this->assertSame($admin->id, $audit->actor_id);
+        $this->assertSame(['status' => 'shipped'], $audit->before);
+        $this->assertSame(['status' => 'delivered'], $audit->after);
+        app(StoreContext::class)->runAs($this->store->id, fn () => $this->assertStringStartsWith('Forced:', $forced->statusLogs()->get()->last()->note));
     }
 
     public function test_a_forced_change_cannot_create_a_refund_or_a_payment(): void
@@ -316,7 +314,7 @@ class RefundTest extends TestCase
             }
         }
 
-        $this->assertSame(0, app(StoreContext::class)->runAs($this->store->id, fn (): int => OrderOverride::query()->count()));
+        $this->assertSame(0, AuditEntry::query()->count());
     }
 
     public function test_a_forced_change_still_obeys_the_state_machine(): void

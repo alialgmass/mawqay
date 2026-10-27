@@ -3,12 +3,12 @@
 namespace Modules\Sales\Actions;
 
 use Illuminate\Support\Facades\DB;
+use Modules\Core\Support\Audit;
 use Modules\Sales\Enums\OrderStatus;
 use Modules\Sales\Events\OrderDelivered;
 use Modules\Sales\Exceptions\InvalidOrderTransition;
 use Modules\Sales\Exceptions\RefundNotAllowed;
 use Modules\Sales\Models\Order;
-use Modules\Sales\Models\OrderOverride;
 use Modules\Sales\Services\OrderStateMachine;
 
 /**
@@ -38,14 +38,7 @@ class ForceOrderStatus
         DB::transaction(function () use ($order, $to, $reason, $actorId, $from): void {
             $this->machine->transition($order, $to, 'admin', $actorId, 'Forced: '.$reason, [$from]);
 
-            OrderOverride::query()->create([
-                'store_id' => $order->store_id,
-                'order_id' => $order->id,
-                'actor_id' => $actorId,
-                'action' => 'force_status',
-                'reason' => $reason,
-                'meta' => ['from' => $from->value, 'to' => $to->value],
-            ]);
+            Audit::record('order_status_forced', $order, ['status' => $from->value], ['status' => $to->value], $reason, $order->store_id, $actorId);
         });
 
         if ($to === OrderStatus::Delivered) {

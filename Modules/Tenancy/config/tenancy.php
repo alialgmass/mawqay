@@ -7,6 +7,7 @@ return [
      */
     'reserved_slugs' => [
         'admin',
+        'health',
         'vendor',
         'api',
         'login',

@@ -4,6 +4,7 @@ namespace Modules\Payments\Actions;
 
 use Illuminate\Support\Facades\DB;
 use Modules\Catalog\Services\StockService;
+use Modules\Core\Support\Audit;
 use Modules\Core\Support\StoreContext;
 use Modules\Payments\Enums\PaymentStatus;
 use Modules\Payments\Events\PaymentApproved;
@@ -61,6 +62,7 @@ class ApprovePayment
                 }
 
                 $locked->forceFill(['status' => PaymentStatus::Approved, 'reviewed_by' => $reviewerId, 'reviewed_at' => now(), 'rejection_reason' => null])->save();
+                Audit::record('payment_approved', $locked, ['status' => PaymentStatus::PendingReview->value], ['status' => PaymentStatus::Approved->value, 'amount' => $locked->amount], null, $locked->store_id, $reviewerId);
                 $payment->setRawAttributes($locked->getAttributes(), true);
                 $approvedNow = true;
 

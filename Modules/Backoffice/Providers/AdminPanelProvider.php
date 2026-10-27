@@ -2,6 +2,7 @@
 
 namespace Modules\Backoffice\Providers;
 
+use Filament\Auth\MultiFactor\App\AppAuthentication;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -19,6 +20,8 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Modules\Auth\Filament\AuthPlugin;
 use Modules\Backoffice\Filament\Admin\Pages\PlatformSettings;
+use Modules\Backoffice\Filament\Admin\Pages\SystemHealth;
+use Modules\Backoffice\Filament\Admin\Resources\AuditEntries\AuditEntryResource;
 use Modules\Backoffice\Http\Middleware\UseArabicLocale;
 use Modules\Catalog\Filament\CatalogPlugin;
 use Modules\Feedback\Filament\FeedbackPlugin;
@@ -37,6 +40,10 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->multiFactorAuthentication(
+                [AppAuthentication::make()->recoverable()],
+                isRequired: fn (): bool => (bool) config('security.admin_mfa_required'),
+            )
             ->colors([
                 'primary' => Color::Teal,
                 'gray' => Color::Slate,
@@ -56,9 +63,11 @@ class AdminPanelProvider extends PanelProvider
             ->plugin(PaymentsPlugin::make())
             ->plugin(LedgerPlugin::make())
             ->plugin(FeedbackPlugin::make())
+            ->resources([AuditEntryResource::class])
             ->pages([
                 Dashboard::class,
                 PlatformSettings::class,
+                SystemHealth::class,
             ])
             ->widgets([
                 AccountWidget::class,

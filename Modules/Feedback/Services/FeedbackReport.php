@@ -41,9 +41,10 @@ class FeedbackReport
     public function responseRate(?int $storeId, CarbonInterface $from, CarbonInterface $until): ?float
     {
         return $this->remember($storeId, 'response-rate', [$from, $until], function () use ($storeId, $from, $until): ?float {
+            // A Survey counts in the period it was invited, or answered when it never was (a copied link).
             $query = DB::table('satisfaction_surveys')
-                ->whereBetween('created_at', [$from, $until])
-                ->where(fn (Builder $inner) => $inner->whereNotNull('sent_at')->orWhereNotNull('submitted_at'))
+                ->whereRaw('coalesce(sent_at, submitted_at) is not null')
+                ->whereBetween(DB::raw('coalesce(sent_at, submitted_at)'), [$from, $until])
                 ->when($storeId !== null, fn (Builder $q) => $q->where('store_id', $storeId));
 
             $invited = (int) (clone $query)->count();

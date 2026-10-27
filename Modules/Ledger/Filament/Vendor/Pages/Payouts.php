@@ -2,6 +2,7 @@
 
 namespace Modules\Ledger\Filament\Vendor\Pages;
 
+use App\Models\User;
 use BackedEnum;
 use Filament\Actions\Action;
 use Filament\Facades\Filament;
@@ -39,6 +40,16 @@ class Payouts extends Page implements HasTable
     protected static ?string $slug = 'payouts';
 
     protected string $view = 'ledger::vendor.payouts';
+
+    /**
+     * Only the Vendor Owner asks for money or edits where it goes.
+     */
+    public static function canAccess(): bool
+    {
+        $user = auth()->user();
+
+        return $user instanceof User && $user->isVendorOwner();
+    }
 
     public static function getNavigationLabel(): string
     {

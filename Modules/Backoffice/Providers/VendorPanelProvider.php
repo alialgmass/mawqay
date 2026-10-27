@@ -19,6 +19,7 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Modules\Auth\Filament\AuthPlugin;
 use Modules\Backoffice\Filament\Vendor\Pages\StoreIdentity;
 use Modules\Backoffice\Filament\Vendor\Pages\VendorDashboard;
+use Modules\Backoffice\Filament\Vendor\Widgets\OnboardingChecklist;
 use Modules\Backoffice\Http\Middleware\SetStoreContextFromTenant;
 use Modules\Backoffice\Http\Middleware\UseArabicLocale;
 use Modules\Catalog\Filament\CatalogPlugin;
@@ -58,6 +59,7 @@ class VendorPanelProvider extends PanelProvider
             ])
             ->widgets([
                 AccountWidget::class,
+                OnboardingChecklist::class,
             ])
             ->middleware([
                 EncryptCookies::class,

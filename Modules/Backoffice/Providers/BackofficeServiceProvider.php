@@ -3,6 +3,7 @@
 namespace Modules\Backoffice\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Modules\Backoffice\Console\WipeDemoData;
 
 class BackofficeServiceProvider extends ServiceProvider
 {
@@ -16,5 +17,9 @@ class BackofficeServiceProvider extends ServiceProvider
     {
         $this->loadTranslationsFrom(__DIR__.'/../lang', 'backoffice');
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'backoffice');
+
+        if ($this->app->runningInConsole()) {
+            $this->commands([WipeDemoData::class]);
+        }
     }
 }
