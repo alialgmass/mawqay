@@ -15,8 +15,8 @@ class ReceiptAwaitingReview extends PaymentNotification
     protected function content(): array
     {
         return [
-            'title' => __('payments::notifications.awaiting_review.title'),
-            'body' => __('payments::notifications.awaiting_review.body', ['number' => $this->number]),
+            'title' => __('notifications::templates.receipt_awaiting_review.title'),
+            'body' => __('notifications::templates.receipt_awaiting_review.body', ['number' => $this->number]),
             'url' => $this->url,
         ];
     }

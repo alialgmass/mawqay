@@ -15,8 +15,8 @@ class PaymentWasApproved extends PaymentNotification
     protected function content(): array
     {
         return [
-            'title' => __('payments::notifications.approved.title'),
-            'body' => __('payments::notifications.approved.body', ['number' => $this->number]),
+            'title' => __('notifications::templates.payment_approved.title'),
+            'body' => __('notifications::templates.payment_approved.body', ['number' => $this->number]),
             'url' => $this->url,
         ];
     }

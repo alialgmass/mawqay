@@ -24,8 +24,8 @@ class OrderWasPaid extends PaymentNotification
     protected function content(): array
     {
         return [
-            'title' => __('payments::notifications.order_paid.title'),
-            'body' => __('payments::notifications.order_paid.body', ['number' => $this->number]),
+            'title' => __('notifications::templates.order_paid.title'),
+            'body' => __('notifications::templates.order_paid.body', ['number' => $this->number]),
             'url' => $this->url,
         ];
     }

@@ -27,6 +27,7 @@ type OrderData = {
         shippedAt: string;
         deliveredAt: string | null;
     } | null;
+    survey: { pending: boolean; url: string } | null;
     canConfirmReceipt: boolean;
     confirmReceiptUrl: string;
     storeContact: {
@@ -172,6 +173,14 @@ function confirmReceipt(url: string) {
             >
                 استلمت طلبي
             </button>
+
+            <a
+                v-if="order.survey?.pending"
+                :href="order.survey.url"
+                class="inline-flex min-h-11 items-center px-5 text-sm font-medium underline"
+            >
+                قيّمي تجربتك مع هذا الطلب
+            </a>
 
             <section
                 v-if="

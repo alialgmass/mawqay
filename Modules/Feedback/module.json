@@ -1,0 +1,11 @@
+{
+    "name": "Feedback",
+    "alias": "feedback",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Feedback\\Providers\\FeedbackServiceProvider"
+    ],
+    "files": []
+}

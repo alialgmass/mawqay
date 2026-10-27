@@ -39,7 +39,7 @@ abstract class PaymentNotification extends Notification implements ShouldQueue
         return (new MailMessage)
             ->subject($content['title'])
             ->line($content['body'])
-            ->action(__('payments::notifications.open'), $content['url']);
+            ->action(__('notifications::templates.open'), $content['url']);
     }
 
     /**

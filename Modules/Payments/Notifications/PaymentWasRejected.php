@@ -15,8 +15,8 @@ class PaymentWasRejected extends PaymentNotification
     protected function content(): array
     {
         return [
-            'title' => __('payments::notifications.rejected.title'),
-            'body' => __('payments::notifications.rejected.body', ['number' => $this->number, 'reason' => $this->reason]),
+            'title' => __('notifications::templates.payment_rejected.title'),
+            'body' => __('notifications::templates.payment_rejected.body', ['number' => $this->number, 'reason' => $this->reason]),
             'url' => $this->url,
         ];
     }

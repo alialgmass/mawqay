@@ -214,8 +214,8 @@ class ReviewPaymentTest extends TestCase
         app(ApprovePayment::class)($payment, $this->admin->id);
 
         $number = $this->order($payment)->number;
-        $this->assertSame(__('payments::notifications.approved.body', ['number' => $number], 'ar'), $this->customer->notifications()->sole()->data['body']);
-        $this->assertSame(__('payments::notifications.order_paid.body', ['number' => $number], 'ar'), $owner->notifications()->sole()->data['body']);
+        $this->assertSame(__('notifications::templates.payment_approved.body', ['number' => $number], 'ar'), $this->customer->notifications()->sole()->data['body']);
+        $this->assertSame(__('notifications::templates.order_paid.body', ['number' => $number], 'ar'), $owner->notifications()->sole()->data['body']);
         $this->assertStringContainsString($number, $this->customer->notifications()->sole()->data['body']);
     }
 

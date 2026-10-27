@@ -3,6 +3,8 @@
 namespace Modules\Storefront\Support;
 
 use Modules\Core\Money\Money;
+use Modules\Feedback\Models\Survey;
+use Modules\Feedback\Services\SurveyLinks;
 use Modules\Payments\Support\PaymentBlock;
 use Modules\Sales\Enums\OrderStatus;
 use Modules\Sales\Models\Order;
@@ -16,7 +18,7 @@ use Modules\Tenancy\Models\Store;
  */
 class OrderPresenter
 {
-    public function __construct(private readonly PaymentBlock $payments) {}
+    public function __construct(private readonly PaymentBlock $payments, private readonly SurveyLinks $surveyLinks) {}
 
     /**
      * @return array<string, mixed>
@@ -68,6 +70,7 @@ class OrderPresenter
                 'at' => $log->created_at->toIso8601String(),
             ])->values()->all(),
             'shipment' => $this->shipment($order),
+            'survey' => $this->survey($order),
             'canConfirmReceipt' => $order->status === OrderStatus::Shipped,
             'confirmReceiptUrl' => url("/{$slug}/orders/{$order->number}/received"),
             'storeContact' => [
@@ -76,6 +79,18 @@ class OrderPresenter
                 'whatsapp' => Store::current()->contact_whatsapp,
             ],
         ];
+    }
+
+    /**
+     * A Survey the Customer has not answered yet, with its signed link; null when there is none or it is answered.
+     *
+     * @return array{pending: bool, url: string}|null
+     */
+    private function survey(Order $order): ?array
+    {
+        $survey = Survey::query()->where('order_id', $order->id)->whereNull('submitted_at')->first();
+
+        return $survey === null ? null : ['pending' => true, 'url' => $this->surveyLinks->show($survey)];
     }
 
     /**

@@ -11,5 +11,6 @@ return [
     'cart' => 'Cart',
     'checkout' => 'Checkout',
     'orders' => 'My orders',
+    'survey' => 'Satisfaction survey',
     'search' => 'Search',
 ];

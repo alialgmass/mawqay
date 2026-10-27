@@ -34,7 +34,7 @@ class ReconciliationFailed extends Notification implements ShouldQueue
         return (new MailMessage)
             ->subject($content['title'])
             ->line($content['body'])
-            ->action(__('ledger::notifications.open'), $content['url']);
+            ->action(__('notifications::templates.open'), $content['url']);
     }
 
     /**
@@ -43,8 +43,8 @@ class ReconciliationFailed extends Notification implements ShouldQueue
     public function toArray(object $notifiable): array
     {
         return [
-            'title' => __('ledger::notifications.reconciliation_failed.title'),
-            'body' => __('ledger::notifications.reconciliation_failed.body', ['count' => $this->mismatchCount]),
+            'title' => __('notifications::templates.reconciliation_failed.title'),
+            'body' => __('notifications::templates.reconciliation_failed.body', ['count' => $this->mismatchCount]),
             'url' => $this->url,
         ];
     }

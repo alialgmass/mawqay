@@ -42,8 +42,8 @@ class PayoutUpdate extends Notification implements ShouldQueue
         $replace = ['amount' => $this->amount, ...$this->replace];
 
         return [
-            'title' => __("ledger::payouts.notifications.{$this->kind}.title", $replace),
-            'body' => __("ledger::payouts.notifications.{$this->kind}.body", $replace),
+            'title' => __("notifications::templates.payout_{$this->kind}.title", $replace),
+            'body' => __("notifications::templates.payout_{$this->kind}.body", $replace),
             'url' => $this->url,
         ];
     }

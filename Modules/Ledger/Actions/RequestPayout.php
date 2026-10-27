@@ -7,6 +7,7 @@ use Modules\Core\Support\PlatformSettings;
 use Modules\Core\Support\StoreContext;
 use Modules\Ledger\Enums\LedgerAccount;
 use Modules\Ledger\Enums\PayoutStatus;
+use Modules\Ledger\Events\PayoutRequested;
 use Modules\Ledger\Exceptions\PayoutNotAllowed;
 use Modules\Ledger\Models\Payout;
 use Modules\Ledger\Models\PayoutDetail;
@@ -34,7 +35,7 @@ class RequestPayout
      */
     public function __invoke(Store $store, int $amount, ?int $actorId): Payout
     {
-        return $this->context->runAs($store->id, fn (): Payout => DB::transaction(function () use ($store, $amount, $actorId): Payout {
+        $payout = $this->context->runAs($store->id, fn (): Payout => DB::transaction(function () use ($store, $amount, $actorId): Payout {
             $locked = Store::query()->lockForUpdate()->findOrFail($store->id);
 
             if (! $locked->canTrade()) {
@@ -75,5 +76,9 @@ class RequestPayout
 
             return $payout;
         }));
+
+        PayoutRequested::dispatch($payout);
+
+        return $payout;
     }
 }

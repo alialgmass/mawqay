@@ -15,6 +15,7 @@ use Modules\Storefront\Http\Controllers\OrderController;
 use Modules\Storefront\Http\Controllers\PaymentController;
 use Modules\Storefront\Http\Controllers\ProductController;
 use Modules\Storefront\Http\Controllers\SearchController;
+use Modules\Storefront\Http\Controllers\SurveyController;
 use Modules\Tenancy\Http\Middleware\EnsureStoreIsPublic;
 use Modules\Tenancy\Http\Middleware\IdentifyStore;
 use Modules\Tenancy\Support\StoreRoutes;
@@ -35,6 +36,8 @@ Route::middleware(['web', UseArabicLocale::class, IdentifyStore::class, EnsureSt
         Route::get('/login', [CustomerPageController::class, 'login'])->name('storefront.login');
         Route::get('/register', [CustomerPageController::class, 'register'])->name('storefront.register');
         Route::get('/forgot-password', [CustomerPageController::class, 'forgotPassword'])->name('storefront.forgot-password');
+        Route::get('/survey/{token}', [SurveyController::class, 'show'])->middleware('throttle:20,1')->name('storefront.survey');
+        Route::post('/survey/{token}', [SurveyController::class, 'submit'])->middleware('throttle:20,1')->name('storefront.survey.submit');
         Route::get('/reset-password/{token}', [CustomerPageController::class, 'resetPassword'])->name('storefront.reset-password');
         Route::middleware(EnsureCustomerIsAuthenticated::class)->group(function () {
             Route::get('/checkout', [CheckoutController::class, 'show'])->name('storefront.checkout');

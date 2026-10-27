@@ -30,6 +30,7 @@ use Modules\Storefront\Pages\ProductPageData;
 use Modules\Storefront\Pages\RegisterPageData;
 use Modules\Storefront\Pages\ResetPasswordPageData;
 use Modules\Storefront\Pages\SearchPageData;
+use Modules\Storefront\Pages\SurveyPageData;
 use Modules\Tenancy\Models\Store;
 use Modules\Theming\Models\Theme;
 use Modules\Theming\Support\ThemeContract;
@@ -350,6 +351,7 @@ class ThemeRenderingTest extends TestCase
             new ForgotPasswordPageData($shell, $seo),
             new ResetPasswordPageData($shell, $seo, 't', 'e'),
             new AddressesPageData($shell, $seo, [], [], 10),
+            new SurveyPageData($shell, $seo, 'invalid'),
             new NotFoundPageData($shell, $seo),
         ];
 

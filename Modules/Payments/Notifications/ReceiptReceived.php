@@ -15,8 +15,8 @@ class ReceiptReceived extends PaymentNotification
     protected function content(): array
     {
         return [
-            'title' => __('payments::notifications.receipt_received.title'),
-            'body' => __('payments::notifications.receipt_received.body', ['number' => $this->number]),
+            'title' => __('notifications::templates.receipt_received.title'),
+            'body' => __('notifications::templates.receipt_received.body', ['number' => $this->number]),
             'url' => $this->url,
         ];
     }

@@ -25,10 +25,6 @@ return [
         'reference_required' => 'رقم العملية مطلوب.',
         'reason_required' => 'السبب مطلوب.',
     ],
-    'notifications' => [
-        'paid' => ['title' => 'تم صرف مستحقاتك', 'body' => 'تم تحويل :amount إليك.'],
-        'rejected' => ['title' => 'تم رفض طلب الصرف', 'body' => 'تم رفض طلب صرف :amount. السبب: :reason'],
-    ],
     'columns' => [
         'store' => 'المتجر',
         'amount' => 'المبلغ',

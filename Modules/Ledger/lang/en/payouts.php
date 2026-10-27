@@ -25,10 +25,6 @@ return [
         'reference_required' => 'The transfer reference is required.',
         'reason_required' => 'A reason is required.',
     ],
-    'notifications' => [
-        'paid' => ['title' => 'Your payout was sent', 'body' => ':amount was transferred to you.'],
-        'rejected' => ['title' => 'Your payout was rejected', 'body' => 'The payout of :amount was rejected. Reason: :reason'],
-    ],
     'columns' => [
         'store' => 'Store',
         'amount' => 'Amount',

@@ -44,8 +44,8 @@ class OrderUpdate extends Notification implements ShouldQueue
         $replace = ['number' => $this->number, ...$this->replace];
 
         return [
-            'title' => __("sales::notifications.{$this->kind}.title", $replace),
-            'body' => __("sales::notifications.{$this->kind}.body", $replace),
+            'title' => __("notifications::templates.order_{$this->kind}.title", $replace),
+            'body' => __("notifications::templates.order_{$this->kind}.body", $replace),
             'url' => $this->url,
         ];
     }
@@ -54,6 +54,6 @@ class OrderUpdate extends Notification implements ShouldQueue
     {
         $content = $this->toArray($notifiable);
 
-        return (new MailMessage)->subject($content['title'])->line($content['body'])->action(__('sales::notifications.open'), $content['url']);
+        return (new MailMessage)->subject($content['title'])->line($content['body'])->action(__('notifications::templates.open'), $content['url']);
     }
 }

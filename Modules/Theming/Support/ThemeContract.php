@@ -10,13 +10,13 @@ namespace Modules\Theming\Support;
 final class ThemeContract
 {
     /** Semantic version of the page data. Minor adds data only; major breaks. */
-    public const VERSION = '1.4.0';
+    public const VERSION = '1.5.0';
 
     /** @var list<string> */
     public const REQUIRED_PAGES = ['Home', 'Category', 'Product', 'Cart', 'Checkout', 'Account', 'Orders', 'NotFound'];
 
     /** @var list<string> Pages a Theme may add; absent ones use the default Theme's page. */
-    public const OPTIONAL_PAGES = ['Search', 'Login', 'Register', 'ForgotPassword', 'ResetPassword', 'Addresses', 'OrderDetail', 'OrderConfirmation'];
+    public const OPTIONAL_PAGES = ['Search', 'Login', 'Register', 'ForgotPassword', 'ResetPassword', 'Addresses', 'OrderDetail', 'OrderConfirmation', 'Survey'];
 
     /** @var list<string> */
     public const CORE_SETTING_KEYS = ['primary_color', 'secondary_color', 'heading_font', 'body_font', 'corner_style'];
