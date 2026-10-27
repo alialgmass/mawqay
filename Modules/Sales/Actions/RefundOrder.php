@@ -2,6 +2,7 @@
 
 namespace Modules\Sales\Actions;
 
+use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Support\Facades\DB;
 use Modules\Catalog\Models\Variant;
 use Modules\Catalog\Services\StockService;
@@ -57,7 +58,29 @@ class RefundOrder
             return $existing;
         }
 
-        $refund = DB::transaction(function () use ($order, $amount, $reason, $note, $actorId, $reference, $restock, $restockQuantities, $overrideReason): Refund {
+        try {
+            $refund = $this->record($order, $amount, $reason, $note, $actorId, $reference, $restock, $restockQuantities, $overrideReason);
+        } catch (UniqueConstraintViolationException) {
+            // A second submission with the same reference won the race: that refund is the answer.
+            return Refund::query()->where('reference', $reference)->where('order_id', $order->getKey())->firstOrFail();
+        }
+
+        $order->refresh();
+        OrderRefunded::dispatch($order, $refund);
+
+        $replace = ['amount' => Money::fromPiasters($refund->amount)->format()];
+        $this->notifier->customer($order, 'refunded', $replace);
+        $this->notifier->vendor($order, 'vendor_refunded', $replace);
+
+        return $refund;
+    }
+
+    /**
+     * @param  array<int, int>  $restockQuantities
+     */
+    private function record(Order $order, ?int $amount, RefundReason $reason, ?string $note, ?int $actorId, string $reference, bool $restock, array $restockQuantities, ?string $overrideReason): Refund
+    {
+        return DB::transaction(function () use ($order, $amount, $reason, $note, $actorId, $reference, $restock, $restockQuantities, $overrideReason): Refund {
             $locked = Order::query()->lockForUpdate()->findOrFail($order->getKey());
 
             $this->assertRefundable($locked, $overrideReason);
@@ -111,15 +134,6 @@ class RefundOrder
 
             return $refund;
         });
-
-        $order->refresh();
-        OrderRefunded::dispatch($order, $refund);
-
-        $replace = ['amount' => Money::fromPiasters($refund->amount)->format()];
-        $this->notifier->customer($order, 'refunded', $replace);
-        $this->notifier->vendor($order, 'vendor_refunded', $replace);
-
-        return $refund;
     }
 
     /**

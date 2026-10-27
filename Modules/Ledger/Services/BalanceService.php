@@ -23,8 +23,7 @@ class BalanceService
                 'pending' => $net[LedgerAccount::VendorPayablePending->value] ?? 0,
                 'available' => $net[LedgerAccount::VendorPayableAvailable->value] ?? 0,
                 'payout_pending' => $net[LedgerAccount::VendorPayoutPending->value] ?? 0,
-                // Paid is drawn from Payout entries, which arrive with Payouts.
-                'paid' => 0,
+                'paid' => $this->paidOut(fn ($query) => $query->where('store_id', $storeId)),
             ];
         });
 
@@ -88,6 +87,25 @@ class BalanceService
         }
 
         return $net;
+    }
+
+    /**
+     * What has actually been transferred to Vendors: the Payout Pending entries cleared by a paid Payout.
+     *
+     * @param  (callable(Builder): mixed)|null  $constrain
+     */
+    public function paidOut(?callable $constrain = null): int
+    {
+        $query = DB::table('ledger_entries')
+            ->where('account', LedgerAccount::VendorPayoutPending->value)
+            ->where('direction', 'debit')
+            ->where('posting_group', 'like', 'payout:%:paid');
+
+        if ($constrain !== null) {
+            $constrain($query);
+        }
+
+        return (int) $query->sum('amount');
     }
 
     private function key(int $storeId): string

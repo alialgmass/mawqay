@@ -29,8 +29,8 @@ class ForceOrderStatus
             throw new RefundNotAllowed('A reason is required to force a status change.');
         }
 
-        if (in_array($to, [OrderStatus::Paid, OrderStatus::Refunded], true)) {
-            throw new RefundNotAllowed("Use Payment Review or Refund instead of forcing {$to->value}.");
+        if (in_array($to, [OrderStatus::Paid, OrderStatus::Refunded, OrderStatus::Completed], true)) {
+            throw new RefundNotAllowed("Use Payment Review, Refund or the funds release instead of forcing {$to->value}.");
         }
 
         $from = $order->status;

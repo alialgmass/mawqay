@@ -307,7 +307,7 @@ class RefundTest extends TestCase
     {
         $order = $this->orderWith($this->store, status: OrderStatus::Delivered);
 
-        foreach ([OrderStatus::Refunded, OrderStatus::Paid] as $target) {
+        foreach ([OrderStatus::Refunded, OrderStatus::Paid, OrderStatus::Completed] as $target) {
             try {
                 app(StoreContext::class)->runAs($this->store->id, fn () => app(ForceOrderStatus::class)($order, $target, 'because', null));
                 $this->fail("Forcing {$target->value} must be refused.");

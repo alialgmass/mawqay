@@ -4,14 +4,22 @@ namespace Modules\Ledger\Filament;
 
 use Filament\Contracts\Plugin;
 use Filament\Panel;
+use Modules\Ledger\Filament\Admin\Pages\Reports;
 use Modules\Ledger\Filament\Admin\Pages\VendorBalances;
 use Modules\Ledger\Filament\Admin\Resources\LedgerEntries\LedgerEntryResource;
+use Modules\Ledger\Filament\Admin\Resources\Payouts\PayoutResource;
+use Modules\Ledger\Filament\Admin\Widgets\OrdersByStatusChart;
+use Modules\Ledger\Filament\Admin\Widgets\PlatformStats;
 use Modules\Ledger\Filament\Admin\Widgets\ReconciliationWidget;
+use Modules\Ledger\Filament\Admin\Widgets\TopStoresChart;
+use Modules\Ledger\Filament\Vendor\Pages\Payouts;
 use Modules\Ledger\Filament\Vendor\Pages\Statement;
 use Modules\Ledger\Filament\Vendor\Widgets\BalanceStats;
+use Modules\Ledger\Filament\Vendor\Widgets\SalesChart;
+use Modules\Ledger\Filament\Vendor\Widgets\TopProductsChart;
 
 /**
- * Contributes the books to the Admin Panel, and each Vendor their own balances and statement.
+ * Contributes the books and payouts to the Admin Panel, and each Vendor their own balances, statement and payouts.
  */
 class LedgerPlugin implements Plugin
 {
@@ -29,12 +37,12 @@ class LedgerPlugin implements Plugin
     {
         match ($panel->getId()) {
             'admin' => $panel
-                ->resources([LedgerEntryResource::class])
-                ->pages([VendorBalances::class])
-                ->widgets([ReconciliationWidget::class]),
+                ->resources([LedgerEntryResource::class, PayoutResource::class])
+                ->pages([VendorBalances::class, Reports::class])
+                ->widgets([PlatformStats::class, OrdersByStatusChart::class, TopStoresChart::class, ReconciliationWidget::class]),
             'vendor' => $panel
-                ->pages([Statement::class])
-                ->widgets([BalanceStats::class]),
+                ->pages([Statement::class, Payouts::class])
+                ->widgets([BalanceStats::class, SalesChart::class, TopProductsChart::class]),
             default => null,
         };
     }

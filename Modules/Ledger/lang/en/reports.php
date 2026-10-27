@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'navigation' => 'Reports',
+    'title' => 'Revenue report',
+    'store' => 'Store',
+    'orders' => 'Orders',
+    'gmv' => 'Sales (GMV)',
+    'commission' => 'Commission',
+    'total' => 'Total',
+    'from' => 'From',
+    'until' => 'Until',
+    'export' => 'Export CSV',
+    'empty' => 'No data in this period.',
+    'gmv_30' => 'Sales (30 days)',
+    'commission_30' => 'Commission (30 days)',
+    'receipts_awaiting' => 'Receipts awaiting review',
+    'payouts_awaiting' => 'Payouts awaiting transfer',
+    'orders_by_status' => 'Orders by status',
+    'top_stores' => 'Top stores',
+    'sales_30' => 'Sales over the last 30 days',
+    'top_products' => 'Top products',
+    'units_sold' => 'Units sold',
+    'to_ship' => 'Orders to ship',
+];

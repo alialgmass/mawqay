@@ -101,7 +101,7 @@ class AdminOrderActions
             ->schema(fn (Order $record): array => [
                 Select::make('status')
                     ->label(__('sales::orders.status'))
-                    ->options(collect($record->status->allowedNext())->reject(fn (OrderStatus $status): bool => in_array($status, [OrderStatus::Paid, OrderStatus::Refunded], true))
+                    ->options(collect($record->status->allowedNext())->reject(fn (OrderStatus $status): bool => in_array($status, [OrderStatus::Paid, OrderStatus::Refunded, OrderStatus::Completed], true))
                         ->mapWithKeys(fn (OrderStatus $status): array => [$status->value => __('sales::orders.statuses.'.$status->value)])->all())
                     ->required(),
                 Textarea::make('reason')->label(__('sales::orders.force.reason'))->required()->maxLength(1000),

@@ -3,6 +3,7 @@
 namespace Modules\Ledger\Filament\Vendor\Pages;
 
 use BackedEnum;
+use Filament\Actions\Action;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\DatePicker;
 use Filament\Pages\Page;
@@ -15,6 +16,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Modules\Core\Money\Money;
 use Modules\Ledger\Models\LedgerEntry;
+use Modules\Ledger\Services\CsvExports;
 use Modules\Ledger\Support\EntryDescription;
 
 /**
@@ -38,6 +40,20 @@ class Statement extends Page implements HasTable
     public function getTitle(): string
     {
         return __('ledger::ledger.statement.title');
+    }
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            Action::make('export')
+                ->label(__('ledger::reports.export'))
+                ->icon(Heroicon::OutlinedArrowDownTray)
+                ->schema([
+                    DatePicker::make('from')->label(__('ledger::ledger.statement.from')),
+                    DatePicker::make('until')->label(__('ledger::ledger.statement.until')),
+                ])
+                ->action(fn (array $data) => app(CsvExports::class)->statement(Filament::getTenant()->getKey(), $data['from'] ?? null, $data['until'] ?? null)),
+        ];
     }
 
     public function table(Table $table): Table
