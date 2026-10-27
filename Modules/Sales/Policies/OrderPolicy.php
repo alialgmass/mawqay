@@ -36,6 +36,30 @@ class OrderPolicy
         return $this->owns($actor, $order) && $order->status === OrderStatus::PendingPayment;
     }
 
+    /**
+     * A Vendor Owner moves their own Store's Orders along; nobody else does.
+     */
+    public function fulfil(Authenticatable $actor, Order $order): bool
+    {
+        return $actor instanceof User && $actor->isVendorOwner() && $actor->store_id === $order->store_id;
+    }
+
+    /**
+     * The Customer confirms they received their own Order once it has shipped.
+     */
+    public function confirmReceipt(Authenticatable $actor, Order $order): bool
+    {
+        return $this->owns($actor, $order) && $order->status === OrderStatus::Shipped;
+    }
+
+    /**
+     * Only a Platform Admin refunds or forces a status.
+     */
+    public function refund(Authenticatable $actor, Order $order): bool
+    {
+        return $actor instanceof User && $actor->isPlatformAdmin();
+    }
+
     private function owns(Authenticatable $actor, Order $order): bool
     {
         return $actor instanceof Customer

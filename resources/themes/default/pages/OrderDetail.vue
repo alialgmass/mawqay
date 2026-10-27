@@ -19,6 +19,21 @@ type OrderData = {
     canCancel: boolean;
     cancelUrl: string;
     payment: PaymentData;
+    timeline: { status: string; label: string; at: string }[];
+    shipment: {
+        courier: string;
+        trackingNumber: string | null;
+        trackingUrl: string | null;
+        shippedAt: string;
+        deliveredAt: string | null;
+    } | null;
+    canConfirmReceipt: boolean;
+    confirmReceiptUrl: string;
+    storeContact: {
+        email: string | null;
+        phone: string | null;
+        whatsapp: string | null;
+    };
     address: Record<string, string | null>;
     items: {
         name: string;
@@ -34,6 +49,10 @@ type OrderData = {
 defineProps<{ seo: Seo; order: OrderData }>();
 
 function cancel(url: string) {
+    router.post(url);
+}
+
+function confirmReceipt(url: string) {
     router.post(url);
 }
 </script>
@@ -103,6 +122,78 @@ function cancel(url: string) {
                 {{ order.address.governorate_name }}، {{ order.address.city }}،
                 {{ order.address.address_line }}
             </p>
+
+            <section v-if="order.timeline.length" class="space-y-2">
+                <h3 class="font-semibold">مسار الطلب</h3>
+                <ol class="space-y-1 text-sm">
+                    <li
+                        v-for="(step, index) in order.timeline"
+                        :key="index"
+                        class="flex justify-between"
+                    >
+                        <span>{{ step.label }}</span>
+                        <time :datetime="step.at" dir="ltr">{{
+                            step.at.slice(0, 10)
+                        }}</time>
+                    </li>
+                </ol>
+            </section>
+
+            <section v-if="order.shipment" class="space-y-1 text-sm">
+                <h3 class="font-semibold">الشحنة</h3>
+                <p>شركة الشحن: {{ order.shipment.courier }}</p>
+                <p v-if="order.shipment.trackingNumber">
+                    رقم التتبع:
+                    <a
+                        v-if="order.shipment.trackingUrl"
+                        :href="order.shipment.trackingUrl"
+                        target="_blank"
+                        rel="noopener"
+                        dir="ltr"
+                        class="underline"
+                        >{{ order.shipment.trackingNumber }}</a
+                    >
+                    <span v-else dir="ltr">{{
+                        order.shipment.trackingNumber
+                    }}</span>
+                </p>
+            </section>
+
+            <button
+                v-if="order.canConfirmReceipt"
+                type="button"
+                class="min-h-11 px-5 text-sm font-medium"
+                :style="{
+                    background: 'var(--color-primary)',
+                    color: 'var(--color-on-primary)',
+                    borderRadius: 'var(--radius-md)',
+                }"
+                @click="confirmReceipt(order.confirmReceiptUrl)"
+            >
+                استلمت طلبي
+            </button>
+
+            <section
+                v-if="
+                    order.storeContact.email ||
+                    order.storeContact.phone ||
+                    order.storeContact.whatsapp
+                "
+                class="space-y-1 text-sm"
+            >
+                <h3 class="font-semibold">
+                    لأي مشكلة أو استرجاع تواصلي مع المتجر
+                </h3>
+                <p v-if="order.storeContact.phone" dir="ltr">
+                    {{ order.storeContact.phone }}
+                </p>
+                <p v-if="order.storeContact.whatsapp" dir="ltr">
+                    {{ order.storeContact.whatsapp }}
+                </p>
+                <p v-if="order.storeContact.email" dir="ltr">
+                    {{ order.storeContact.email }}
+                </p>
+            </section>
 
             <button
                 v-if="order.canCancel"

@@ -17,6 +17,7 @@ use Modules\Core\Money\Money;
 use Modules\Sales\Enums\OrderStatus;
 use Modules\Sales\Filament\Vendor\Resources\Orders\Pages\ListOrders;
 use Modules\Sales\Filament\Vendor\Resources\Orders\Pages\ViewOrder;
+use Modules\Sales\Filament\Vendor\Resources\Orders\Support\FulfilmentActions;
 use Modules\Sales\Models\Order;
 use Modules\Sales\Models\OrderItem;
 
@@ -107,7 +108,7 @@ class OrderResource extends Resource
                 TextColumn::make('total')->label(__('sales::orders.total'))->formatStateUsing(fn (int $state): string => Money::fromPiasters($state)->format()),
                 TextColumn::make('created_at')->label(__('sales::orders.placed_at'))->dateTime()->sortable(),
             ])
-            ->recordActions([ViewAction::make()])
+            ->recordActions([ViewAction::make(), ...FulfilmentActions::all()])
             ->defaultSort('created_at', 'desc');
     }
 

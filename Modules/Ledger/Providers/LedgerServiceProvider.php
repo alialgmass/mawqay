@@ -12,7 +12,9 @@ use Modules\Ledger\Console\ReleaseAvailableFunds;
 use Modules\Ledger\Filament\Vendor\Support\OrderNet;
 use Modules\Ledger\Listeners\PostApprovedPayment;
 use Modules\Ledger\Services\BalanceService;
+use Modules\Ledger\Services\OrderMoneyReverser;
 use Modules\Payments\Events\PaymentApproved;
+use Modules\Sales\Contracts\ReversesOrderMoney;
 use Modules\Sales\Filament\Vendor\Resources\Orders\Pages\ViewOrder;
 
 class LedgerServiceProvider extends ServiceProvider
@@ -20,6 +22,7 @@ class LedgerServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton(BalanceService::class);
+        $this->app->bind(ReversesOrderMoney::class, OrderMoneyReverser::class);
     }
 
     public function boot(): void

@@ -1,6 +1,6 @@
 # Theme contract
 
-How to build and register a Storefront Theme. Contract version: **1.3.0** (`Modules/Theming/Support/ThemeContract.php`). Only the Platform team changes the contract.
+How to build and register a Storefront Theme. Contract version: **1.4.0** (`Modules/Theming/Support/ThemeContract.php`). Only the Platform team changes the contract.
 
 ## What a Theme is
 
@@ -129,6 +129,7 @@ Adding to the Cart posts `variant_id` and `quantity` to `actions.cartItems`; cha
 ### Changelog
 
 - **1.3.0**: `OrderDetail` and `OrderConfirmation` gain `order.payment` (payment instructions, Receipt state and upload data). Additive only.
+- **1.4.0**: `OrderDetail` and `OrderConfirmation` gain `order.timeline` (status steps with date), `order.shipment` (courier, tracking number and link, or null), `order.canConfirmReceipt`, `order.confirmReceiptUrl` and `order.storeContact`. Additive only.
 - **1.2.0**: Cart, Checkout and Orders carry real data; added the `OrderDetail` and `OrderConfirmation` pages, the `checkout` and `orders` URLs, and the `cartItems`, `acceptPrices` and `checkout` actions. Additive only.
 - **1.1.0**: added the `Login`, `Register`, `ForgotPassword`, `ResetPassword` and `Addresses` pages, the `actions` and `status` shell data, more `urls`, and extra `Account` customer fields. Additive only: a 1.0.0 Theme keeps working and uses the default Theme for the new pages.
 

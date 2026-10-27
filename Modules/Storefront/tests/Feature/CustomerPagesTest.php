@@ -193,6 +193,6 @@ Set-Cookie: x=1'],
         $this->assertContains('Login', ThemeContract::OPTIONAL_PAGES);
         $this->assertNotContains('Login', ThemeContract::REQUIRED_PAGES);
         $this->assertContains('Account', ThemeContract::REQUIRED_PAGES);
-        $this->assertSame('1.3.0', ThemeContract::VERSION);
+        $this->assertSame('1.4.0', ThemeContract::VERSION);
     }
 }

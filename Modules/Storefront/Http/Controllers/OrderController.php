@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\ValidationException;
 use Modules\Auth\Models\Customer;
 use Modules\Sales\Actions\CancelOrder;
+use Modules\Sales\Contracts\Fulfilment;
 use Modules\Sales\Enums\OrderStatus;
 use Modules\Sales\Exceptions\InvalidOrderTransition;
 use Modules\Sales\Models\Order;
@@ -85,9 +86,30 @@ class OrderController
         return redirect('/'.Store::current()->slug."/orders/{$order->number}")->with('status', __('sales::checkout.cancelled'));
     }
 
+    public function received(string $store, string $number, Fulfilment $fulfilment): Response|RedirectResponse
+    {
+        $order = $this->find($number);
+
+        if ($order === null) {
+            return $this->renderer->notFound();
+        }
+
+        if (Gate::forUser($this->customer())->denies('confirmReceipt', $order)) {
+            throw ValidationException::withMessages(['order' => __('sales::orders.fulfilment.moved')]);
+        }
+
+        try {
+            $fulfilment->markDelivered($order, 'customer', $this->customer()->id);
+        } catch (InvalidOrderTransition) {
+            throw ValidationException::withMessages(['order' => __('sales::orders.fulfilment.moved')]);
+        }
+
+        return redirect('/'.Store::current()->slug."/orders/{$order->number}")->with('status', __('sales::orders.received'));
+    }
+
     private function find(string $number): ?Order
     {
-        return $this->ownOrders()->with('items')->where('number', $number)->first();
+        return $this->ownOrders()->with(['items', 'statusLogs'])->where('number', $number)->first();
     }
 
     /**

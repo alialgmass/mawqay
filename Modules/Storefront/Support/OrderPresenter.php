@@ -7,6 +7,8 @@ use Modules\Payments\Support\PaymentBlock;
 use Modules\Sales\Enums\OrderStatus;
 use Modules\Sales\Models\Order;
 use Modules\Sales\Models\OrderItem;
+use Modules\Sales\Models\OrderStatusLog;
+use Modules\Shipping\Models\Shipment;
 use Modules\Tenancy\Models\Store;
 
 /**
@@ -60,6 +62,35 @@ class OrderPresenter
             ])->values()->all(),
             'cancelUrl' => url("/{$slug}/orders/{$order->number}/cancel"),
             'payment' => $this->payments->for($order, url("/{$slug}/orders/{$order->number}/receipt")),
+            'timeline' => $order->statusLogs->map(fn (OrderStatusLog $log): array => [
+                'status' => $log->to_status->value,
+                'label' => __('sales::orders.statuses.'.$log->to_status->value),
+                'at' => $log->created_at->toIso8601String(),
+            ])->values()->all(),
+            'shipment' => $this->shipment($order),
+            'canConfirmReceipt' => $order->status === OrderStatus::Shipped,
+            'confirmReceiptUrl' => url("/{$slug}/orders/{$order->number}/received"),
+            'storeContact' => [
+                'email' => Store::current()->contact_email,
+                'phone' => Store::current()->contact_phone,
+                'whatsapp' => Store::current()->contact_whatsapp,
+            ],
+        ];
+    }
+
+    /**
+     * @return array{courier: string, trackingNumber: string|null, trackingUrl: string|null, shippedAt: string, deliveredAt: string|null}|null
+     */
+    private function shipment(Order $order): ?array
+    {
+        $shipment = Shipment::query()->where('order_id', $order->id)->first();
+
+        return $shipment === null ? null : [
+            'courier' => $shipment->courier_name,
+            'trackingNumber' => $shipment->tracking_number,
+            'trackingUrl' => $shipment->tracking_url,
+            'shippedAt' => $shipment->shipped_at->toIso8601String(),
+            'deliveredAt' => $shipment->delivered_at?->toIso8601String(),
         ];
     }
 }

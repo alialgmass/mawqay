@@ -8,5 +8,6 @@
     "Theming": true,
     "Sales": true,
     "Payments": true,
-    "Ledger": true
+    "Ledger": true,
+    "Shipping": true
 }

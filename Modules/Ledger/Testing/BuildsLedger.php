@@ -29,7 +29,7 @@ trait BuildsLedger
      * @param  list<array{0: int, 1: int, 2: string|int|float}>  $lines
      * @param  array<string, mixed>  $attributes
      */
-    protected function orderWith(Store $store, array $lines, int $shipping = 0, OrderStatus $status = OrderStatus::Paid, array $attributes = []): Order
+    protected function orderWith(Store $store, array $lines = [[100000, 1, 10]], int $shipping = 0, OrderStatus $status = OrderStatus::Paid, array $attributes = []): Order
     {
         $variant = $this->ledgerVariants[$store->id] ??= $this->variant($store);
         $subtotal = array_sum(array_map(fn (array $line): int => $line[0] * $line[1], $lines));

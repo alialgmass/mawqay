@@ -52,6 +52,16 @@ class StockService
         });
     }
 
+    /**
+     * Put goods that already left the shelf back, for a refunded Order whose items came back sellable.
+     */
+    public function restock(Variant $variant, int $quantity): void
+    {
+        $this->change($variant, $quantity, function (Variant $locked) use ($quantity): void {
+            $locked->stock += $quantity;
+        });
+    }
+
     private function change(Variant $variant, int $quantity, callable $apply): void
     {
         if ($quantity < 1) {

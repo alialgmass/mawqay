@@ -37,6 +37,10 @@ class OrderStateMachine
                 $current->cancelled_at = now();
             }
 
+            if ($to === OrderStatus::Delivered && $current->delivered_at === null) {
+                $current->delivered_at = now();
+            }
+
             if ($to === OrderStatus::Completed) {
                 $current->completed_at = now();
             }
