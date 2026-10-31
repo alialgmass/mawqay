@@ -37,6 +37,13 @@ class Payouts extends Page implements HasTable
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBanknotes;
 
+    protected static ?int $navigationSort = 2;
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('panel.nav.finance');
+    }
+
     protected static ?string $slug = 'payouts';
 
     protected string $view = 'ledger::vendor.payouts';

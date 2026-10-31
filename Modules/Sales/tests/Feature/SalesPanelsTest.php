@@ -236,6 +236,20 @@ class SalesPanelsTest extends TestCase
         Livewire::test(VendorViewOrder::class, ['record' => $paid->getKey()])->assertSee('Black Abaya')->assertSee($paid->number);
     }
 
+    public function test_the_vendor_never_sees_the_customers_contact_or_address_on_an_order(): void
+    {
+        $this->actAsOwnerOfA();
+
+        foreach (OrderStatus::visibleToVendor() as $status) {
+            $order = $this->orderFor($this->storeA, $status);
+
+            Livewire::test(VendorViewOrder::class, ['record' => $order->getKey()])
+                ->assertDontSee('+201012345678')
+                ->assertDontSee('1 Street')
+                ->assertDontSee('mona@example.com');
+        }
+    }
+
     public function test_the_vendor_has_no_way_to_change_orders(): void
     {
         $this->actAsOwnerOfA();

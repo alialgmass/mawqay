@@ -12,6 +12,8 @@ class VendorDashboard extends Dashboard
 {
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedHome;
 
+    protected static ?int $navigationSort = -1;
+
     protected string $view = 'backoffice::vendor.dashboard';
 
     protected function getViewData(): array

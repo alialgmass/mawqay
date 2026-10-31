@@ -39,6 +39,13 @@ class StoreIdentity extends Page
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedPaintBrush;
 
+    protected static ?int $navigationSort = 2;
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('panel.nav.store');
+    }
+
     protected static ?string $slug = 'store-identity';
 
     /**

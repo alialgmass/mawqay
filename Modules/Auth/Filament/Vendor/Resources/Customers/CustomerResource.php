@@ -17,13 +17,21 @@ use Modules\Auth\Models\Customer;
 
 /**
  * A Vendor Owner's read-only list of their own Store's Customers: name,
- * phone, city and registration date only. No email, no export.
+ * city and registration date only. No email, no phone, no export: contact
+ * details are shared per Order, and only while it needs fulfilling.
  */
 class CustomerResource extends Resource
 {
     protected static ?string $model = Customer::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedUsers;
+
+    protected static ?int $navigationSort = 2;
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('panel.nav.sales');
+    }
 
     public static function getModelLabel(): string
     {
@@ -62,7 +70,6 @@ class CustomerResource extends Resource
     {
         return $schema->components([
             TextEntry::make('name')->label(__('auth::admin.name')),
-            TextEntry::make('phone')->label(__('auth::admin.phone')),
             TextEntry::make('defaultAddress.city')->label(__('auth::admin.city')),
             TextEntry::make('created_at')->label(__('auth::admin.registered'))->dateTime(),
         ]);
@@ -73,7 +80,6 @@ class CustomerResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name')->label(__('auth::admin.name'))->searchable(),
-                TextColumn::make('phone')->label(__('auth::admin.phone'))->searchable(),
                 TextColumn::make('defaultAddress.city')->label(__('auth::admin.city')),
                 TextColumn::make('created_at')->label(__('auth::admin.registered'))->dateTime()->sortable(),
             ])

@@ -43,6 +43,13 @@ class ProductResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedShoppingBag;
 
+    protected static ?int $navigationSort = 1;
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('panel.nav.catalog');
+    }
+
     public static function getModelLabel(): string
     {
         return __('catalog::products.label');

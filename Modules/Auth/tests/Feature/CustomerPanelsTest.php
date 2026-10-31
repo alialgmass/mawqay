@@ -157,8 +157,8 @@ class CustomerPanelsTest extends TestCase
             ->assertCanNotSeeTableRecords([$this->layla])
             ->assertTableColumnStateSet('defaultAddress.city', 'Dokki', $this->mona)
             ->assertTableColumnExists('name')
-            ->assertTableColumnExists('phone')
             ->assertTableColumnExists('created_at')
+            ->assertTableColumnDoesNotExist('phone')
             ->assertTableColumnDoesNotExist('email');
     }
 
@@ -168,6 +168,7 @@ class CustomerPanelsTest extends TestCase
 
         Livewire::test(VendorViewCustomer::class, ['record' => $this->mona->getKey()])
             ->assertSee('Mona')
+            ->assertDontSee('01012345678')
             ->assertDontSee('mona@example.com');
 
         $this->assertFalse(\Modules\Auth\Filament\Vendor\Resources\Customers\CustomerResource::canCreate());

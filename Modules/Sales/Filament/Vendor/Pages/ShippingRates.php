@@ -29,6 +29,15 @@ class ShippingRates extends Page
 {
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedTruck;
 
+    protected static bool $shouldRegisterNavigation = false;
+
+    protected static ?int $navigationSort = 3;
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('panel.nav.store');
+    }
+
     protected static ?string $slug = 'shipping-rates';
 
     /**

@@ -6,6 +6,7 @@ use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\NavigationGroup;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
@@ -39,6 +40,12 @@ class VendorPanelProvider extends PanelProvider
             ->login()
             ->tenant(Store::class, slugAttribute: 'slug')
             ->tenantMenu(false)
+            ->navigationGroups([
+                NavigationGroup::make(fn (): string => __('panel.nav.sales')),
+                NavigationGroup::make(fn (): string => __('panel.nav.catalog')),
+                NavigationGroup::make(fn (): string => __('panel.nav.store')),
+                NavigationGroup::make(fn (): string => __('panel.nav.finance')),
+            ])
             ->plugin(CatalogPlugin::make())
             ->plugin(ThemingPlugin::make())
             ->plugin(AuthPlugin::make())

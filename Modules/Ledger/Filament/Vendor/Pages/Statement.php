@@ -28,6 +28,13 @@ class Statement extends Page implements HasTable
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentText;
 
+    protected static ?int $navigationSort = 1;
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('panel.nav.finance');
+    }
+
     protected static ?string $slug = 'statement';
 
     protected string $view = 'ledger::vendor.statement';

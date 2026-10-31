@@ -31,6 +31,13 @@ class CategoryResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleGroup;
 
+    protected static ?int $navigationSort = 2;
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('panel.nav.catalog');
+    }
+
     public static function getModelLabel(): string
     {
         return __('catalog::categories.label');

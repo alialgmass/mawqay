@@ -30,6 +30,13 @@ class CustomerFeedback extends Page implements HasTable
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedStar;
 
+    protected static ?int $navigationSort = 3;
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('panel.nav.sales');
+    }
+
     protected static ?string $slug = 'customer-feedback';
 
     protected string $view = 'feedback::vendor.feedback';

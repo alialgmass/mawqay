@@ -32,6 +32,13 @@ class Appearance extends Page
 {
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedSwatch;
 
+    protected static ?int $navigationSort = 1;
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('panel.nav.store');
+    }
+
     protected static ?string $slug = 'appearance';
 
     protected string $view = 'theming::vendor.appearance';
