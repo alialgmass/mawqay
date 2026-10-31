@@ -7,6 +7,7 @@ use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\NavigationGroup;
 use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -45,6 +46,13 @@ class AdminPanelProvider extends PanelProvider
                 [AppAuthentication::make()->recoverable()],
                 isRequired: fn (): bool => (bool) config('security.admin_mfa_required'),
             )
+            ->navigationGroups([
+                NavigationGroup::make(fn (): string => __('panel.admin_nav.sales')),
+                NavigationGroup::make(fn (): string => __('panel.admin_nav.stores')),
+                NavigationGroup::make(fn (): string => __('panel.admin_nav.finance')),
+                NavigationGroup::make(fn (): string => __('panel.admin_nav.content')),
+                NavigationGroup::make(fn (): string => __('panel.admin_nav.system')),
+            ])
             ->colors([
                 'primary' => Color::Teal,
                 'gray' => Color::Slate,

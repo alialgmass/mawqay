@@ -33,6 +33,13 @@ class PaymentResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBanknotes;
 
+    protected static ?int $navigationSort = 2;
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('panel.admin_nav.sales');
+    }
+
     public static function getModelLabel(): string
     {
         return __('payments::review.payment.label');

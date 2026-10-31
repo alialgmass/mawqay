@@ -29,6 +29,13 @@ class AuditEntryResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedShieldCheck;
 
+    protected static ?int $navigationSort = 3;
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('panel.admin_nav.system');
+    }
+
     public static function getModelLabel(): string
     {
         return __('backoffice::panel.audit.label');

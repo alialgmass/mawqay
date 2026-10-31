@@ -18,6 +18,13 @@ class Reports extends Page
 {
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedChartBar;
 
+    protected static ?int $navigationSort = 4;
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('panel.admin_nav.finance');
+    }
+
     protected static ?string $slug = 'reports';
 
     protected string $view = 'ledger::admin.reports';

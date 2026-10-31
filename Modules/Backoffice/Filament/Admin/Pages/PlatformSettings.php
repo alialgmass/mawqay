@@ -20,6 +20,13 @@ class PlatformSettings extends Page
 {
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCog6Tooth;
 
+    protected static ?int $navigationSort = 1;
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('panel.admin_nav.system');
+    }
+
     protected static ?string $slug = 'platform-settings';
 
     /**

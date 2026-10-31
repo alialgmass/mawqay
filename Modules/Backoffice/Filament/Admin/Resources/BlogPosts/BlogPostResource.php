@@ -32,6 +32,13 @@ class BlogPostResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedNewspaper;
 
+    protected static ?int $navigationSort = 1;
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('panel.admin_nav.content');
+    }
+
     public static function getModelLabel(): string
     {
         return __('backoffice::blog.label');

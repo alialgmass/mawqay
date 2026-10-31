@@ -14,6 +14,13 @@ class SystemHealth extends Page
 {
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedHeart;
 
+    protected static ?int $navigationSort = 2;
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('panel.admin_nav.system');
+    }
+
     protected static ?string $slug = 'system-health';
 
     protected string $view = 'backoffice::admin.system-health';

@@ -9,4 +9,11 @@ return [
         'store' => 'Store',
         'finance' => 'Finance',
     ],
+    'admin_nav' => [
+        'sales' => 'Sales',
+        'stores' => 'Stores & catalog',
+        'finance' => 'Finance',
+        'content' => 'Content',
+        'system' => 'System',
+    ],
 ];

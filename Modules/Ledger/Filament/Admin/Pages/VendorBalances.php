@@ -26,6 +26,13 @@ class VendorBalances extends Page implements HasTable
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedScale;
 
+    protected static ?int $navigationSort = 2;
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('panel.admin_nav.finance');
+    }
+
     protected static ?string $slug = 'vendor-balances';
 
     protected string $view = 'ledger::admin.vendor-balances';
