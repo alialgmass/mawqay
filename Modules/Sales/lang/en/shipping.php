@@ -3,6 +3,7 @@
 return [
     'navigation' => 'Shipping fees',
     'title' => 'Shipping fees',
+    'platform_hint' => 'The Platform delivers all orders, so these fees apply to every store.',
     'flat_fee' => 'Flat shipping fee (EGP)',
     'flat_hint' => 'Applies to every governorate you have not given its own fee.',
     'by_governorate' => 'Fees by governorate',

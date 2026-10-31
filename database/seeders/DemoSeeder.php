@@ -6,6 +6,8 @@ use App\Models\User;
 use Illuminate\Database\Seeder;
 use Modules\Auth\Enums\UserRole;
 use Modules\Backoffice\Models\BlogPost;
+use Modules\Sales\Enums\ShippingRateKind;
+use Modules\Sales\Models\PlatformShippingRate;
 use Modules\Tenancy\Enums\StoreStatus;
 use Modules\Tenancy\Models\Store;
 
@@ -34,6 +36,12 @@ class DemoSeeder extends Seeder
         User::query()->updateOrCreate(
             ['email' => 'owner@mawqaay.test'],
             ['name' => 'Demo Vendor Owner', 'password' => 'password', 'role' => UserRole::VendorOwner, 'store_id' => $store->id],
+        );
+
+        // The Platform delivers every order; give the demo a flat fee so checkout works out of the box.
+        PlatformShippingRate::query()->updateOrCreate(
+            ['kind' => ShippingRateKind::Flat, 'governorate' => null],
+            ['fee' => 5000],
         );
 
         $this->seedBlogPosts();

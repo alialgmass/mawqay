@@ -6,7 +6,7 @@ use Filament\Facades\Filament;
 use Filament\Widgets\Widget;
 use Modules\Catalog\Models\Product;
 use Modules\Ledger\Models\PayoutDetail;
-use Modules\Sales\Models\ShippingRate;
+use Modules\Sales\Services\ShippingFeeResolver;
 use Modules\Tenancy\Models\Store;
 
 /**
@@ -32,7 +32,7 @@ class OnboardingChecklist extends Widget
             __('backoffice::panel.checklist.logo') => $store->logo_path !== null,
             __('backoffice::panel.checklist.product') => Product::query()->published()->exists(),
             __('backoffice::panel.checklist.theme') => $store->theme_id !== null,
-            __('backoffice::panel.checklist.shipping') => ShippingRate::query()->exists(),
+            __('backoffice::panel.checklist.shipping') => app(ShippingFeeResolver::class)->hasAnyRate(),
             __('backoffice::panel.checklist.payout') => PayoutDetail::query()->exists(),
         ];
     }

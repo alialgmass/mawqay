@@ -4,6 +4,7 @@ namespace Modules\Sales\Filament;
 
 use Filament\Contracts\Plugin;
 use Filament\Panel;
+use Modules\Sales\Filament\Admin\Pages\PlatformShippingRates;
 use Modules\Sales\Filament\Admin\Resources\Orders\OrderResource as AdminOrderResource;
 use Modules\Sales\Filament\Vendor\Pages\ShippingRates;
 use Modules\Sales\Filament\Vendor\Resources\Orders\OrderResource as VendorOrderResource;
@@ -26,7 +27,7 @@ class SalesPlugin implements Plugin
     public function register(Panel $panel): void
     {
         match ($panel->getId()) {
-            'admin' => $panel->resources([AdminOrderResource::class]),
+            'admin' => $panel->resources([AdminOrderResource::class])->pages([PlatformShippingRates::class]),
             'vendor' => $panel->resources([VendorOrderResource::class])->pages([ShippingRates::class]),
             default => null,
         };
