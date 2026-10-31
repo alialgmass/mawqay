@@ -22,6 +22,7 @@ use Modules\Auth\Filament\AuthPlugin;
 use Modules\Backoffice\Filament\Admin\Pages\PlatformSettings;
 use Modules\Backoffice\Filament\Admin\Pages\SystemHealth;
 use Modules\Backoffice\Filament\Admin\Resources\AuditEntries\AuditEntryResource;
+use Modules\Backoffice\Filament\BlogPlugin;
 use Modules\Backoffice\Http\Middleware\UseArabicLocale;
 use Modules\Catalog\Filament\CatalogPlugin;
 use Modules\Feedback\Filament\FeedbackPlugin;
@@ -63,6 +64,7 @@ class AdminPanelProvider extends PanelProvider
             ->plugin(PaymentsPlugin::make())
             ->plugin(LedgerPlugin::make())
             ->plugin(FeedbackPlugin::make())
+            ->plugin(BlogPlugin::make())
             ->resources([AuditEntryResource::class])
             ->pages([
                 Dashboard::class,

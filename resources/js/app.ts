@@ -5,6 +5,7 @@ import { initializeDirection } from '@/composables/useDirection';
 import { createAppI18n } from '@/i18n';
 import AppLayout from '@/layouts/AppLayout.vue';
 import AuthLayout from '@/layouts/AuthLayout.vue';
+import LandingLayout from '@/layouts/LandingLayout.vue';
 import { initializeFlashToast } from '@/lib/flashToast';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
@@ -82,8 +83,10 @@ createInertiaApp({
     layout: (name) => {
         switch (true) {
             case name === 'Welcome':
-                return null;
+                return LandingLayout;
             case name.startsWith('storefront/'):
+                return null;
+            case name.startsWith('blog/'):
                 return null;
             case name.startsWith('Tenancy/'):
                 return AuthLayout;

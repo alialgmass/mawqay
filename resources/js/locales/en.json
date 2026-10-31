@@ -70,5 +70,235 @@
     "searchFilter": {
         "placeholder": "Search by name or code...",
         "reset": "Reset filters"
+    },
+    "landing": {
+        "brand": "Mawqaay",
+        "tagline": "The modest-fashion commerce platform",
+        "nav": {
+            "home": "Home",
+            "services": "Services",
+            "how": "How it works",
+            "about": "About us",
+            "blog": "Blog",
+            "contact": "Contact",
+            "faq": "FAQ",
+            "money": "Payments"
+        },
+        "cta": {
+            "start": "Start your store",
+            "login": "Log in",
+            "adminPanel": "Admin panel",
+            "vendorPanel": "Vendor panel",
+            "demo": "Visit the demo store"
+        },
+        "hero": {
+            "badge": "Made with love for modest fashion 💜",
+            "title": "Open your store in a day — we’ll handle the rest",
+            "subtitle": "A bilingual storefront with your name on the address, bank-transfer payments we check for you, stock reservations and payouts — no plugins, no code, one friendly dashboard.",
+            "ctaPrimary": "Let’s open my store",
+            "ctaSecondary": "How does it work?",
+            "note": "Arabic-first · True RTL · No credit card",
+            "mock": {
+                "store": "Nour Boutique",
+                "tagline": "Abayas & scarves",
+                "cart": "Cart 2",
+                "currency": "EGP",
+                "checkout": "Checkout",
+                "paid": "Payment confirmed",
+                "products": {
+                    "abaya": "Linen abaya",
+                    "scarf": "Silk scarf",
+                    "set": "Two-piece set",
+                    "dress": "Maxi dress"
+                }
+            }
+        },
+        "stats": {
+            "stores": "Active stores",
+            "products": "Products listed",
+            "lead": "We’re growing every day and merchants are already selling. Come join them!"
+        },
+        "services": {
+            "title": "Everything a clever merchant needs",
+            "subtitle": "No plugin jungle — just the essentials, done right.",
+            "items": {
+                "storefront": {
+                    "title": "Bilingual storefront",
+                    "description": "A beautiful store at your own address with Arabic-first design, RTL layouts and full LTR support."
+                },
+                "themes": {
+                    "title": "Curated themes",
+                    "description": "Pick a theme, set your colors and fonts from the approved Arabic set, and preview it live before publishing."
+                },
+                "payments": {
+                    "title": "Manual payments, reviewed",
+                    "description": "Your customers pay by bank transfer; every receipt is matched, quoted and checked before stock is finalized."
+                },
+                "shipping": {
+                    "title": "Delivery that keeps promises",
+                    "description": "Shipping rates per governorate, dispatch workflows, packing slips and refunds inside a fair window."
+                },
+                "ledger": {
+                    "title": "A ledger that pays you",
+                    "description": "Commission, balances and payout statements computed for you — request a payout when you need it."
+                },
+                "feedback": {
+                    "title": "Feedback and notifications",
+                    "description": "After-delivery satisfaction surveys and notifications that keep you posted on what matters."
+                }
+            }
+        },
+        "how": {
+            "title": "3 easy steps to your first sale",
+            "items": {
+                "one": {
+                    "title": "Claim your invitation",
+                    "description": "Leave your store details below; we email an invitation link to finish setting up your account."
+                },
+                "two": {
+                    "title": "Build your storefront",
+                    "description": "Add products, categories and a theme in Arabic and English — publish when you are ready."
+                },
+                "three": {
+                    "title": "Sell and get paid",
+                    "description": "Orders arrive, customers pay by transfer, and your earnings land on your payout statement."
+                }
+            }
+        },
+        "about": {
+            "title": "About us",
+            "lead": "Mawqaay is built by a small Gulf team for modest-fashion merchants.",
+            "body": [
+                "We believe modest fashion deserves commerce software that speaks the culture: Arabic-first words, right-to-left layouts, and the rhythm of Ramadan and Eid built into a store's calendar.",
+                "Every feature — from the reservation timer to the payout ledger — exists because a merchant asked for it. Fewer options, more taste: what ships on the platform is what we would run on our own stores."
+            ],
+            "points": {
+                "craft": {
+                    "title": "Craft over noise",
+                    "description": "Curated themes and an approved Arabic font set — never a maze of settings."
+                },
+                "values": {
+                    "title": "Values, not vanity metrics",
+                    "description": "Modesty is a feature here, not a filter bolted onto someone else's template."
+                },
+                "support": {
+                    "title": "Real people, real hours",
+                    "description": "Support in Arabic and English, by people who use the platform themselves."
+                }
+            }
+        },
+        "blog": {
+            "title": "From the blog",
+            "subtitle": "Product news, merchant stories and practical guides.",
+            "readMore": "Read more",
+            "all": "All posts",
+            "empty": "No posts yet — stories are on the way.",
+            "back": "Back to all posts",
+            "by": "By :author",
+            "related": "Related posts",
+            "categories": {
+                "product": "Product updates",
+                "merchant_story": "Merchant stories",
+                "fashion": "Fashion",
+                "guide": "Guides"
+            }
+        },
+        "testimonials": {
+            "title": "Merchants talk about their stores",
+            "items": {
+                "one": {
+                    "quote": "The reservation timer alone paid for itself the first week. No more ghosting carts.",
+                    "name": "Nora",
+                    "meta": "Abayas and scarves, Jeddah"
+                },
+                "two": {
+                    "quote": "Arabic-first means my sisters finally see their season, not a translated template.",
+                    "name": "Umm Salwa",
+                    "meta": "Modestwear, Kuwait City"
+                },
+                "three": {
+                    "quote": "Payout statements used to be my Sunday-night chore. Now they are one button.",
+                    "name": "Ahmad",
+                    "meta": "Thobes boutique, Riyadh"
+                }
+            }
+        },
+        "faq": {
+            "title": "Things you might be wondering",
+            "items": [
+                {
+                    "q": "Is the storefront just templates?",
+                    "a": "No — it is a modern, fast front-end with live cart logic, stock reservations and mobile-first RTL layouts."
+                },
+                {
+                    "q": "How do payments work?",
+                    "a": "Customers pay by bank transfer. Every receipt is checked against the exact amount and reference before the sale is final. The stock reservation timer pauses during review, so nothing expires out from under a paid order."
+                },
+                {
+                    "q": "What does the platform cost?",
+                    "a": "A small commission per completed order, set per store by the Platform Admin. There is no monthly fee while Mawqaay is in beta."
+                },
+                {
+                    "q": "Can I bring my existing catalogue?",
+                    "a": "Yes — images, descriptions, sizes and colors work natively in Arabic or English, and shipping fees are set per governorate."
+                },
+                {
+                    "q": "Who owns my customer data?",
+                    "a": "You do. Customer lists, orders and receipts belong to your store; the platform never sells or shares them."
+                }
+            ]
+        },
+        "contact": {
+            "title": "Contact",
+            "subtitle": "Questions before you commit? We answer quickly.",
+            "emailLabel": "Email us",
+            "email": "hello@mawqaay.com",
+            "hours": "Support hours: Sunday–Thursday, 9:00–18:00 (GMT+3)",
+            "response": "A real person usually answers within one working day."
+        },
+        "register": {
+            "title": "Start your story today",
+            "subtitle": "Tell us about your store and we’ll email you an invitation to finish your account. Reviews are quick, promise.",
+            "storeName": "Store name",
+            "storeSlug": "Store address",
+            "slugHint": "This becomes yourname in your store's address.",
+            "ownerName": "Your name",
+            "email": "Email",
+            "phone": "Phone (optional)",
+            "submit": "Send my invitation",
+            "submitting": "Sending…",
+            "privacy": "We use your details only to set up your store and contact you about it.",
+            "successTitle": "Check your inbox 💌"
+        },
+        "footer": {
+            "product": "Product",
+            "company": "Company",
+            "blog": "Blog",
+            "demo": "Demo store",
+            "rights": "All rights reserved.",
+            "madeFor": "Made for modest fashion."
+        },
+        "a11y": {
+            "openMenu": "Open menu",
+            "closeMenu": "Close menu"
+        },
+        "money": {
+            "title": "So, how does your money travel?",
+            "subtitle": "Clear as day, and always on the record.",
+            "items": {
+                "pay": {
+                    "title": "Customers pay the Platform",
+                    "description": "Every bank transfer is checked against the exact amount and reference before an order is confirmed."
+                },
+                "commission": {
+                    "title": "The Platform keeps a commission",
+                    "description": "A clear percentage per order, recorded in your ledger. No hidden fees."
+                },
+                "payout": {
+                    "title": "You receive your payout",
+                    "description": "The remainder is paid to you on a payout statement you can request once you reach the minimum."
+                }
+            }
+        }
     }
 }

@@ -56,7 +56,7 @@ function getCookieLocale(): Locale | null {
 }
 
 export function resolveInitialLocale(): Locale {
-    return getStoredLocale() ?? getCookieLocale() ?? 'en';
+    return getStoredLocale() ?? getCookieLocale() ?? 'ar';
 }
 
 /**

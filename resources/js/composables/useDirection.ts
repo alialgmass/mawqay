@@ -67,7 +67,7 @@ export function initializeDirection(): void {
     }
 }
 
-const locale = ref<Locale>('en');
+const locale = ref<Locale>('ar');
 
 export function useDirection(): UseDirectionReturn {
     const page = usePage();
@@ -78,7 +78,7 @@ export function useDirection(): UseDirectionReturn {
         if (savedLocale) {
             locale.value = savedLocale;
         } else {
-            locale.value = (page.props.locale as Locale) || 'en';
+            locale.value = (page.props.locale as Locale) || 'ar';
         }
 
         updateDirection(locale.value);

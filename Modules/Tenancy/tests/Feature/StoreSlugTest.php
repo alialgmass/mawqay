@@ -83,7 +83,7 @@ class StoreSlugTest extends TestCase
 
     public function test_the_reserved_list_covers_the_platform_routes(): void
     {
-        $expected = ['admin', 'vendor', 'api', 'login', 'register', 'logout', 'storage', 'assets', 'build', 'up', 'livewire', 'filament', 'invitations', 'theme-previews', 'payment-receipts', 'health'];
+        $expected = ['admin', 'vendor', 'api', 'login', 'register', 'logout', 'storage', 'assets', 'build', 'up', 'livewire', 'filament', 'invitations', 'theme-previews', 'payment-receipts', 'health', 'about', 'blog', 'sitemap'];
 
         $this->assertEqualsCanonicalizing($expected, config('tenancy.reserved_slugs'));
     }
@@ -94,6 +94,11 @@ class StoreSlugTest extends TestCase
         Store::query()->forceCreate(['slug' => 'build', 'name' => 'Sneaky', 'status' => 'active']);
 
         $this->get('/build')->assertNotFound();
+    }
+
+    public function test_a_file_url_with_an_extension_is_never_a_store(): void
+    {
+        $this->get('/sitemap.xml')->assertOk()->assertHeader('Content-Type', 'application/xml');
     }
 
     public function test_the_admin_address_is_never_treated_as_a_store(): void

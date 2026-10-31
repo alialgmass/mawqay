@@ -22,5 +22,8 @@ return [
         'invitations',
         'theme-previews',
         'payment-receipts',
+        'about',
+        'blog',
+        'sitemap',
     ],
 ];

@@ -36,8 +36,16 @@
 
         @fonts
 
+        @php
+            $pageComponent = $page['component'];
+
+            $pagePath = str_starts_with($pageComponent, 'storefront/')
+                ? sprintf('resources/themes/%s/pages/%s.vue', explode('/', $pageComponent)[1], explode('/', $pageComponent)[2])
+                : sprintf('resources/js/pages/%s.vue', $pageComponent);
+        @endphp
+
         @routes
-        @vite(['resources/css/app.css', 'resources/js/app.ts', "resources/js/pages/{$page['component']}.vue"])
+        @vite(['resources/css/app.css', 'resources/js/app.ts', $pagePath])
         <x-inertia::head>
             <title>{{ config('app.name', 'Laravel') }}</title>
         </x-inertia::head>
