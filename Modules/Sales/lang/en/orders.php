@@ -42,6 +42,7 @@ return [
     'payment_methods' => [
         'vodafone_cash' => 'Vodafone Cash',
         'instapay' => 'InstaPay',
+        'fawaterk' => 'Pay online (card / wallet)',
     ],
     'item' => [
         'product' => 'Product',

@@ -28,10 +28,11 @@ class PaymentBlock
      *     rejectionReason: string|null,
      *     receiptUrl: string|null,
      *     maxKilobytes: int,
-     *     acceptedTypes: list<string>
+     *     acceptedTypes: list<string>,
+     *     online: array{available: bool, url: string|null}
      * }
      */
-    public function for(Order $order, string $submitUrl): array
+    public function for(Order $order, string $submitUrl, ?string $onlineUrl = null): array
     {
         $payments = Payment::query()->where('order_id', $order->id)->orderBy('attempt')->get();
         $latest = $payments->last();
@@ -39,7 +40,7 @@ class PaymentBlock
         $left = max(0, $max - $payments->count());
         $open = $order->status === OrderStatus::PendingPayment;
         $expired = $order->expires_at !== null && $order->expires_at->lte(now());
-        $canSubmit = $open && ! $expired && $left > 0;
+        $canSubmit = $open && ! $expired && $left > 0 && $order->payment_method !== 'fawaterk';
 
         return [
             'state' => $this->state($order, $latest, $left),
@@ -56,6 +57,10 @@ class PaymentBlock
             'submitUrl' => $submitUrl,
             'maxKilobytes' => (int) config('payments.max_receipt_kilobytes'),
             'acceptedTypes' => ['image/jpeg', 'image/png', 'image/webp', 'application/pdf'],
+            'online' => [
+                'available' => $order->payment_method === 'fawaterk' && $open && ! $expired && app(FawaterkClient::class)->isConfigured(),
+                'url' => $onlineUrl,
+            ],
         ];
     }
 
@@ -63,6 +68,7 @@ class PaymentBlock
     {
         return match (true) {
             $order->status === OrderStatus::PaymentReview => 'under_review',
+            $order->status === OrderStatus::PendingPayment && $order->payment_method === 'fawaterk' => 'awaiting_online',
             $order->status === OrderStatus::PendingPayment && $latest === null => 'awaiting_receipt',
             $order->status === OrderStatus::PendingPayment => $attemptsLeft > 0 ? 'rejected' : 'exhausted',
             in_array($order->status, [OrderStatus::Cancelled], true) => 'closed',

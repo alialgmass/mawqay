@@ -20,7 +20,7 @@ use Modules\Tenancy\Models\Store;
 #[Fillable([
     'store_id', 'order_id', 'method', 'amount', 'status', 'attempt', 'receipt_path', 'receipt_mime',
     'transfer_reference', 'sender_phone', 'method_snapshot', 'reviewed_by', 'reviewed_at',
-    'rejection_reason', 'duplicate_of_id',
+    'rejection_reason', 'duplicate_of_id', 'gateway', 'gateway_reference', 'gateway_transaction_id', 'gateway_payload',
 ])]
 class Payment extends Model
 {
@@ -65,6 +65,7 @@ class Payment extends Model
             'amount' => 'integer',
             'attempt' => 'integer',
             'method_snapshot' => 'array',
+            'gateway_payload' => 'array',
             'reviewed_at' => 'datetime',
         ];
     }

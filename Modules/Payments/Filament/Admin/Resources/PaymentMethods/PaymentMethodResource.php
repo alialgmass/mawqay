@@ -93,6 +93,7 @@ class PaymentMethodResource extends Resource
     private static function typeOptions(): array
     {
         return collect(array_keys(config('sales.payment_methods')))
+            ->reject(fn (string $type): bool => $type === 'fawaterk')
             ->mapWithKeys(fn (string $type): array => [$type => __('sales::orders.payment_methods.'.$type)])
             ->all();
     }

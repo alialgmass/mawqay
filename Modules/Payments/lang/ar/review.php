@@ -28,6 +28,7 @@ return [
         'history' => 'سجل المدفوعات',
         'none' => 'لا توجد مدفوعات بعد.',
         'statuses' => [
+            'awaiting_gateway' => 'بانتظار الدفع أونلاين',
             'pending_review' => 'بانتظار المراجعة',
             'approved' => 'مقبول',
             'rejected' => 'مرفوض',

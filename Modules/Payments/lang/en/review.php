@@ -28,6 +28,7 @@ return [
         'history' => 'Payment history',
         'none' => 'No payments yet.',
         'statuses' => [
+            'awaiting_gateway' => 'Awaiting online payment',
             'pending_review' => 'Waiting for review',
             'approved' => 'Approved',
             'rejected' => 'Rejected',

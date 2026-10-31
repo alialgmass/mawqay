@@ -68,7 +68,7 @@ class OrderPresenter
                 'lineTotal' => $item->lineTotal()->format(),
             ])->values()->all(),
             'cancelUrl' => url("/{$slug}/orders/{$order->number}/cancel"),
-            'payment' => $this->payments->for($order, url("/{$slug}/orders/{$order->number}/receipt")),
+            'payment' => $this->payments->for($order, url("/{$slug}/orders/{$order->number}/receipt"), url("/{$slug}/orders/{$order->number}/pay-online")),
             'timeline' => $order->statusLogs->map(fn (OrderStatusLog $log): array => [
                 'status' => $log->to_status->value,
                 'label' => __('sales::orders.statuses.'.$log->to_status->value),

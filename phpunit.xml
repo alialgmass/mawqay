@@ -42,6 +42,9 @@
         <env name="PULSE_ENABLED" value="false"/>
         <env name="TELESCOPE_ENABLED" value="false"/>
         <env name="ADMIN_MFA_REQUIRED" value="false"/>
+        <env name="FAWATERK_CLIENT_ID" value=""/>
+        <env name="FAWATERK_CLIENT_SECRET" value=""/>
+        <env name="FAWATERK_HASH_KEY" value=""/>
         <env name="NIGHTWATCH_ENABLED" value="false"/>
     </php>
 </phpunit>

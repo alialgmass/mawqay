@@ -42,6 +42,7 @@ return [
     'payment_methods' => [
         'vodafone_cash' => 'فودافون كاش',
         'instapay' => 'إنستاباي',
+        'fawaterk' => 'دفع أونلاين (كارت / محفظة)',
     ],
     'item' => [
         'product' => 'المنتج',

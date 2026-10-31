@@ -13,6 +13,8 @@ return [
     'payment_methods' => [
         'vodafone_cash' => 'Vodafone Cash',
         'instapay' => 'InstaPay',
+        // Online card/wallet checkout; offered only once its credentials are set.
+        ...(env('FAWATERK_CLIENT_ID') ? ['fawaterk' => 'Fawaterk'] : []),
     ],
 
     'currency' => 'EGP',

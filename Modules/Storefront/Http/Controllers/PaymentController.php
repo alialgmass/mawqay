@@ -6,8 +6,11 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use Inertia\Inertia;
 use Modules\Auth\Models\Customer;
+use Modules\Payments\Actions\StartOnlinePayment;
 use Modules\Payments\Contracts\PaymentGateway;
+use Modules\Payments\Exceptions\OnlinePaymentFailed;
 use Modules\Payments\Exceptions\ReceiptCannotBeSubmitted;
 use Modules\Sales\Models\Order;
 use Modules\Storefront\Support\ThemeRenderer;
@@ -44,5 +47,27 @@ class PaymentController
         }
 
         return redirect('/'.Store::current()->slug."/orders/{$order->number}")->with('status', __('payments::receipt.submitted'));
+    }
+
+    /**
+     * Sends the Customer to Fawaterk's hosted checkout for their own unpaid Order.
+     */
+    public function online(string $store, string $number, StartOnlinePayment $start): Response|RedirectResponse
+    {
+        /** @var Customer $customer */
+        $customer = Auth::guard('customer')->user();
+        $order = Order::query()->where('customer_id', $customer->id)->where('number', $number)->first();
+
+        if ($order === null) {
+            return $this->renderer->notFound();
+        }
+
+        try {
+            $url = $start($order);
+        } catch (OnlinePaymentFailed $exception) {
+            return redirect('/'.Store::current()->slug."/orders/{$order->number}")->withErrors(['online' => $exception->getMessage()]);
+        }
+
+        return Inertia::location($url);
     }
 }

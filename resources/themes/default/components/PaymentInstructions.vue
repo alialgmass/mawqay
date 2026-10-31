@@ -2,6 +2,7 @@
 export type PaymentData = {
     state:
         | 'awaiting_receipt'
+        | 'awaiting_online'
         | 'under_review'
         | 'rejected'
         | 'exhausted'
@@ -24,6 +25,7 @@ export type PaymentData = {
     submitUrl: string;
     maxKilobytes: number;
     acceptedTypes: string[];
+    online: { available: boolean; url: string | null };
 };
 </script>
 
@@ -133,6 +135,17 @@ function choose(event: Event) {
     }
 }
 
+const onlineForm = useForm({});
+const onlineError = computed(
+    () => (onlineForm.errors as Record<string, string | undefined>).online,
+);
+
+function payOnline() {
+    if (props.payment.online.url) {
+        onlineForm.post(props.payment.online.url);
+    }
+}
+
 function submit() {
     if (!form.receipt) {
         fileError.value = 'اختاري ملف الإيصال أولًا.';
@@ -202,7 +215,42 @@ function submit() {
                 </template>
             </p>
 
-            <div v-if="payment.account" class="space-y-2 text-sm">
+            <div
+                v-if="payment.state === 'awaiting_online'"
+                class="space-y-3 text-sm"
+                data-online-payment
+            >
+                <p>
+                    المبلغ المطلوب:
+                    <strong dir="ltr">{{ payment.amount }}</strong>
+                </p>
+                <p
+                    v-if="onlineError"
+                    role="alert"
+                    :style="{ color: 'var(--color-danger)' }"
+                >
+                    {{ onlineError }}
+                </p>
+                <button
+                    v-if="payment.online.available"
+                    type="button"
+                    class="min-h-11 w-full px-4 font-medium"
+                    :disabled="onlineForm.processing"
+                    :style="{
+                        backgroundColor: 'var(--color-primary)',
+                        color: '#fff',
+                        borderRadius: 'var(--radius-md)',
+                    }"
+                    data-pay-online
+                    @click="payOnline"
+                >
+                    ادفعي أونلاين (كارت / محفظة)
+                </button>
+                <p v-else data-account-missing>
+                    الدفع أونلاين غير متاح حاليًا. تواصلي مع المنصة.
+                </p>
+            </div>
+            <div v-else-if="payment.account" class="space-y-2 text-sm">
                 <p>
                     حوّلي عبر <strong>{{ methodLabel }}</strong> إلى:
                 </p>
