@@ -32,10 +32,10 @@ defineProps<{ products: ProductPage; emptyMessage: string }>();
             v-if="products.lastPage > 1"
             class="mt-6 flex items-center justify-between text-sm"
         >
-            <Link v-if="products.prevUrl" :href="products.prevUrl">السابق</Link>
+            <Link v-if="products.prevUrl" :href="products.prevUrl" class="inline-flex min-h-11 items-center px-4 font-semibold transition-all duration-200 hover:shadow-md" :style="{ border: '1px solid var(--color-border)', borderRadius: 'var(--radius-sm)' }">السابق</Link>
             <span v-else />
             <span>{{ products.currentPage }} / {{ products.lastPage }}</span>
-            <Link v-if="products.nextUrl" :href="products.nextUrl">التالي</Link>
+            <Link v-if="products.nextUrl" :href="products.nextUrl" class="inline-flex min-h-11 items-center px-4 font-semibold transition-all duration-200 hover:shadow-md" :style="{ border: '1px solid var(--color-border)', borderRadius: 'var(--radius-sm)' }">التالي</Link>
             <span v-else />
         </nav>
     </template>

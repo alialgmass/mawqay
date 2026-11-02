@@ -60,12 +60,12 @@ const shell = useShell();
             <div class="flex flex-wrap gap-4 text-sm">
                 <Link
                     :href="order.url"
-                    class="inline-flex min-h-11 items-center underline"
+                    class="inline-flex min-h-11 items-center font-semibold text-[var(--color-primary)] hover:underline"
                     >تفاصيل الطلب</Link
                 >
                 <Link
                     :href="shell.urls.orders"
-                    class="inline-flex min-h-11 items-center underline"
+                    class="inline-flex min-h-11 items-center font-semibold text-[var(--color-primary)] hover:underline"
                     >كل طلباتي</Link
                 >
             </div>

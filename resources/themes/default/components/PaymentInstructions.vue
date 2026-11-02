@@ -96,9 +96,10 @@ async function copy(key: string, value: string) {
     }
 }
 
-function choose(event: Event) {
-    const file = (event.target as HTMLInputElement).files?.[0] ?? null;
+const dragging = ref(false);
+const fileInput = ref<HTMLInputElement | null>(null);
 
+function accept(file: File | null) {
     fileError.value = null;
     form.clearErrors('receipt');
 
@@ -135,6 +136,35 @@ function choose(event: Event) {
     }
 }
 
+function choose(event: Event) {
+    accept((event.target as HTMLInputElement).files?.[0] ?? null);
+}
+
+function drop(event: DragEvent) {
+    dragging.value = false;
+    const file = event.dataTransfer?.files?.[0] ?? null;
+
+    if (file && fileInput.value) {
+        const transfer = new DataTransfer();
+        transfer.items.add(file);
+        fileInput.value.files = transfer.files;
+    }
+
+    accept(file);
+}
+
+function clearFile() {
+    if (fileInput.value) {
+        fileInput.value.value = '';
+    }
+
+    accept(null);
+}
+
+const fileSize = computed(() =>
+    form.receipt ? `${(form.receipt.size / 1024 / 1024).toFixed(1)} MB` : '',
+);
+
 const onlineForm = useForm({});
 const onlineError = computed(
     () => (onlineForm.errors as Record<string, string | undefined>).online,
@@ -166,28 +196,72 @@ function submit() {
         aria-labelledby="payment-instructions-heading"
         data-payment-instructions
         :data-payment-state="payment.state"
-        class="space-y-4 p-4"
+        class="space-y-5 p-5 shadow-sm"
         :style="{
-            border: '1px dashed var(--color-border)',
-            borderRadius: 'var(--radius-md)',
-            backgroundColor: 'var(--color-surface)',
+            border: '1px solid var(--color-border)',
+            borderRadius: 'var(--radius-lg)',
+            backgroundColor: 'var(--color-bg)',
         }"
     >
-        <h3 id="payment-instructions-heading" class="font-semibold">
-            تعليمات الدفع
-        </h3>
+        <div class="flex flex-wrap items-center justify-between gap-2">
+            <h3
+                id="payment-instructions-heading"
+                class="text-lg font-bold"
+                :style="{ fontFamily: 'var(--font-heading)' }"
+            >
+                تعليمات الدفع
+            </h3>
+            <p
+                v-if="
+                    remaining &&
+                    payment.state !== 'under_review' &&
+                    payment.state !== 'paid' &&
+                    payment.state !== 'closed'
+                "
+                class="px-3 py-1 text-xs font-semibold"
+                :style="{
+                    backgroundColor: '#FEF3C7',
+                    color: '#92400E',
+                    borderRadius: '9999px',
+                }"
+            >
+                ⏱ الوقت المتبقي لحجز الطلب:
+                <strong dir="ltr" data-remaining>{{ remaining }}</strong>
+            </p>
+        </div>
 
-        <p v-if="payment.state === 'paid'" class="text-sm" data-payment-paid>
-            تم قبول الدفع. شكرًا لكِ!
+        <p
+            v-if="payment.state === 'paid'"
+            class="p-3 text-sm font-semibold"
+            data-payment-paid
+            :style="{
+                backgroundColor: '#DCFCE7',
+                color: '#166534',
+                borderRadius: 'var(--radius-sm)',
+            }"
+        >
+            ✓ تم قبول الدفع. شكرًا لكِ!
         </p>
-        <p v-else-if="payment.state === 'closed'" class="text-sm">
+        <p
+            v-else-if="payment.state === 'closed'"
+            class="p-3 text-sm"
+            :style="{
+                backgroundColor: 'var(--color-surface)',
+                borderRadius: 'var(--radius-sm)',
+            }"
+        >
             تم إغلاق هذا الطلب ولا يمكن الدفع له.
         </p>
         <p
             v-else-if="payment.state === 'under_review'"
-            class="text-sm"
+            class="p-3 text-sm font-semibold"
             role="status"
             data-payment-review
+            :style="{
+                backgroundColor: '#DBEAFE',
+                color: '#1E40AF',
+                borderRadius: 'var(--radius-sm)',
+            }"
         >
             استلمنا إيصالك وهو قيد المراجعة. نحجز لكِ المنتجات إلى أن نراجعه.
         </p>
@@ -199,9 +273,13 @@ function submit() {
                     payment.state === 'exhausted'
                 "
                 role="alert"
-                class="text-sm"
+                class="p-3 text-sm font-semibold"
                 data-payment-rejected
-                :style="{ color: 'var(--color-danger)' }"
+                :style="{
+                    backgroundColor: '#FEE2E2',
+                    color: '#991B1B',
+                    borderRadius: 'var(--radius-sm)',
+                }"
             >
                 تم رفض الإيصال<template v-if="payment.rejectionReason">
                     — السبب: {{ payment.rejectionReason }}</template
@@ -222,7 +300,9 @@ function submit() {
             >
                 <p>
                     المبلغ المطلوب:
-                    <strong dir="ltr">{{ payment.amount }}</strong>
+                    <strong class="text-lg" dir="ltr">{{
+                        payment.amount
+                    }}</strong>
                 </p>
                 <p
                     v-if="onlineError"
@@ -234,12 +314,12 @@ function submit() {
                 <button
                     v-if="payment.online.available"
                     type="button"
-                    class="min-h-11 w-full px-4 font-medium"
+                    class="min-h-12 w-full px-4 text-base font-semibold transition-all duration-200 hover:shadow-lg disabled:opacity-60"
                     :disabled="onlineForm.processing"
                     :style="{
                         backgroundColor: 'var(--color-primary)',
-                        color: '#fff',
-                        borderRadius: 'var(--radius-md)',
+                        color: 'var(--color-on-primary)',
+                        borderRadius: 'var(--radius-sm)',
                     }"
                     data-pay-online
                     @click="payOnline"
@@ -250,61 +330,120 @@ function submit() {
                     الدفع أونلاين غير متاح حاليًا. تواصلي مع المنصة.
                 </p>
             </div>
-            <div v-else-if="payment.account" class="space-y-2 text-sm">
-                <p>
+
+            <div v-else-if="payment.account" class="space-y-3 text-sm">
+                <p class="flex items-center gap-2 font-semibold">
+                    <span
+                        class="flex h-6 w-6 items-center justify-center text-xs font-bold"
+                        :style="{
+                            backgroundColor: 'var(--color-primary)',
+                            color: 'var(--color-on-primary)',
+                            borderRadius: '9999px',
+                        }"
+                        >1</span
+                    >
                     حوّلي عبر <strong>{{ methodLabel }}</strong> إلى:
                 </p>
-                <ul class="space-y-2">
-                    <li class="flex flex-wrap items-center gap-2">
-                        <span>الاسم:</span>
+                <ul
+                    class="divide-y"
+                    :style="{
+                        border: '1px solid var(--color-border)',
+                        borderRadius: 'var(--radius-lg)',
+                        backgroundColor: 'var(--color-surface)',
+                    }"
+                >
+                    <li
+                        class="flex flex-wrap items-center justify-between gap-2 px-4 py-3"
+                    >
+                        <span :style="{ color: 'var(--color-text-muted)' }"
+                            >الاسم</span
+                        >
                         <strong data-account-name>{{
                             payment.account.name
                         }}</strong>
                     </li>
-                    <li class="flex flex-wrap items-center gap-2">
-                        <span>الرقم:</span>
-                        <strong dir="ltr" data-account-number>{{
-                            payment.account.number
-                        }}</strong>
-                        <button
-                            type="button"
-                            class="min-h-11 px-3 text-xs underline"
-                            @click="copy('number', payment.account.number)"
+                    <li
+                        class="flex flex-wrap items-center justify-between gap-2 px-4 py-3"
+                    >
+                        <span :style="{ color: 'var(--color-text-muted)' }"
+                            >الرقم</span
                         >
-                            {{ copied === 'number' ? 'تم النسخ' : 'نسخ' }}
-                        </button>
+                        <span class="flex items-center gap-2">
+                            <strong dir="ltr" data-account-number>{{
+                                payment.account.number
+                            }}</strong>
+                            <button
+                                type="button"
+                                class="min-h-9 px-3 text-xs font-semibold"
+                                :style="{
+                                    backgroundColor: 'var(--color-secondary)',
+                                    color: 'var(--color-primary)',
+                                    borderRadius: '9999px',
+                                }"
+                                @click="copy('number', payment.account.number)"
+                            >
+                                {{ copied === 'number' ? '✓ تم النسخ' : 'نسخ' }}
+                            </button>
+                        </span>
                     </li>
-                    <li class="flex flex-wrap items-center gap-2">
-                        <span>المبلغ بالضبط:</span>
-                        <strong dir="ltr" data-amount>{{
-                            payment.amount
-                        }}</strong>
-                        <button
-                            type="button"
-                            class="min-h-11 px-3 text-xs underline"
-                            @click="copy('amount', payment.amount)"
+                    <li
+                        class="flex flex-wrap items-center justify-between gap-2 px-4 py-3"
+                    >
+                        <span :style="{ color: 'var(--color-text-muted)' }"
+                            >المبلغ بالضبط</span
                         >
-                            {{ copied === 'amount' ? 'تم النسخ' : 'نسخ' }}
-                        </button>
+                        <span class="flex items-center gap-2">
+                            <strong class="text-base" dir="ltr" data-amount>{{
+                                payment.amount
+                            }}</strong>
+                            <button
+                                type="button"
+                                class="min-h-9 px-3 text-xs font-semibold"
+                                :style="{
+                                    backgroundColor: 'var(--color-secondary)',
+                                    color: 'var(--color-primary)',
+                                    borderRadius: '9999px',
+                                }"
+                                @click="copy('amount', payment.amount)"
+                            >
+                                {{ copied === 'amount' ? '✓ تم النسخ' : 'نسخ' }}
+                            </button>
+                        </span>
                     </li>
-                    <li class="flex flex-wrap items-center gap-2">
-                        <span>اكتبي رقم الطلب كمرجع:</span>
-                        <strong dir="ltr" data-reference>{{
-                            payment.reference
-                        }}</strong>
-                        <button
-                            type="button"
-                            class="min-h-11 px-3 text-xs underline"
-                            @click="copy('reference', payment.reference)"
+                    <li
+                        class="flex flex-wrap items-center justify-between gap-2 px-4 py-3"
+                    >
+                        <span :style="{ color: 'var(--color-text-muted)' }"
+                            >اكتبي رقم الطلب كمرجع</span
                         >
-                            {{ copied === 'reference' ? 'تم النسخ' : 'نسخ' }}
-                        </button>
+                        <span class="flex items-center gap-2">
+                            <strong dir="ltr" data-reference>{{
+                                payment.reference
+                            }}</strong>
+                            <button
+                                type="button"
+                                class="min-h-9 px-3 text-xs font-semibold"
+                                :style="{
+                                    backgroundColor: 'var(--color-secondary)',
+                                    color: 'var(--color-primary)',
+                                    borderRadius: '9999px',
+                                }"
+                                @click="copy('reference', payment.reference)"
+                            >
+                                {{
+                                    copied === 'reference'
+                                        ? '✓ تم النسخ'
+                                        : 'نسخ'
+                                }}
+                            </button>
+                        </span>
                     </li>
                 </ul>
                 <p
                     v-if="payment.account.instructions"
                     class="whitespace-pre-line"
                     data-account-instructions
+                    :style="{ color: 'var(--color-text-muted)' }"
                 >
                     {{ payment.account.instructions }}
                 </p>
@@ -313,27 +452,94 @@ function submit() {
                 بيانات الدفع غير متاحة حاليًا. تواصلي مع المنصة لإتمام الدفع.
             </p>
 
-            <p
-                v-if="remaining && payment.state !== 'under_review'"
-                class="text-sm"
-            >
-                الوقت المتبقي لحجز الطلب:
-                <strong dir="ltr" data-remaining>{{ remaining }}</strong>
-            </p>
-
             <form
                 v-if="payment.canSubmit"
-                class="space-y-3"
+                class="space-y-4"
                 data-receipt-form
                 novalidate
                 @submit.prevent="submit"
             >
-                <div class="space-y-1">
-                    <label for="receipt" class="block text-sm font-medium"
-                        >صورة أو ملف إيصال التحويل</label
+                <p class="flex items-center gap-2 text-sm font-semibold">
+                    <span
+                        class="flex h-6 w-6 items-center justify-center text-xs font-bold"
+                        :style="{
+                            backgroundColor: 'var(--color-primary)',
+                            color: 'var(--color-on-primary)',
+                            borderRadius: '9999px',
+                        }"
+                        >2</span
                     >
+                    <label for="receipt">صورة أو ملف إيصال التحويل</label>
+                </p>
+
+                <div
+                    class="relative flex flex-col items-center justify-center gap-2 px-4 py-8 text-center transition-colors duration-200"
+                    :style="{
+                        border: `2px dashed ${dragging || form.receipt ? 'var(--color-primary)' : 'var(--color-border)'}`,
+                        borderRadius: 'var(--radius-lg)',
+                        backgroundColor:
+                            dragging || form.receipt
+                                ? 'var(--color-secondary)'
+                                : 'var(--color-surface)',
+                    }"
+                    @dragover.prevent="dragging = true"
+                    @dragleave.prevent="dragging = false"
+                    @drop.prevent="drop"
+                >
+                    <template v-if="!form.receipt">
+                        <svg
+                            aria-hidden="true"
+                            viewBox="0 0 24 24"
+                            class="h-10 w-10"
+                            fill="none"
+                            stroke="var(--color-primary)"
+                            stroke-width="1.6"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <path d="M12 16V4m0 0 4 4m-4-4L8 8" />
+                            <path d="M4 14v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4" />
+                        </svg>
+                        <p class="text-sm font-semibold">
+                            اضغطي لاختيار الإيصال أو اسحبيه هنا
+                        </p>
+                        <p
+                            id="receipt-hint"
+                            class="text-xs"
+                            :style="{ color: 'var(--color-text-muted)' }"
+                        >
+                            JPG أو PNG أو WebP أو PDF، حتى
+                            {{ maxMegabytes }} ميجابايت.
+                        </p>
+                    </template>
+
+                    <template v-else>
+                        <img
+                            v-if="previewUrl"
+                            :src="previewUrl"
+                            alt="معاينة الإيصال"
+                            class="max-h-56 w-auto shadow-md"
+                            :style="{ borderRadius: 'var(--radius-sm)' }"
+                            data-receipt-preview
+                        />
+                        <p v-else class="text-3xl" aria-hidden="true">📄</p>
+                        <p
+                            class="max-w-full truncate text-sm font-semibold"
+                            :data-receipt-preview="previewUrl ? undefined : ''"
+                            dir="ltr"
+                        >
+                            {{ form.receipt.name }}
+                            <span
+                                class="font-normal"
+                                :style="{ color: 'var(--color-text-muted)' }"
+                                >· {{ fileSize }}</span
+                            >
+                        </p>
+                    </template>
+
                     <input
                         id="receipt"
+                        ref="fileInput"
                         name="receipt"
                         type="file"
                         :accept="payment.acceptedTypes.join(',')"
@@ -341,59 +547,56 @@ function submit() {
                         :aria-describedby="
                             receiptError ? 'receipt-error' : 'receipt-hint'
                         "
-                        class="block min-h-11 w-full text-sm"
+                        class="absolute inset-0 h-full w-full cursor-pointer opacity-0"
                         @change="choose"
                     />
-                    <p
-                        id="receipt-hint"
-                        class="text-xs"
-                        :style="{ color: 'var(--color-text-muted)' }"
-                    >
-                        JPG أو PNG أو WebP أو PDF، حتى
-                        {{ maxMegabytes }} ميجابايت.
-                    </p>
-                    <p
-                        v-if="receiptError"
-                        id="receipt-error"
-                        role="alert"
-                        class="text-sm"
-                        :style="{ color: 'var(--color-danger)' }"
-                    >
-                        {{ receiptError }}
-                    </p>
                 </div>
 
-                <img
-                    v-if="previewUrl"
-                    :src="previewUrl"
-                    alt="معاينة الإيصال"
-                    class="max-h-64 w-auto"
-                    data-receipt-preview
-                />
-                <p
-                    v-else-if="isPdf && form.receipt"
-                    class="text-sm"
-                    data-receipt-preview
+                <button
+                    v-if="form.receipt"
+                    type="button"
+                    class="min-h-11 text-sm font-semibold"
+                    :style="{ color: 'var(--color-danger)' }"
+                    @click="clearFile"
                 >
-                    {{ form.receipt.name }}
+                    حذف واختيار ملف آخر
+                </button>
+
+                <p
+                    v-if="receiptError"
+                    id="receipt-error"
+                    role="alert"
+                    class="text-sm"
+                    :style="{ color: 'var(--color-danger)' }"
+                >
+                    {{ receiptError }}
                 </p>
 
-                <FormField
-                    id="transfer_reference"
-                    v-model="form.transfer_reference"
-                    label="مرجع التحويل (اختياري)"
-                    dir="ltr"
-                    :error="form.errors.transfer_reference"
-                />
-                <FormField
-                    id="sender_phone"
-                    v-model="form.sender_phone"
-                    label="الرقم الذي حوّلتِ منه (اختياري)"
-                    type="tel"
-                    dir="ltr"
-                    autocomplete="tel"
-                    :error="form.errors.sender_phone"
-                />
+                <details>
+                    <summary
+                        class="min-h-11 cursor-pointer py-2 text-sm font-semibold text-[var(--color-primary)]"
+                    >
+                        تفاصيل إضافية (اختياري)
+                    </summary>
+                    <div class="mt-2 space-y-3">
+                        <FormField
+                            id="transfer_reference"
+                            v-model="form.transfer_reference"
+                            label="مرجع التحويل (اختياري)"
+                            dir="ltr"
+                            :error="form.errors.transfer_reference"
+                        />
+                        <FormField
+                            id="sender_phone"
+                            v-model="form.sender_phone"
+                            label="الرقم الذي حوّلتِ منه (اختياري)"
+                            type="tel"
+                            dir="ltr"
+                            autocomplete="tel"
+                            :error="form.errors.sender_phone"
+                        />
+                    </div>
+                </details>
 
                 <p
                     v-if="orderError"
@@ -414,11 +617,11 @@ function submit() {
                     class="h-2 w-full overflow-hidden"
                     :style="{
                         backgroundColor: 'var(--color-border)',
-                        borderRadius: 'var(--radius-md)',
+                        borderRadius: '9999px',
                     }"
                 >
                     <div
-                        class="h-full"
+                        class="h-full transition-all duration-200"
                         :style="{
                             width: `${form.progress.percentage}%`,
                             backgroundColor: 'var(--color-primary)',
@@ -426,11 +629,11 @@ function submit() {
                     />
                 </div>
 
-                <SubmitButton :processing="form.processing">
+                <SubmitButton :processing="form.processing" class="w-full">
                     إرسال الإيصال
                 </SubmitButton>
                 <p
-                    class="text-xs"
+                    class="text-center text-xs"
                     :style="{ color: 'var(--color-text-muted)' }"
                 >
                     المحاولات المتبقية: {{ payment.attemptsLeft }} من
@@ -444,7 +647,7 @@ function submit() {
                 :href="payment.receiptUrl"
                 target="_blank"
                 rel="noopener"
-                class="inline-flex min-h-11 items-center underline"
+                class="inline-flex min-h-11 items-center font-semibold text-[var(--color-primary)] hover:underline"
                 data-receipt-link
                 >عرض الإيصال الذي أرسلتِه</a
             >

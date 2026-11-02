@@ -33,15 +33,15 @@ defineProps<{
             <li
                 v-for="order in orders"
                 :key="order.number"
-                class="flex flex-wrap items-center justify-between gap-3 p-4"
+                class="flex flex-wrap items-center justify-between gap-3 p-4 shadow-sm"
                 :style="{
                     border: '1px solid var(--color-border)',
-                    borderRadius: 'var(--radius-md)',
+                    borderRadius: 'var(--radius-lg)',
                     backgroundColor: 'var(--color-surface)',
                 }"
             >
                 <div>
-                    <Link :href="order.url" class="font-medium underline">{{
+                    <Link :href="order.url" class="font-semibold text-[var(--color-primary)] hover:underline">{{
                         order.number
                     }}</Link>
                     <p

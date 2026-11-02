@@ -61,7 +61,8 @@ const method = computed(() =>
 
 const order = useForm({ address_id: 0, payment_method: '' });
 const newAddress = useForm({
-    redirect: shell.value.urls.checkout,
+    // The server only follows same-store paths, never absolute URLs.
+    redirect: new URL(shell.value.urls.checkout, window.location.origin).pathname,
     label: '',
     recipient_name: '',
     phone: '',
@@ -81,8 +82,22 @@ const issueText: Record<string, string> = {
 };
 
 function saveAddress() {
+    const knownIds = props.addresses.map((a) => a.id);
+
     newAddress.post(shell.value.actions.addresses, {
-        onSuccess: () => newAddress.reset(),
+        preserveScroll: true,
+        onSuccess: () => {
+            newAddress.reset();
+
+            const created = props.addresses.find(
+                (a) => !knownIds.includes(a.id),
+            );
+
+            if (created) {
+                chosenAddress.value = created.id;
+                step.value = created.shippingFee === null ? 1 : 2;
+            }
+        },
     });
 }
 
@@ -153,7 +168,7 @@ const steps = ['العنوان', 'الشحن والدفع', 'المراجعة'];
                         class="flex min-h-11 cursor-pointer items-start gap-3 p-3"
                         :style="{
                             border: `1px solid ${chosenAddress === a.id ? 'var(--color-primary)' : 'var(--color-border)'}`,
-                            borderRadius: 'var(--radius-md)',
+                            borderRadius: 'var(--radius-sm)',
                         }"
                     >
                         <input
@@ -228,7 +243,7 @@ const steps = ['العنوان', 'الشحن والدفع', 'المراجعة'];
                                 class="min-h-11 w-full px-3"
                                 :style="{
                                     border: '1px solid var(--color-border)',
-                                    borderRadius: 'var(--radius-md)',
+                                    borderRadius: 'var(--radius-sm)',
                                     backgroundColor: 'var(--color-bg)',
                                 }"
                             >
@@ -265,12 +280,12 @@ const steps = ['العنوان', 'الشحن والدفع', 'المراجعة'];
 
                 <button
                     type="button"
-                    class="min-h-11 px-5 text-sm font-medium disabled:opacity-50"
+                    class="min-h-11 px-5 text-sm font-semibold transition-all duration-200 disabled:opacity-50"
                     :disabled="address === null"
                     :style="{
                         backgroundColor: 'var(--color-primary)',
                         color: 'var(--color-on-primary)',
-                        borderRadius: 'var(--radius-md)',
+                        borderRadius: 'var(--radius-sm)',
                     }"
                     @click="step = 2"
                 >
@@ -310,7 +325,7 @@ const steps = ['العنوان', 'الشحن والدفع', 'المراجعة'];
                         class="flex min-h-11 cursor-pointer items-center gap-3 p-3"
                         :style="{
                             border: `1px solid ${paymentMethod === m.value ? 'var(--color-primary)' : 'var(--color-border)'}`,
-                            borderRadius: 'var(--radius-md)',
+                            borderRadius: 'var(--radius-sm)',
                         }"
                     >
                         <input
@@ -334,14 +349,14 @@ const steps = ['العنوان', 'الشحن والدفع', 'المراجعة'];
                     </button>
                     <button
                         type="button"
-                        class="min-h-11 px-5 text-sm font-medium disabled:opacity-50"
+                        class="min-h-11 px-5 text-sm font-semibold transition-all duration-200 disabled:opacity-50"
                         :disabled="
                             address.shippingFee === null || !paymentMethod
                         "
                         :style="{
                             backgroundColor: 'var(--color-primary)',
                             color: 'var(--color-on-primary)',
-                            borderRadius: 'var(--radius-md)',
+                            borderRadius: 'var(--radius-sm)',
                         }"
                         @click="step = 3"
                     >
@@ -421,12 +436,12 @@ const steps = ['العنوان', 'الشحن والدفع', 'المراجعة'];
                     </button>
                     <button
                         type="button"
-                        class="min-h-11 px-5 text-sm font-medium disabled:opacity-50"
+                        class="min-h-11 px-5 text-sm font-semibold transition-all duration-200 disabled:opacity-50"
                         :disabled="!ready || order.processing"
                         :style="{
                             backgroundColor: 'var(--color-primary)',
                             color: 'var(--color-on-primary)',
-                            borderRadius: 'var(--radius-md)',
+                            borderRadius: 'var(--radius-sm)',
                         }"
                         @click="placeOrder"
                     >
@@ -435,7 +450,7 @@ const steps = ['العنوان', 'الشحن والدفع', 'المراجعة'];
                 </div>
                 <Link
                     :href="shell.urls.cart"
-                    class="inline-flex min-h-11 items-center text-sm underline"
+                    class="inline-flex min-h-11 items-center font-semibold text-[var(--color-primary)] hover:underline text-sm"
                     >العودة إلى السلة</Link
                 >
             </section>

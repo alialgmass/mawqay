@@ -91,7 +91,7 @@ function changePassword() {
 
                 <Link
                     :href="shell.urls.addresses"
-                    class="inline-flex min-h-11 items-center text-sm underline"
+                    class="inline-flex min-h-11 items-center font-semibold text-[var(--color-primary)] hover:underline text-sm"
                     >عناويني</Link
                 >
             </section>

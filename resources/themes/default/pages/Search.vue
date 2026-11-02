@@ -18,7 +18,7 @@ defineProps<{
     <StoreLayout :seo="seo" :query="query">
         <StorefrontBreadcrumbs :items="breadcrumbs" />
 
-        <h2 v-if="query" class="mb-4 text-lg font-semibold">
+        <h2 v-if="query" class="mb-4 text-xl font-semibold" :style="{ fontFamily: 'var(--font-heading)' }">
             نتائج البحث عن «{{ query }}»
         </h2>
 

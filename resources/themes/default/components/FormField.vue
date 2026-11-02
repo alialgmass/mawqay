@@ -40,11 +40,11 @@ const describedBy = computed(() =>
             :dir="dir"
             :aria-invalid="error ? 'true' : undefined"
             :aria-describedby="describedBy"
-            class="min-h-11 w-full px-3 focus-visible:outline-2 focus-visible:outline-offset-2"
+            class="min-h-11 w-full px-4 text-sm transition duration-200 ease-out focus-visible:outline-2 focus-visible:outline-offset-2"
             :style="{
                 border: `1px solid ${error ? 'var(--color-danger)' : 'var(--color-border)'}`,
-                borderRadius: 'var(--radius-md)',
-                backgroundColor: 'var(--color-bg)',
+                borderRadius: 'var(--radius-sm)',
+                backgroundColor: 'var(--color-surface)',
                 color: 'var(--color-text)',
             }"
             @input="

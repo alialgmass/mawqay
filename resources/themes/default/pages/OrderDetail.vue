@@ -167,7 +167,7 @@ function confirmReceipt(url: string) {
                 :style="{
                     background: 'var(--color-primary)',
                     color: 'var(--color-on-primary)',
-                    borderRadius: 'var(--radius-md)',
+                    borderRadius: 'var(--radius-sm)',
                 }"
                 @click="confirmReceipt(order.confirmReceiptUrl)"
             >
@@ -211,7 +211,7 @@ function confirmReceipt(url: string) {
                 :style="{
                     border: '1px solid var(--color-danger)',
                     color: 'var(--color-danger)',
-                    borderRadius: 'var(--radius-md)',
+                    borderRadius: 'var(--radius-sm)',
                 }"
                 @click="cancel(order.cancelUrl)"
             >

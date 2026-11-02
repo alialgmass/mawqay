@@ -105,7 +105,7 @@ class ThemeManifestTest extends TestCase
     {
         $defaults = (new ThemeSettingsSchema(ThemeManifest::fromArray($this->manifestData())))->defaults();
 
-        $this->assertSame('#7A3E65', $defaults['primary_color']);
+        $this->assertSame('#5B63E6', $defaults['primary_color']);
         $this->assertSame('cairo', $defaults['heading_font']);
         $this->assertSame('soft', $defaults['corner_style']);
         $this->assertTrue($defaults['show_banner']);
@@ -195,6 +195,6 @@ class ThemeManifestTest extends TestCase
         $manifest = ThemeManifest::fromArray($this->manifestData());
         $variables = StyleVariables::from($manifest, [...(new ThemeSettingsSchema($manifest))->defaults(), 'corner_style' => 'soft']);
 
-        $this->assertSame(['6px', '10px', '16px'], [$variables['--radius-sm'], $variables['--radius-md'], $variables['--radius-lg']]);
+        $this->assertSame(['8px', '12px', '20px'], [$variables['--radius-sm'], $variables['--radius-md'], $variables['--radius-lg']]);
     }
 }

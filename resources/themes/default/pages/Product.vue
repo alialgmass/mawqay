@@ -51,8 +51,8 @@ const image = computed(() => props.product.images[activeImage.value] ?? null);
         <div class="grid gap-6 md:grid-cols-2">
             <section aria-label="الصور">
                 <div
-                    class="aspect-square w-full overflow-hidden bg-black/5"
-                    :style="{ borderRadius: 'var(--radius-md)' }"
+                    class="aspect-square w-full overflow-hidden bg-[var(--color-surface)]"
+                    :style="{ borderRadius: 'var(--radius-lg)' }"
                 >
                     <img
                         v-if="image"
@@ -65,7 +65,7 @@ const image = computed(() => props.product.images[activeImage.value] ?? null);
                     <li v-for="(img, index) in product.images" :key="index">
                         <button
                             type="button"
-                            class="h-16 w-16 overflow-hidden rounded-md"
+                            class="h-16 w-16 overflow-hidden rounded-[var(--radius-sm)] transition-all duration-200 hover:shadow-md"
                             :style="{
                                 border: `2px solid ${activeImage === index ? 'var(--color-primary)' : 'transparent'}`,
                             }"
@@ -81,9 +81,9 @@ const image = computed(() => props.product.images[activeImage.value] ?? null);
                 </ul>
             </section>
 
-            <section class="space-y-5">
+            <section class="space-y-5 md:sticky md:top-4 md:self-start">
                 <h2
-                    class="text-2xl font-semibold"
+                    class="text-2xl font-bold sm:text-3xl"
                     :style="{ fontFamily: 'var(--font-heading)' }"
                 >
                     {{ product.name }}
@@ -96,32 +96,54 @@ const image = computed(() => props.product.images[activeImage.value] ?? null);
                     :variants="product.variants"
                     @select="chosen = $event"
                 />
-                <form class="space-y-2" @submit.prevent="addToCart">
-                    <label class="flex items-center gap-2 text-sm">
-                        الكمية
-                        <input
-                            v-model.number="cart.quantity"
-                            type="number"
-                            min="1"
-                            class="min-h-11 w-20 px-2"
+                <form class="space-y-3" @submit.prevent="addToCart">
+                    <div class="flex items-stretch gap-3">
+                        <div
+                            class="flex items-center"
+                            role="group"
+                            aria-label="الكمية"
                             :style="{
                                 border: '1px solid var(--color-border)',
-                                borderRadius: 'var(--radius-md)',
+                                borderRadius: 'var(--radius-sm)',
                             }"
-                        />
-                    </label>
-                    <button
-                        type="submit"
-                        class="min-h-11 px-6 text-sm font-medium disabled:opacity-50"
-                        :disabled="chosen === null || cart.processing"
-                        :style="{
-                            backgroundColor: 'var(--color-primary)',
-                            color: 'var(--color-on-primary)',
-                            borderRadius: 'var(--radius-md)',
-                        }"
-                    >
-                        أضيفي إلى السلة
-                    </button>
+                        >
+                            <button
+                                type="button"
+                                class="h-11 w-11 text-lg"
+                                aria-label="تقليل الكمية"
+                                @click="cart.quantity = Math.max(1, cart.quantity - 1)"
+                            >
+                                −
+                            </button>
+                            <input
+                                v-model.number="cart.quantity"
+                                type="number"
+                                min="1"
+                                aria-label="الكمية"
+                                class="h-11 w-12 bg-transparent text-center text-sm font-semibold"
+                            />
+                            <button
+                                type="button"
+                                class="h-11 w-11 text-lg"
+                                aria-label="زيادة الكمية"
+                                @click="cart.quantity += 1"
+                            >
+                                +
+                            </button>
+                        </div>
+                        <button
+                            type="submit"
+                            class="min-h-11 flex-1 px-6 text-sm font-semibold transition-all duration-200 hover:shadow-lg disabled:opacity-50 disabled:hover:shadow-none"
+                            :disabled="chosen === null || cart.processing"
+                            :style="{
+                                backgroundColor: 'var(--color-primary)',
+                                color: 'var(--color-on-primary)',
+                                borderRadius: 'var(--radius-sm)',
+                            }"
+                        >
+                            أضيفي إلى السلة
+                        </button>
+                    </div>
                     <p
                         v-if="chosen === null"
                         class="text-xs"
@@ -142,7 +164,8 @@ const image = computed(() => props.product.images[activeImage.value] ?? null);
                 </form>
                 <p
                     v-if="product.description"
-                    class="text-sm leading-7 whitespace-pre-line"
+                    class="pt-4 text-sm leading-7 whitespace-pre-line"
+                    :style="{ borderTop: '1px solid var(--color-border)', color: 'var(--color-text-muted)' }"
                 >
                     {{ product.description }}
                 </p>

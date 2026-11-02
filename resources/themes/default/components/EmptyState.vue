@@ -4,9 +4,11 @@ defineProps<{ message: string }>();
 
 <template>
     <div
-        class="rounded-md p-10 text-center"
+        class="p-10 text-center"
         :style="{
             border: '1px dashed var(--color-border)',
+            borderRadius: 'var(--radius-lg)',
+            backgroundColor: 'var(--color-surface)',
             color: 'var(--color-text-muted)',
         }"
     >

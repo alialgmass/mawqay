@@ -112,10 +112,10 @@ function makeDefault(address: AddressData) {
                     <li
                         v-for="address in addresses"
                         :key="address.id"
-                        class="space-y-1 p-4"
+                        class="space-y-1 p-4 shadow-sm"
                         :style="{
                             border: '1px solid var(--color-border)',
-                            borderRadius: 'var(--radius-md)',
+                            borderRadius: 'var(--radius-lg)',
                             backgroundColor: 'var(--color-surface)',
                         }"
                     >
@@ -222,7 +222,7 @@ function makeDefault(address: AddressData) {
                             class="min-h-11 w-full px-3"
                             :style="{
                                 border: '1px solid var(--color-border)',
-                                borderRadius: 'var(--radius-md)',
+                                borderRadius: 'var(--radius-sm)',
                                 backgroundColor: 'var(--color-bg)',
                             }"
                         >

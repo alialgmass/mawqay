@@ -27,12 +27,12 @@ const colours = computed(() => {
 
 <template>
     <span
-        class="inline-block px-3 py-1 text-xs font-medium"
+        class="inline-block px-3 py-1 text-xs font-semibold"
         :data-status="status"
         :style="{
             backgroundColor: colours.bg,
             color: colours.fg,
-            borderRadius: 'var(--radius-md)',
+            borderRadius: '9999px',
         }"
     >
         {{ label }}

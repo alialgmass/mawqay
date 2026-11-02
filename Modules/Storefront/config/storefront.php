@@ -6,14 +6,14 @@ return [
      * A Store's Theme Settings override these in later phases.
      */
     'tokens' => [
-        '--color-primary' => '#7A3E65',
-        '--color-secondary' => '#F3E8EE',
+        '--color-primary' => '#5B63E6',
+        '--color-secondary' => '#EEF0FF',
         '--color-bg' => '#FFFFFF',
-        '--color-surface' => '#FAF7F9',
-        '--color-text' => '#1F1A1D',
-        '--color-text-muted' => '#6B6065',
-        '--color-border' => '#E6DEE2',
-        '--radius-md' => '10px',
+        '--color-surface' => '#F9FAFB',
+        '--color-text' => '#1F2937',
+        '--color-text-muted' => '#6B7280',
+        '--color-border' => '#E5E7EB',
+        '--radius-md' => '12px',
         '--font-heading' => "'Cairo', sans-serif",
         '--font-body' => "'IBM Plex Sans Arabic', sans-serif",
     ],

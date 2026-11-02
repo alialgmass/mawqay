@@ -9,17 +9,17 @@ withDefaults(
     <button
         type="submit"
         :disabled="processing"
-        class="min-h-11 px-5 text-sm font-medium focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-60"
+        class="min-h-11 px-5 text-sm font-semibold transition-all duration-200 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-60"
         :style="
             variant === 'primary'
                 ? {
                       backgroundColor: 'var(--color-primary)',
                       color: 'var(--color-on-primary)',
-                      borderRadius: 'var(--radius-md)',
+                      borderRadius: 'var(--radius-sm)',
                   }
                 : {
                       border: '1px solid var(--color-border)',
-                      borderRadius: 'var(--radius-md)',
+                      borderRadius: 'var(--radius-sm)',
                   }
         "
     >

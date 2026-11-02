@@ -80,14 +80,14 @@ function acceptPrices() {
                 <li
                     v-for="line in items"
                     :key="line.id"
-                    class="flex flex-wrap items-center gap-3 p-3"
+                    class="flex flex-wrap items-center gap-3 p-3 shadow-sm"
                     :style="{
                         border: '1px solid var(--color-border)',
-                        borderRadius: 'var(--radius-md)',
+                        borderRadius: 'var(--radius-lg)',
                         backgroundColor: 'var(--color-surface)',
                     }"
                 >
-                    <div class="h-16 w-16 shrink-0 bg-black/5">
+                    <div class="h-20 w-20 shrink-0 overflow-hidden rounded-[var(--radius-sm)] bg-[var(--color-surface)]">
                         <img
                             v-if="line.imageUrl"
                             :src="line.imageUrl"
@@ -128,10 +128,10 @@ function acceptPrices() {
                             type="number"
                             min="1"
                             :value="line.quantity"
-                            class="min-h-11 w-20 px-2"
+                            class="min-h-11 w-20 px-2 text-center"
                             :style="{
                                 border: '1px solid var(--color-border)',
-                                borderRadius: 'var(--radius-md)',
+                                borderRadius: 'var(--radius-sm)',
                             }"
                             @change="setQuantity(line, $event)"
                         />
@@ -166,11 +166,11 @@ function acceptPrices() {
                     <Link
                         v-if="canCheckout"
                         :href="shell.urls.checkout"
-                        class="inline-flex min-h-11 items-center px-5 text-sm font-medium"
+                        class="inline-flex min-h-11 items-center px-5 text-sm font-semibold transition-all duration-200 hover:shadow-md"
                         :style="{
                             backgroundColor: 'var(--color-primary)',
                             color: 'var(--color-on-primary)',
-                            borderRadius: 'var(--radius-md)',
+                            borderRadius: 'var(--radius-sm)',
                         }"
                     >
                         إتمام الطلب

@@ -80,7 +80,7 @@ const messages: Record<string, string> = {
                         rows="4"
                         maxlength="1000"
                         class="w-full border p-2"
-                        :style="{ borderRadius: 'var(--radius-md)' }"
+                        :style="{ borderRadius: 'var(--radius-sm)' }"
                     />
                 </label>
 

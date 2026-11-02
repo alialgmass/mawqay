@@ -29,13 +29,18 @@ function sortBy(event: Event) {
         <StorefrontBreadcrumbs :items="breadcrumbs" />
 
         <div class="mb-4 flex items-center justify-between gap-3">
-            <h2 class="text-lg font-semibold">{{ category.name }}</h2>
+            <h2 class="text-xl font-semibold" :style="{ fontFamily: 'var(--font-heading)' }">{{ category.name }}</h2>
             <label class="flex items-center gap-2 text-sm">
                 <span>الترتيب</span>
                 <select
                     :value="sort"
-                    class="rounded-md px-2 py-1"
-                    :style="{ border: '1px solid var(--color-border)' }"
+                    class="min-h-11 cursor-pointer px-4 text-sm transition duration-200 ease-out focus-visible:outline-2 focus-visible:outline-offset-2"
+                    :style="{
+                        border: '1px solid var(--color-border)',
+                        borderRadius: 'var(--radius-sm)',
+                        backgroundColor: 'var(--color-surface)',
+                        color: 'var(--color-text)',
+                    }"
                     @change="sortBy"
                 >
                     <option value="newest">الأحدث</option>

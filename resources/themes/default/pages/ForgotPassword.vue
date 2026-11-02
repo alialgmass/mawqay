@@ -18,7 +18,14 @@ function submit() {
 
 <template>
     <StoreLayout :seo="seo">
-        <div class="mx-auto max-w-md space-y-4">
+        <div
+            class="mx-auto max-w-md space-y-5 p-6 shadow-md sm:p-8"
+            :style="{
+                border: '1px solid var(--color-border)',
+                borderRadius: 'var(--radius-lg)',
+                backgroundColor: 'var(--color-bg)',
+            }"
+        >
             <h2
                 class="text-xl font-semibold"
                 :style="{ fontFamily: 'var(--font-heading)' }"
@@ -47,7 +54,7 @@ function submit() {
 
             <Link
                 :href="shell.urls.login"
-                class="inline-flex min-h-11 items-center text-sm underline"
+                class="inline-flex min-h-11 items-center font-semibold text-[var(--color-primary)] hover:underline text-sm"
                 >العودة لتسجيل الدخول</Link
             >
         </div>

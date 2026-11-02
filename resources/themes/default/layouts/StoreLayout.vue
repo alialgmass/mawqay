@@ -81,6 +81,11 @@ const showSocial = computed(
 const focusRing =
     'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current';
 
+const navLink = [
+    'flex min-h-11 items-center rounded-[var(--radius-sm)] px-3 transition-colors duration-200 hover:bg-[var(--color-secondary)]',
+    focusRing,
+].join(' ');
+
 function logout() {
     router.post(shell.value.actions.logout);
 }
@@ -122,13 +127,15 @@ function logout() {
         }"
     >
         <header
+            class="sticky top-0 z-30"
             :style="{
-                backgroundColor: 'var(--color-primary)',
-                color: 'var(--color-on-primary)',
+                backgroundColor: 'var(--color-bg)',
+                color: 'var(--color-text)',
+                boxShadow: '0 1px 3px rgba(5,5,5,0.10)',
             }"
         >
             <div
-                class="mx-auto flex max-w-6xl flex-wrap items-center gap-3 px-4 py-3"
+                class="mx-auto flex max-w-6xl flex-wrap items-center gap-x-3 gap-y-2 px-4 py-3"
             >
                 <Link
                     :href="shell.urls.home"
@@ -142,72 +149,36 @@ function logout() {
                         class="h-10 w-auto"
                     />
                     <span
-                        class="text-xl font-semibold"
-                        :style="{ fontFamily: 'var(--font-heading)' }"
+                        class="text-xl font-bold"
+                        :style="{
+                            fontFamily: 'var(--font-heading)',
+                            color: 'var(--color-primary)',
+                        }"
                     >
                         {{ store.name }}
                     </span>
                 </Link>
 
-                <form
-                    :action="shell.urls.search"
-                    method="get"
-                    role="search"
-                    aria-label="البحث في المتجر"
-                    class="ms-auto flex w-full max-w-sm gap-2 sm:w-auto"
-                >
-                    <input
-                        type="search"
-                        name="q"
-                        :value="query ?? ''"
-                        aria-label="ابحث عن منتج"
-                        placeholder="ابحث عن منتج"
-                        :class="[
-                            'min-h-11 min-w-0 flex-1 px-3 text-sm',
-                            focusRing,
-                        ]"
-                        :style="{
-                            backgroundColor: 'var(--color-bg)',
-                            color: 'var(--color-text)',
-                            borderRadius: 'var(--radius-md)',
-                        }"
-                    />
-                    <button
-                        type="submit"
-                        :class="[
-                            'min-h-11 px-4 text-sm font-medium',
-                            focusRing,
-                        ]"
-                        :style="{
-                            backgroundColor: 'var(--color-secondary)',
-                            color: 'var(--color-on-secondary)',
-                            borderRadius: 'var(--radius-md)',
-                        }"
-                    >
-                        بحث
-                    </button>
-                </form>
-
                 <nav
                     aria-label="الحساب"
-                    class="flex items-center gap-3 text-sm"
+                    class="ms-auto flex items-center gap-1 text-sm font-semibold sm:order-3 sm:ms-0"
                     data-account-nav
                 >
                     <template v-if="shell.customer">
                         <Link
                             :href="shell.urls.account"
-                            :class="['flex min-h-11 items-center', focusRing]"
+                            :class="[navLink, 'max-w-28 truncate']"
                             data-account-link
                             >{{ shell.customer.name }}</Link
                         >
                         <Link
                             :href="shell.urls.orders"
-                            :class="['flex min-h-11 items-center', focusRing]"
+                            :class="[navLink, 'hidden sm:flex']"
                             >طلباتي</Link
                         >
                         <button
                             type="button"
-                            :class="['flex min-h-11 items-center', focusRing]"
+                            :class="[navLink, 'hidden sm:flex']"
                             @click="logout"
                         >
                             تسجيل الخروج
@@ -216,43 +187,102 @@ function logout() {
                     <template v-else>
                         <Link
                             :href="shell.urls.login"
-                            :class="['flex min-h-11 items-center', focusRing]"
+                            :class="navLink"
                             data-login-link
                             >تسجيل الدخول</Link
                         >
                         <Link
                             :href="shell.urls.register"
-                            :class="['flex min-h-11 items-center', focusRing]"
+                            :class="[navLink, 'hidden sm:flex']"
                             >إنشاء حساب</Link
                         >
                     </template>
+                    <a
+                        :href="shell.urls.cart"
+                        :class="[
+                            'relative flex min-h-11 min-w-11 items-center justify-center rounded-full transition-colors duration-200 hover:bg-[var(--color-secondary)]',
+                            focusRing,
+                        ]"
+                        :aria-label="`سلة التسوق، ${shell.cartCount} منتج`"
+                    >
+                        <svg
+                            aria-hidden="true"
+                            viewBox="0 0 24 24"
+                            class="h-6 w-6"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <path d="M3 4h2l2.4 11.2a1 1 0 0 0 1 .8h8.9a1 1 0 0 0 1-.8L20 8H6" />
+                            <circle cx="9.5" cy="20" r="1.2" />
+                            <circle cx="17" cy="20" r="1.2" />
+                        </svg>
+                        <span
+                            data-cart-count
+                            class="absolute -top-0.5 -end-0.5 flex h-5 min-w-5 items-center justify-center rounded-full px-1 text-xs font-bold"
+                            :style="{
+                                backgroundColor: 'var(--color-primary)',
+                                color: 'var(--color-on-primary)',
+                            }"
+                            >{{ shell.cartCount }}</span
+                        >
+                    </a>
                 </nav>
 
-                <a
-                    :href="shell.urls.cart"
-                    :class="[
-                        'flex min-h-11 min-w-11 items-center gap-1',
-                        focusRing,
-                    ]"
-                    :aria-label="`سلة التسوق، ${shell.cartCount} منتج`"
+                <form
+                    :action="shell.urls.search"
+                    method="get"
+                    role="search"
+                    aria-label="البحث في المتجر"
+                    class="order-last flex w-full gap-2 sm:order-2 sm:ms-auto sm:w-auto sm:max-w-sm sm:flex-1"
                 >
-                    <span aria-hidden="true">🛒</span>
-                    <span data-cart-count>{{ shell.cartCount }}</span>
-                </a>
+                    <input
+                        type="search"
+                        name="q"
+                        :value="query ?? ''"
+                        aria-label="ابحث عن منتج"
+                        placeholder="ابحث عن منتج"
+                        :class="[
+                            'min-h-11 min-w-0 flex-1 px-4 text-sm',
+                            focusRing,
+                        ]"
+                        :style="{
+                            backgroundColor: 'var(--color-surface)',
+                            color: 'var(--color-text)',
+                            border: '1px solid var(--color-border)',
+                            borderRadius: 'var(--radius-sm)',
+                        }"
+                    />
+                    <button
+                        type="submit"
+                        :class="[
+                            'min-h-11 px-4 text-sm font-semibold',
+                            focusRing,
+                        ]"
+                        :style="{
+                            backgroundColor: 'var(--color-primary)',
+                            color: 'var(--color-on-primary)',
+                            borderRadius: 'var(--radius-sm)',
+                        }"
+                    >
+                        بحث
+                    </button>
+                </form>
             </div>
 
             <nav
                 v-if="shell.navigation.length"
                 aria-label="التصنيفات"
-                class="mx-auto max-w-6xl overflow-x-auto px-4 pb-2"
+                class="overflow-x-auto"
+                :style="{ borderTop: '1px solid var(--color-border)' }"
             >
-                <ul class="flex gap-4 text-sm">
+                <ul class="mx-auto flex max-w-6xl gap-1 px-4 text-sm font-semibold">
                     <li v-for="link in shell.navigation" :key="link.url">
-                        <Link
-                            :href="link.url"
-                            :class="['flex min-h-11 items-center', focusRing]"
-                            >{{ link.name }}</Link
-                        >
+                        <Link :href="link.url" :class="[navLink, 'whitespace-nowrap']">{{
+                            link.name
+                        }}</Link>
                     </li>
                 </ul>
             </nav>
@@ -265,8 +295,8 @@ function logout() {
                 class="mb-4 p-3 text-sm"
                 :style="{
                     backgroundColor: 'var(--color-secondary)',
-                    color: 'var(--color-on-secondary)',
-                    borderRadius: 'var(--radius-md)',
+                    color: 'var(--color-text)',
+                    borderRadius: 'var(--radius-lg)',
                 }"
             >
                 {{ shell.status }}
@@ -275,12 +305,13 @@ function logout() {
         </main>
 
         <footer
-            class="space-y-2 px-4 py-6 text-sm"
+            class="mt-8 px-4 py-8 text-sm"
             :style="{
                 backgroundColor: 'var(--color-surface)',
                 borderTop: '1px solid var(--color-border)',
             }"
         >
+            <div class="mx-auto max-w-6xl space-y-3">
             <p v-if="store.footerText">{{ store.footerText }}</p>
             <ul class="flex flex-wrap gap-x-4 gap-y-2">
                 <li v-if="store.contact.phone">
@@ -330,6 +361,7 @@ function logout() {
                     >
                 </li>
             </ul>
+        </div>
         </footer>
     </div>
 </template>
